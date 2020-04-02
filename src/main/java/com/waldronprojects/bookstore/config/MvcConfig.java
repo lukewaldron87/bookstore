@@ -28,12 +28,13 @@ import com.mchange.v2.c3p0.ComboPooledDataSource;
 @EnableWebMvc
 @EnableTransactionManagement
 @ComponentScan("com.waldronprojects.bookstore")
-@PropertySource({"classpath:persistence-mysql.properties",
-				 "classpath:security-persistence-mysql.properties"})
+@PropertySource({ "classpath:persistence-mysql.properties",
+				  "classpath:security-persistence-mysql.properties" })
 public class MvcConfig implements WebMvcConfigurer{
 
 	@Autowired
 	private Environment env;
+	
 	private Logger logger = Logger.getLogger(getClass().getName());
 	private boolean debug = true;
 	
@@ -54,7 +55,7 @@ public class MvcConfig implements WebMvcConfigurer{
 		ComboPooledDataSource dataSource = new ComboPooledDataSource();
 		
 		try {
-			dataSource.setDriverClass("com.mysql.jdbc,Driver");
+			dataSource.setDriverClass("com.mysql.jdbc.Driver");	
 		}catch(PropertyVetoException exc) {
 			throw new RuntimeException(exc);
 		}
@@ -83,7 +84,7 @@ public class MvcConfig implements WebMvcConfigurer{
 		Properties properties = new Properties();
 		
 		properties.setProperty("hibernate.dialect", env.getProperty("hibernate.dialect"));
-		properties.setProperty("hibernate,show_sql", env.getProperty("hibernate.show_sql"));
+		properties.setProperty("hibernate.show_sql", env.getProperty("hibernate.show_sql"));
 		
 		return properties;
 	}
@@ -94,7 +95,8 @@ public class MvcConfig implements WebMvcConfigurer{
 		ComboPooledDataSource securityDataSource = new ComboPooledDataSource();
 		
 		try {
-			securityDataSource.setDriverClass("com.mysql.jdbc,Driver");
+			//securityDataSource.setDriverClass("com.mysql.jdbc,Driver");
+			securityDataSource.setDriverClass(env.getProperty("security.jdbc.driver"));
 		}catch(PropertyVetoException exc) {
 			throw new RuntimeException(exc);
 		}
@@ -136,14 +138,13 @@ public class MvcConfig implements WebMvcConfigurer{
 	
 	@Bean
 	public LocalSessionFactoryBean sessionFactory() {
-		
 		LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
-		
+
 		// set the properties
 		sessionFactory.setDataSource(dataSource());
 		sessionFactory.setPackagesToScan(env.getProperty("hibernate.packagesToScan"));
 		sessionFactory.setHibernateProperties(getHibernateProperties());
-		
+
 		return sessionFactory;
 	}
 	
