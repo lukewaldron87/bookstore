@@ -25,25 +25,38 @@ public class ProductController {
 		
 		List<Product> productList = productService.getProducts();
 		productModel.addAttribute("products", productList);
-		
 		return "list-products";
 	}
 	
 	@GetMapping("/showFormForAdd")
 	public String showFormForAdd(Model model) {
 		
-		// create model attribute to bind from data
 		Product product = new Product();
-		
 		model.addAttribute("product", product);
-		
 		return "product-form";
 	}
 	
 	
 	@PostMapping("/saveProduct")
 	public String saveProduct(@ModelAttribute("product")Product product) {
+		
 		productService.saveProduct(product);
+		return "redirect:/product/list";
+	}
+	
+	@GetMapping("/showFormForUpdate")
+	public String showFormForUpdate(@ModelAttribute("productId")int id,
+									Model model) {
+		
+		Product product = productService.getProduct(id);
+		model.addAttribute("product", product);
+		return "product-form";
+	}
+	
+	@GetMapping("/delete")
+	public String delete(@ModelAttribute("productId")int id) {
+		
+		productService.deteteProduct(id);
 		return "redirect:/product/list";
 	}
 }
