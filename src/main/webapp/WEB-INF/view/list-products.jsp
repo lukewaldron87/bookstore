@@ -28,9 +28,28 @@
 		<!-- loop and print the products -->
 		<c:forEach var="tempProduct" items="${products}">
 			
+			<c:url var="updateLink" value="/product/showFormForUpdate">
+				<c:param name="productId" value="${tempProduct.id}" />
+			</c:url>
+			
+			<c:url var="deleteLink" value="/product/delete">
+				<c:param name="productId" value="${tempProduct.id}" />
+			</c:url>
+			
 			<tr>
 				<td>${tempProduct.productName}</td>
 				<td>${tempProduct.unitPrice}</td>
+				
+				<!-- cange to link in name for edit -->
+				<td>
+					<a href="${updateLink}">Update</a>
+
+					<a href="${deleteLink}"
+					   onclick="return confirm('Are you sure you want to delete this customer?');">
+						Delete
+					</a>
+				</td>
+
 			</tr>
 			
 		</c:forEach>
