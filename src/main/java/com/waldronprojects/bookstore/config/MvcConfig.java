@@ -28,6 +28,7 @@ import com.mchange.v2.c3p0.ComboPooledDataSource;
 @EnableWebMvc
 @EnableTransactionManagement
 @ComponentScan("com.waldronprojects.bookstore")
+//@PropertySource("classpath:persistence-mysql.properties")
 @PropertySource({ "classpath:persistence-mysql.properties",
 				  "classpath:security-persistence-mysql.properties" })
 public class MvcConfig implements WebMvcConfigurer{

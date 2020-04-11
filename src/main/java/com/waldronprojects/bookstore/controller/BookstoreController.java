@@ -10,7 +10,6 @@ public class BookstoreController {
 	public String showHome() {
 		System.out.println("in BookstoreController showHome");
 		return "home";
-		
 	}
 
 }

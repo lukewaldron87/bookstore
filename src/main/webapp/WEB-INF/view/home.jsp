@@ -22,6 +22,12 @@
 	</p>
 	
 	<!-- put new button: Customer link -->
+	<!-- <input type="button" value="Login"
+		   onclick="window.location.href='product/list'; return false;"
+		   class="add-button"
+	/>-->
+	
+	<!-- put new button: Customer link -->
 	<input type="button" value="Products"
 		   onclick="window.location.href='product/list'; return false;"
 		   class="add-button"
