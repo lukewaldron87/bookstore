@@ -25,9 +25,6 @@ import com.waldronprojects.bookstore.validation.ValidEmail;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name="user")
-@FieldMatch.List({
-    @FieldMatch(first = "password", second = "matchingPassword", message = "The password fields must match")
-})
 public class User{
 
 	@Id
@@ -36,34 +33,18 @@ public class User{
 	private Long id;
 	
 	@Column(name="username")
-	@NotNull(message = "is required")
-	@Size(min = 1, message = "is required")
 	private String userName;
 	
 	@Column(name="password")
-	@NotNull(message = "is required")
-	@Size(min = 1, message = "is required")
 	private String password;
 	
-	@Transient
-	@NotNull(message = "is required")
-	@Size(min = 1, message = "is required")
-	private String matchingPassword;
-	
 	@Column(name="first_name")
-	@NotNull(message = "is required")
-	@Size(min = 1, message = "is required")
 	private String firstName;
 	
 	@Column(name="last_name")
-	@NotNull(message = "is required")
-	@Size(min = 1, message = "is required")
 	private String lastName;
 	
 	@Column(name="email")
-	@ValidEmail
-	@NotNull(message = "is required")
-	@Size(min = 1, message = "is required")
 	private String email;
 	
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -107,14 +88,6 @@ public class User{
 
 	public void setUserName(String userName) {
 		this.userName = userName;
-	}
-
-	public String getMatchingPassword() {
-		return matchingPassword;
-	}
-
-	public void setMatchingPassword(String matchingPassword) {
-		this.matchingPassword = matchingPassword;
 	}
 
 	public String getPassword() {

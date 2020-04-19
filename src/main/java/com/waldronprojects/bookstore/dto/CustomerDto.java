@@ -1,4 +1,4 @@
-package com.waldronprojects.bookstore.entity;
+package com.waldronprojects.bookstore.dto;
 
 import java.util.Collection;
 
@@ -10,42 +10,36 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
-@Entity
-@PrimaryKeyJoinColumn(name = "user_id")
-@Table(name="customer")
-public class Customer extends User{
-	
-	/*@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="id")
-	private Long id;
-	
-	@Column(name="user_id")
-	private int userId;*/
+import com.waldronprojects.bookstore.entity.Role;
 
-	@Column(name="address_line_1")
+public class CustomerDto extends UserDto{
+	
+	@NotNull(message = "is required")
+	@Size(min = 1, message = "is required")
 	private String addressLine1;
 	
-	@Column(name="address_line_2")
 	private String addressLine2;
 	
-	@Column(name="city")
+	@NotNull(message = "is required")
+	@Size(min = 1, message = "is required")
 	private String city;
 	
-	@Column(name="country")
+	@NotNull(message = "is required")
+	@Size(min = 1, message = "is required")
 	private String country;
 	
-	@Column(name="post_code")
+	@NotNull(message = "is required")
+	@Size(min = 1, message = "is required")
 	private String postCode;
 	
-	@Column(name="phone_number")
+	@NotNull(message = "is required")
 	private int phoneNumber;
 
-	public Customer() {
+	public CustomerDto() {
 		super();
 	}
 
-	public Customer(String userName, String password, String firstName, 
+	public CustomerDto(String userName, String password, String firstName, 
 					String lastName, String email, String addressLine1, 
 					String addressLine2, String city, String country, 
 					String postCode, int phoneNumber) {
@@ -59,7 +53,7 @@ public class Customer extends User{
 		this.phoneNumber = phoneNumber;
 	}
 
-	public Customer(String userName, String password, String firstName, 
+	public CustomerDto(String userName, String password, String firstName, 
 					String lastName, String email, Collection<Role> roles, 
 					String addressLine1, String addressLine2, String city, 
 					String country, String postCode, int phoneNumber) {

@@ -19,58 +19,43 @@ import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.waldronprojects.bookstore.entity.Role;
 import com.waldronprojects.bookstore.validation.FieldMatch;
 import com.waldronprojects.bookstore.validation.ValidEmail;
 
-@Entity
-@Inheritance(strategy = InheritanceType.JOINED)
-@Table(name="user")
 @FieldMatch.List({
     @FieldMatch(first = "password", second = "matchingPassword", message = "The password fields must match")
 })
 public class UserDto{
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="id")
 	private Long id;
 	
-	@Column(name="username")
 	@NotNull(message = "is required")
 	@Size(min = 1, message = "is required")
 	private String userName;
 	
-	@Column(name="password")
 	@NotNull(message = "is required")
 	@Size(min = 1, message = "is required")
 	private String password;
 	
-	@Transient
 	@NotNull(message = "is required")
 	@Size(min = 1, message = "is required")
 	private String matchingPassword;
 	
-	@Column(name="first_name")
 	@NotNull(message = "is required")
 	@Size(min = 1, message = "is required")
 	private String firstName;
 	
-	@Column(name="last_name")
 	@NotNull(message = "is required")
 	@Size(min = 1, message = "is required")
 	private String lastName;
 	
-	@Column(name="email")
 	@ValidEmail
 	@NotNull(message = "is required")
 	@Size(min = 1, message = "is required")
 	private String email;
 	
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinTable(name = "users_roles",
-			   joinColumns = @JoinColumn(name  = "user_id"),
-			   inverseJoinColumns = @JoinColumn(name = "role_id"))
-	private Collection<RoleDto> roles;
+	private Collection<Role> roles;
 	
 	public UserDto() {
 	}
@@ -84,7 +69,7 @@ public class UserDto{
 	}
 
 	public UserDto(String userName, String password, String firstName, String lastName, String email,
-			Collection<RoleDto> roles) {
+			Collection<Role> roles) {
 		this.userName = userName;
 		this.password = password;
 		this.firstName = firstName;
@@ -149,11 +134,11 @@ public class UserDto{
 		this.email = email;
 	}
 
-	public Collection<RoleDto> getRoles() {
+	public Collection<Role> getRoles() {
 		return roles;
 	}
 
-	public void setRoles(Collection<RoleDto> roles) {
+	public void setRoles(Collection<Role> roles) {
 		this.roles = roles;
 	}
 

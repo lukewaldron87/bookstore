@@ -15,6 +15,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.waldronprojects.bookstore.dao.RoleDao;
 import com.waldronprojects.bookstore.dao.UserDao;
+import com.waldronprojects.bookstore.dto.CustomerDto;
+import com.waldronprojects.bookstore.dto.EmployeeDto;
+import com.waldronprojects.bookstore.dto.UserDto;
+import com.waldronprojects.bookstore.entity.Customer;
+import com.waldronprojects.bookstore.entity.Employee;
 import com.waldronprojects.bookstore.entity.Role;
 import com.waldronprojects.bookstore.entity.User;
 
@@ -35,31 +40,46 @@ public class UserServiceImpl implements UserService {
 	public User findUserName(String userName) {
 		return userDao.findByUserName(userName); 
 	}
-
-	/*@Override
-	@Transactional
-	public void save(CrmUser crmUser) {
-		User user = new User();
-		 // assign user details to the user object
-		user.setUserName(crmUser.getUserName());
-		user.setPassword(passwordEncoder.encode(crmUser.getPassword()));
-		user.setFirstName(crmUser.getFirstName());
-		user.setLastName(crmUser.getLastName());
-		user.setEmail(crmUser.getEmail());
-
-		user.setRoles(Arrays.asList(roleDao.findRoleByName("ROLE_EMPLOYEE")));
-
-		userDao.save(user);
-	}*/
 	
 	@Override
 	@Transactional
-	public void save(User user) {
+	public void save(UserDto userDto) {
 
-		user.setPassword(passwordEncoder.encode(user.getPassword()));
-		// Need to change for Employee!!!!!
-		user.setRoles(Arrays.asList(roleDao.findRoleByName("ROLE_CUSTOMER")));
+		/****** CREATE UTILITY TO CONVERT DTO TO ENTITY ******/
+		User user = new User();
+		
+		if(userDto.getClass().isInstance(new CustomerDto())) {
+			user = setCustomerFields((CustomerDto)userDto);
+			user.setRoles(Arrays.asList(roleDao.findRoleByName("ROLE_CUSTOMER")));
+		}else if(userDto.getClass().isInstance(new EmployeeDto())) {
+			user = setEmployeeFields((EmployeeDto)userDto);
+			user.setRoles(Arrays.asList(roleDao.findRoleByName("ROLE_EMPLOYEE")));
+		}
+		
+		user.setUserName(userDto.getUserName());
+		user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+		user.setFirstName(userDto.getFirstName());
+		user.setLastName(userDto.getLastName());
+		user.setEmail(userDto.getEmail());
 		userDao.save(user);
+	}
+	
+	private Customer setCustomerFields(CustomerDto  customerDto) {
+		Customer customer = new Customer();
+		customer.setAddressLine1(customerDto.getAddressLine1());
+		customer.setAddressLine2(customerDto.getAddressLine2());
+		customer.setCity(customerDto.getCity());
+		customer.setCountry(customerDto.getCountry());
+		customer.setPostCode(customerDto.getPostCode());
+		customer.setPhoneNumber(customerDto.getPhoneNumber());
+		return customer;
+	}
+	
+	private Employee setEmployeeFields(EmployeeDto employeeDto) {
+		Employee employee = new Employee();
+		employee.setDepartment(employeeDto.getDepartment());
+		employee.setTitle(employeeDto.getTitle());
+		return employee;
 	}
 
 	@Override

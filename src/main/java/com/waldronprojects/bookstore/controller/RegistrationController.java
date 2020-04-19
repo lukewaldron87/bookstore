@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.waldronprojects.bookstore.dto.CustomerDto;
 import com.waldronprojects.bookstore.entity.Customer;
 import com.waldronprojects.bookstore.entity.User;
 import com.waldronprojects.bookstore.service.UserService;
@@ -45,13 +46,13 @@ public class RegistrationController {
 		
 		// should be a customer class????
 		//model.addAttribute("crmUser", new CrmUser());
-		model.addAttribute("customer", new Customer());
+		model.addAttribute("customer", new CustomerDto());
 		return "registration-form";
 	}
 	
 	@PostMapping("/processRegistrationForm")
 	public String processRegistrationForm(
-					@Valid @ModelAttribute("customer") Customer customer,
+					@Valid @ModelAttribute("customer") CustomerDto customer,
 					BindingResult bindingResult,
 					Model model) {
 		
@@ -65,7 +66,7 @@ public class RegistrationController {
 		// check if user already exists
 		User user = userService.findUserName(userName);
 		if(user == null) {
-			model.addAttribute("customer", new Customer());
+			model.addAttribute("customer", new CustomerDto());
 			model.addAttribute("registrationError", "User name already exists.");
 			logger.warning("User name already exists.");
         	return "registration-form";
