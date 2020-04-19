@@ -56,7 +56,9 @@ public class UserServiceImpl implements UserService {
 	@Transactional
 	public void save(User user) {
 
-		user.setRoles((Collection)Arrays.asList(roleDao.findRoleByName("ROLE_EMPLOYEE")));
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
+		// Need to change for Employee!!!!!
+		user.setRoles(Arrays.asList(roleDao.findRoleByName("ROLE_CUSTOMER")));
 		userDao.save(user);
 	}
 

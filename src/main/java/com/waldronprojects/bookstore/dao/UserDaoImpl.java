@@ -27,14 +27,15 @@ public class UserDaoImpl implements UserDao{
 		try {
 			user = query.getSingleResult();
 		} catch (Exception e) {
-			user = null;
+			user = new User();
 		}
-		return user;
 		
+		return user;
 	}
 
 	@Override
 	public void save(User user) {
+		
 		Session currentSession = sessionFactory.getCurrentSession();
 		currentSession.saveOrUpdate(user);
 	}

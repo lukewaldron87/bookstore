@@ -35,5 +35,7 @@
 		<button type="submit" class="btn btn-success">Login</button>
 	</form:form>
 	
+	<a href="${pageContext.request.contextPath}/register/showRegistrationForm" class="btn btn-primary" role="button" aria-pressed="true">Register New User</a>
+	
 </body>
 </html>

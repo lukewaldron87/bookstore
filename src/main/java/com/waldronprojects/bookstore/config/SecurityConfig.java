@@ -20,8 +20,8 @@ import com.waldronprojects.bookstore.service.UserService;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-	//@Autowired
-	//private DataSource securityDataSource;
+	@Autowired
+	private DataSource securityDataSource;
 	
     @Autowired
     private UserService userService;
@@ -54,8 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		
 	}
 	
-	// remove
-	/*@Bean
+	@Bean
 	public UserDetailsManager userDetailsManager() {
 		
 		JdbcUserDetailsManager jdbcUserDetailsManager = new JdbcUserDetailsManager();
@@ -63,7 +62,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		jdbcUserDetailsManager.setDataSource(securityDataSource);
 		
 		return jdbcUserDetailsManager; 
-	}*/
+	}
 	
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder() {

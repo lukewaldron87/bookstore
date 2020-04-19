@@ -1,4 +1,4 @@
-package com.waldronprojects.bookstore.entity;
+package com.waldronprojects.bookstore.dto;
 
 import java.util.Collection;
 
@@ -28,7 +28,7 @@ import com.waldronprojects.bookstore.validation.ValidEmail;
 @FieldMatch.List({
     @FieldMatch(first = "password", second = "matchingPassword", message = "The password fields must match")
 })
-public class User{
+public class UserDto{
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -70,12 +70,12 @@ public class User{
 	@JoinTable(name = "users_roles",
 			   joinColumns = @JoinColumn(name  = "user_id"),
 			   inverseJoinColumns = @JoinColumn(name = "role_id"))
-	private Collection<Role> roles;
+	private Collection<RoleDto> roles;
 	
-	public User() {
+	public UserDto() {
 	}
 
-	public User(String userName, String password, String firstName, String lastName, String email) {
+	public UserDto(String userName, String password, String firstName, String lastName, String email) {
 		this.userName = userName;
 		this.password = password;
 		this.firstName = firstName;
@@ -83,8 +83,8 @@ public class User{
 		this.email = email;
 	}
 
-	public User(String userName, String password, String firstName, String lastName, String email,
-			Collection<Role> roles) {
+	public UserDto(String userName, String password, String firstName, String lastName, String email,
+			Collection<RoleDto> roles) {
 		this.userName = userName;
 		this.password = password;
 		this.firstName = firstName;
@@ -149,11 +149,11 @@ public class User{
 		this.email = email;
 	}
 
-	public Collection<Role> getRoles() {
+	public Collection<RoleDto> getRoles() {
 		return roles;
 	}
 
-	public void setRoles(Collection<Role> roles) {
+	public void setRoles(Collection<RoleDto> roles) {
 		this.roles = roles;
 	}
 

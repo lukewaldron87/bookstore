@@ -1,6 +1,6 @@
 package com.waldronprojects.bookstore.dao;
 
-import org.springframework.context.annotation.Role;
+import com.waldronprojects.bookstore.entity.Role;
 
 public interface RoleDao {
 
