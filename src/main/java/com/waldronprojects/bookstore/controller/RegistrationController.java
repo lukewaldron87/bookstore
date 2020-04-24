@@ -47,7 +47,7 @@ public class RegistrationController {
 		// should be a customer class????
 		//model.addAttribute("crmUser", new CrmUser());
 		model.addAttribute("customer", new CustomerDto());
-		return "registration-form";
+		return "customer/registration-form";
 	}
 	
 	@PostMapping("/processRegistrationForm")
@@ -60,7 +60,7 @@ public class RegistrationController {
 		logger.info("Processing registration form for new user: "+userName);
 		
 		if(bindingResult.hasErrors()) {
-			return "registration-form";
+			return "customer/registration-form";
 		}
 		
 		// check if user already exists
@@ -69,13 +69,13 @@ public class RegistrationController {
 			model.addAttribute("customer", new CustomerDto());
 			model.addAttribute("registrationError", "User name already exists.");
 			logger.warning("User name already exists.");
-        	return "registration-form";
+        	return "customer/registration-form";
 		}
 		
 		//userService.save(user);
 		userService.save(customer);
 		logger.info("Successfully created user: " + userName);
 
-        return "registration-confirmation";	
+        return "customer/registration-confirmation";	
 	}
 }
