@@ -10,38 +10,69 @@
 	<!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 	
+	
 	<title>Employee Menu</title>
 </head>
 
 <body>
-	<h1>Bookstore Employee Menu</h1>
-	<hr>
+	<div id="wrapper">
+		<div id="header">
+			<h1>Bookstore Employee Menu</h1>
+		</div>
+	</div>
+	
+<div id="container">
+	
+		<div id="content">
 	
 	<p>
 	Welcome to the Bookstore Employee Menu
 	</p>
-	
+	<p>
 	<input type="button" value="Books"
 		   onclick="window.location.href='product/list'; return false;"
 		   class="add-button"
 	/>
+	</p>
 	
+	<p>
 	<input type="button" value="Orders"
-		   onclick="window.location.href='product/list'; return false;"
+		   onclick="window.location.href='order/list'; return false;"
 		   class="add-button"
 	/>
+	</p>
 	
+	<p>
 	<input type="button" value="Customers"
 		   onclick="window.location.href='customer/list'; return false;"
 		   class="add-button"
 	/>
+	</p>
 	
 	<!-- Admin Only -->
-	<input type="button" value="Employees"
-		   onclick="window.location.href='employee/list'; return false;"
-		   class="add-button"
-	/>
+	<security:authorize access="hasRole('ADMIN')">
+	<p>
+		<input type="button" value="Employees"
+			   onclick="window.location.href='employee/list'; return false;"
+			   class="add-button" />
+	</p>
+	</security:authorize>
+
+	<hr>
 	
+	</div>
+	
+	</div>
+	
+	<!-- Add a logout button -->
+	<p>
+	<form:form action="${pageContext.request.contextPath}/logout" 
+			   method="POST">
+	
+		<input type="submit" value="Logout" />
+	
+	</form:form>
+	</p>
 	
 	<!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

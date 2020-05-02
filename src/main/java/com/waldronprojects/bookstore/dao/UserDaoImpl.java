@@ -6,6 +6,7 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.waldronprojects.bookstore.entity.Customer;
 import com.waldronprojects.bookstore.entity.User;
 
 @Repository
@@ -15,13 +16,13 @@ public class UserDaoImpl implements UserDao{
 	private SessionFactory sessionFactory;
 	
 	@Override
-	public User findByUserName(String userName) {
+	public User findByUsername(String username) {
 
 		Session currentSession = sessionFactory.getCurrentSession();
 		Query<User>  query = currentSession
-								.createQuery("from User where username = :userName",
+								.createQuery("from User where username = :username",
 											 User.class);
-		query.setParameter("userName", userName);
+		query.setParameter("username", username);
 		
 		User user = null;
 		try {
@@ -38,6 +39,22 @@ public class UserDaoImpl implements UserDao{
 		
 		Session currentSession = sessionFactory.getCurrentSession();
 		currentSession.saveOrUpdate(user);
+	}
+
+	@Override
+	public User findUserById(Long id) {
+		
+		Session currentSession = sessionFactory.getCurrentSession();
+		return currentSession.get(User.class, id);
+	}
+
+	@Override
+	public void deleteUser(Long id) {
+		Session currentSession = sessionFactory.getCurrentSession();
+		Query query = currentSession.createQuery("delete from User where id=:userId");
+		query.setParameter("userId", id);
+		query.executeUpdate();
+		
 	}
 
 }

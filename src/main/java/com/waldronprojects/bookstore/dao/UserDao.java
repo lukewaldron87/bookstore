@@ -4,7 +4,11 @@ import com.waldronprojects.bookstore.entity.User;
 
 public interface UserDao {
 
-    User findByUserName(String userName);
+    public User findByUsername(String username);
     
-    void save(User user);
+    public void save(User user);
+
+    public User findUserById(Long id);
+
+	public void deleteUser(Long id);
 }
