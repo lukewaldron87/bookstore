@@ -39,12 +39,12 @@ public class CustomerDto extends UserDto{
 		super();
 	}
 
-	public CustomerDto(String userName, String password, String firstName, 
+	public CustomerDto(String username, String password, String firstName, 
 					String lastName, String email, String addressLine1, 
 					String addressLine2, String city, String country, 
 					String postCode, int phoneNumber) {
 		
-		super(userName, password, firstName, lastName, email);
+		super(username, password, firstName, lastName, email);
 		this.addressLine1 = addressLine1;
 		this.addressLine2 = addressLine2;
 		this.city = city;
@@ -53,12 +53,12 @@ public class CustomerDto extends UserDto{
 		this.phoneNumber = phoneNumber;
 	}
 
-	public CustomerDto(String userName, String password, String firstName, 
+	public CustomerDto(String username, String password, String firstName, 
 					String lastName, String email, Collection<Role> roles, 
 					String addressLine1, String addressLine2, String city, 
 					String country, String postCode, int phoneNumber) {
 		
-		super(userName, password, firstName, lastName, email, roles);
+		super(username, password, firstName, lastName, email, roles);
 		this.addressLine1 = addressLine1;
 		this.addressLine2 = addressLine2;
 		this.city = city;

@@ -41,8 +41,8 @@
 		<div style="margin-bottom: 25px" class="input-group">
 			<span class="input-group-addon"><i
 				class="glyphicon glyphicon-user"></i></span>
-			<form:errors path="userName" cssClass="error" />
-			<form:input path="userName" placeholder="username (*)"
+			<form:errors path="username" cssClass="error" />
+			<form:input path="username" placeholder="username (*)"
 				class="form-control" />
 		</div>
 

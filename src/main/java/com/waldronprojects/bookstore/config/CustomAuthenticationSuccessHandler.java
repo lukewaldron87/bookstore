@@ -31,8 +31,8 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 										Authentication authentication) 
 										throws IOException, ServletException {
 
-		String userName = authentication.getName();
-		User user = userService.findUserName(userName);
+		String username = authentication.getName();
+		User user = userService.findUsername(username);
 		HttpSession session = request.getSession();
 		session.setAttribute("user", user);
 		String requestPath = getRedirectPathForRole(authentication,

@@ -7,7 +7,7 @@ import com.waldronprojects.bookstore.entity.User;
 
 public interface UserService extends UserDetailsService{
 
-	public User findUserName(String userName);
+	public User findUsername(String username);
 	
     void save(UserDto user);
 }

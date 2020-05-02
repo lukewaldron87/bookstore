@@ -39,22 +39,22 @@ public class Employee extends User{
 		super();
 	}
 
-	public Employee(String userName, String password,
+	public Employee(String username, String password,
 					String firstName, String lastName, 
 					String email, String department, 
 					String title) {
 
-		super(userName, password, firstName, lastName, email);
+		super(username, password, firstName, lastName, email);
 		this.department = department;
 		this.title = title;
 	}
 
-	public Employee(String userName, String password,
+	public Employee(String username, String password,
 					String firstName, String lastName,
 					String email, Collection<Role> roles, 
 					String department, String title) {
 
-		super(userName, password, firstName, lastName, email, roles);
+		super(username, password, firstName, lastName, email, roles);
 		this.department = department;
 		this.title = title;
 	}

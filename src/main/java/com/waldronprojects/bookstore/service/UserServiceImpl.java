@@ -2,6 +2,7 @@ package com.waldronprojects.bookstore.service;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,8 +38,8 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	@Transactional
-	public User findUserName(String userName) {
-		return userDao.findByUserName(userName); 
+	public User findUsername(String username) {
+		return userDao.findByUsername(username); 
 	}
 	
 	@Override
@@ -56,7 +57,7 @@ public class UserServiceImpl implements UserService {
 			user.setRoles(Arrays.asList(roleDao.findRoleByName("ROLE_EMPLOYEE")));
 		}
 		
-		user.setUserName(userDto.getUserName());
+		user.setUsername(userDto.getUsername());
 		user.setPassword(passwordEncoder.encode(userDto.getPassword()));
 		user.setFirstName(userDto.getFirstName());
 		user.setLastName(userDto.getLastName());
@@ -84,12 +85,12 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	@Transactional
-	public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-		User user = userDao.findByUserName(userName);
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		User user = userDao.findByUsername(username);
 		if (user == null) {
 			throw new UsernameNotFoundException("Invalid username or password.");
 		}
-		return new org.springframework.security.core.userdetails.User(user.getUserName(), user.getPassword(),
+		return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
 				mapRolesToAuthorities(user.getRoles()));
 	}
 

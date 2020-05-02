@@ -32,7 +32,7 @@ public class UserDto{
 	
 	@NotNull(message = "is required")
 	@Size(min = 1, message = "is required")
-	private String userName;
+	private String username;
 	
 	@NotNull(message = "is required")
 	@Size(min = 1, message = "is required")
@@ -60,17 +60,17 @@ public class UserDto{
 	public UserDto() {
 	}
 
-	public UserDto(String userName, String password, String firstName, String lastName, String email) {
-		this.userName = userName;
+	public UserDto(String username, String password, String firstName, String lastName, String email) {
+		this.username = username;
 		this.password = password;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
 	}
 
-	public UserDto(String userName, String password, String firstName, String lastName, String email,
+	public UserDto(String username, String password, String firstName, String lastName, String email,
 			Collection<Role> roles) {
-		this.userName = userName;
+		this.username = username;
 		this.password = password;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -86,12 +86,12 @@ public class UserDto{
 		this.id = id;
 	}
 
-	public String getUserName() {
-		return userName;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public String getMatchingPassword() {
@@ -144,7 +144,7 @@ public class UserDto{
 
 	@Override
 	public String toString() {
-		return "User{" + "id=" + id + ", userName='" + userName + '\'' + ", password='" + "*********" + '\''
+		return "User{" + "id=" + id + ", username='" + username + '\'' + ", password='" + "*********" + '\''
 				+ ", firstName='" + firstName + '\'' + ", lastName='" + lastName + '\'' + ", email='" + email + '\''
 				+ ", roles=" + roles + '}';
 	}

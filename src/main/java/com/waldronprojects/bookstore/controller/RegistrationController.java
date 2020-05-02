@@ -56,15 +56,15 @@ public class RegistrationController {
 					BindingResult bindingResult,
 					Model model) {
 		
-		String userName = customer.getUserName();
-		logger.info("Processing registration form for new user: "+userName);
+		String username = customer.getUsername();
+		logger.info("Processing registration form for new user: "+username);
 		
 		if(bindingResult.hasErrors()) {
 			return "customer/registration-form";
 		}
 		
 		// check if user already exists
-		User user = userService.findUserName(userName);
+		User user = userService.findUsername(username);
 		if(user == null) {
 			model.addAttribute("customer", new CustomerDto());
 			model.addAttribute("registrationError", "User name already exists.");
@@ -74,7 +74,7 @@ public class RegistrationController {
 		
 		//userService.save(user);
 		userService.save(customer);
-		logger.info("Successfully created user: " + userName);
+		logger.info("Successfully created user: " + username);
 
         return "customer/registration-confirmation";	
 	}

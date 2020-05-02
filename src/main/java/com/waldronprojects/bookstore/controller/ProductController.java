@@ -14,7 +14,7 @@ import com.waldronprojects.bookstore.entity.Product;
 import com.waldronprojects.bookstore.service.ProductService;
 
 @Controller
-@RequestMapping("/product")
+@RequestMapping("/employee/product")
 public class ProductController {
 
 	@Autowired
@@ -25,7 +25,7 @@ public class ProductController {
 		
 		List<Product> productList = productService.getProducts();
 		productModel.addAttribute("products", productList);
-		return "list-products";
+		return "/employee/list-products";
 	}
 	
 	@GetMapping("/showFormForAdd")
@@ -33,7 +33,7 @@ public class ProductController {
 		
 		Product product = new Product();
 		model.addAttribute("product", product);
-		return "product-form";
+		return "/employee/product-form";
 	}
 	
 	
@@ -41,7 +41,7 @@ public class ProductController {
 	public String saveProduct(@ModelAttribute("product")Product product) {
 		
 		productService.saveProduct(product);
-		return "redirect:/product/list";
+		return "redirect:/employee/product/list";
 	}
 	
 	@GetMapping("/showFormForUpdate")
@@ -50,13 +50,13 @@ public class ProductController {
 		
 		Product product = productService.getProduct(id);
 		model.addAttribute("product", product);
-		return "product-form";
+		return "/employee/product-form";
 	}
 	
 	@GetMapping("/delete")
 	public String delete(@ModelAttribute("productId")int id) {
 		
 		productService.deteteProduct(id);
-		return "redirect:/product/list";
+		return "redirect:/employee/product/list";
 	}
 }

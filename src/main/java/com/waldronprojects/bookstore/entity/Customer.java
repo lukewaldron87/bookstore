@@ -14,14 +14,6 @@ import javax.validation.constraints.Size;
 @PrimaryKeyJoinColumn(name = "user_id")
 @Table(name="customer")
 public class Customer extends User{
-	
-	/*@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="id")
-	private Long id;
-	
-	@Column(name="user_id")
-	private int userId;*/
 
 	@Column(name="address_line_1")
 	private String addressLine1;
@@ -45,12 +37,12 @@ public class Customer extends User{
 		super();
 	}
 
-	public Customer(String userName, String password, String firstName, 
+	public Customer(String username, String password, String firstName, 
 					String lastName, String email, String addressLine1, 
 					String addressLine2, String city, String country, 
 					String postCode, int phoneNumber) {
 		
-		super(userName, password, firstName, lastName, email);
+		super(username, password, firstName, lastName, email);
 		this.addressLine1 = addressLine1;
 		this.addressLine2 = addressLine2;
 		this.city = city;
@@ -59,12 +51,12 @@ public class Customer extends User{
 		this.phoneNumber = phoneNumber;
 	}
 
-	public Customer(String userName, String password, String firstName, 
+	public Customer(String username, String password, String firstName, 
 					String lastName, String email, Collection<Role> roles, 
 					String addressLine1, String addressLine2, String city, 
 					String country, String postCode, int phoneNumber) {
 		
-		super(userName, password, firstName, lastName, email, roles);
+		super(username, password, firstName, lastName, email, roles);
 		this.addressLine1 = addressLine1;
 		this.addressLine2 = addressLine2;
 		this.city = city;
