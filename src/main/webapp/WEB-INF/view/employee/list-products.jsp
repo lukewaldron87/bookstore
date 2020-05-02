@@ -28,11 +28,11 @@
 		<!-- loop and print the products -->
 		<c:forEach var="tempProduct" items="${products}">
 			
-			<c:url var="updateLink" value="/product/showFormForUpdate">
+			<c:url var="updateLink" value="/employee/product/showFormForUpdate">
 				<c:param name="productId" value="${tempProduct.id}" />
 			</c:url>
 			
-			<c:url var="deleteLink" value="/product/delete">
+			<c:url var="deleteLink" value="/employee/product/delete">
 				<c:param name="productId" value="${tempProduct.id}" />
 			</c:url>
 			
@@ -45,7 +45,7 @@
 					<a href="${updateLink}">Update</a>
 
 					<a href="${deleteLink}"
-					   onclick="return confirm('Are you sure you want to delete this customer?');">
+					   onclick="return confirm('Are you sure you want to delete this product?');">
 						Delete
 					</a>
 				</td>
@@ -59,6 +59,10 @@
 		   onclick="window.location.href='showFormForAdd'; return false;"
 		   class="add-button"
 	/>
+	
+	<br>
+	
+	<a href=${pageContext.request.contextPath}/employee/showEmployeeMenu>Back to Menu</a>
 	
 		<!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

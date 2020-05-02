@@ -43,7 +43,7 @@
 	
 	</form:form>
 	
-	<a href=${pageContext.request.contextPath}/product/list>Back to List</a>
+	<a href=${pageContext.request.contextPath}/employee/product/list>Back to List</a>
 
 </body>
 </html>
