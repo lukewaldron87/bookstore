@@ -40,7 +40,6 @@ public class CustomerController {
 		
 		customerService.saveCustomer(customer);
 		return "redirect:/employee/customer/list";
-		
 	}
 	
 	@RequestMapping("/delete")

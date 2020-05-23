@@ -24,6 +24,8 @@ public class EmployeeDto extends UserDto{
 	@Size(min = 1, message = "is required")
 	private String title;
 	
+	private boolean isAdmin;
+	
 	public EmployeeDto() {
 		super();
 	}
@@ -31,21 +33,24 @@ public class EmployeeDto extends UserDto{
 	public EmployeeDto(String username, String password,
 					String firstName, String lastName, 
 					String email, String department, 
-					String title) {
+					String title, boolean isAdmin) {
 
 		super(username, password, firstName, lastName, email);
 		this.department = department;
 		this.title = title;
+		this.isAdmin = isAdmin;
 	}
 
 	public EmployeeDto(String username, String password,
 					String firstName, String lastName,
 					String email, Collection<Role> roles, 
-					String department, String title) {
+					String department, String title,
+					boolean isAdmin) {
 
 		super(username, password, firstName, lastName, email, roles);
 		this.department = department;
 		this.title = title;
+		this.isAdmin = isAdmin;
 	}
 
 	public String getDepartment() {
@@ -62,6 +67,14 @@ public class EmployeeDto extends UserDto{
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+	
+	public boolean getIsAdmin() {
+		return isAdmin;
+	}
+	
+	public void setIsAdmin(boolean isAdmin) {
+		this.isAdmin = isAdmin;
 	}
 
 	@Override

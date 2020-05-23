@@ -9,5 +9,9 @@ public interface UserService extends UserDetailsService{
 
 	public User findUsername(String username);
 	
-    void save(UserDto user);
+    public void saveUser(UserDto user);
+    
+    public UserDto getUser(Long id);
+    
+    public void deleteUser(Long id);
 }

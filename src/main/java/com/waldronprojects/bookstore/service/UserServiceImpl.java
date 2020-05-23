@@ -1,8 +1,8 @@
 package com.waldronprojects.bookstore.service;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,43 +44,71 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	@Transactional
-	public void save(UserDto userDto) {
+	public void deleteUser(Long id) {
+		userDao.deleteUser(id);
+	}
+	
+	@Override
+	@Transactional
+	public void saveUser(UserDto userDto) {
 
 		/****** CREATE UTILITY TO CONVERT DTO TO ENTITY ******/
-		User user = new User();
-		
-		if(userDto.getClass().isInstance(new CustomerDto())) {
-			user = setCustomerFields((CustomerDto)userDto);
-			user.setRoles(Arrays.asList(roleDao.findRoleByName("ROLE_CUSTOMER")));
-		}else if(userDto.getClass().isInstance(new EmployeeDto())) {
-			user = setEmployeeFields((EmployeeDto)userDto);
-			user.setRoles(Arrays.asList(roleDao.findRoleByName("ROLE_EMPLOYEE")));
-		}
-		
-		user.setUsername(userDto.getUsername());
-		user.setPassword(passwordEncoder.encode(userDto.getPassword()));
-		user.setFirstName(userDto.getFirstName());
-		user.setLastName(userDto.getLastName());
-		user.setEmail(userDto.getEmail());
+		User user = createUserObject(userDto);
 		userDao.save(user);
 	}
 	
-	private Customer setCustomerFields(CustomerDto  customerDto) {
-		Customer customer = new Customer();
-		customer.setAddressLine1(customerDto.getAddressLine1());
-		customer.setAddressLine2(customerDto.getAddressLine2());
-		customer.setCity(customerDto.getCity());
-		customer.setCountry(customerDto.getCountry());
-		customer.setPostCode(customerDto.getPostCode());
-		customer.setPhoneNumber(customerDto.getPhoneNumber());
-		return customer;
+	
+	/**************** CREATE UTILITY TO CONVERT DTO TO ENTITY ****************/
+	private User createUserObject(UserDto userDto) {
+		User user = new User();
+		if(userDto instanceof CustomerDto) {
+			user = createCustomerObjectFromDto((CustomerDto)userDto);
+		}else if(userDto instanceof EmployeeDto) {
+			user = createEmployeeObjectFromDto((EmployeeDto)userDto);
+		}
+		return user;
 	}
 	
-	private Employee setEmployeeFields(EmployeeDto employeeDto) {
-		Employee employee = new Employee();
-		employee.setDepartment(employeeDto.getDepartment());
-		employee.setTitle(employeeDto.getTitle());
-		return employee;
+	private Customer createCustomerObjectFromDto(CustomerDto  customerDto) {
+			Customer customer = new Customer();
+			customer.setId(customerDto.getId());
+			customer.setUsername(customerDto.getUsername());
+			customer.setPassword(passwordEncoder.encode(customerDto.getPassword()));
+			customer.setFirstName(customerDto.getFirstName());
+			customer.setLastName(customerDto.getLastName());
+			customer.setEmail(customerDto.getEmail());
+			customer.setAddressLine1(customerDto.getAddressLine1());
+			customer.setAddressLine2(customerDto.getAddressLine2());
+			customer.setCity(customerDto.getCity());
+			customer.setCountry(customerDto.getCountry());
+			customer.setPostCode(customerDto.getPostCode());
+			customer.setPhoneNumber(customerDto.getPhoneNumber());
+			customer.setRoles(Arrays.asList(roleDao.findRoleByName("ROLE_CUSTOMER")));
+			return customer;
+	}
+	
+	private Employee createEmployeeObjectFromDto(EmployeeDto employeeDto) {
+			Employee employee = new Employee();
+			employee.setId(employeeDto.getId());
+			employee.setUsername(employeeDto.getUsername());
+			employee.setPassword(passwordEncoder.encode(employeeDto.getPassword()));
+			employee.setFirstName(employeeDto.getFirstName());
+			employee.setLastName(employeeDto.getLastName());
+			employee.setEmail(employeeDto.getEmail());
+			employee.setDepartment(employeeDto.getDepartment());
+			employee.setTitle(employeeDto.getTitle());
+			Collection<Role> roleCollection = createEmployeeRoleCollection(employeeDto);
+			employee.setRoles(roleCollection);
+			return employee;
+	}
+	
+	private Collection<Role> createEmployeeRoleCollection(EmployeeDto employeeDto) {
+		Collection<Role> roleCollection = new ArrayList<Role>();
+		roleCollection.add(roleDao.findRoleByName("ROLE_EMPLOYEE"));
+		if(employeeDto.getIsAdmin()) {
+			roleCollection.add(roleDao.findRoleByName("ROLE_ADMIN"));
+		}
+		return roleCollection;
 	}
 
 	@Override
@@ -93,7 +121,68 @@ public class UserServiceImpl implements UserService {
 		return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
 				mapRolesToAuthorities(user.getRoles()));
 	}
+	
+	@Override
+	@Transactional
+	public  UserDto getUser(Long id) {
+		User user = userDao.findUserById(id);
+		return createUserDtoObject(user);
+	}
+	
+	/**************** CREATE UTILITY TO CONVERT ENTITY TO DTO ****************/
+	private UserDto createUserDtoObject(User user) {
+		UserDto userDto = new UserDto();
+		if(user instanceof Customer) {
+			userDto = createCustomerDtoObject((Customer)user);
+		}else if(userDto.getClass().isInstance(new EmployeeDto())) {
+			userDto = createEmployeeDtoObject((Employee)user);
+		}
+		return userDto;
+	}
 
+	private UserDto createCustomerDtoObject(Customer customer) {
+		CustomerDto customerDto = new CustomerDto();
+		customerDto.setId(customer.getId());
+		customerDto.setUsername(customer.getUsername());
+		customerDto.setPassword(customer.getPassword());
+		customerDto.setMatchingPassword(customer.getPassword());
+		customerDto.setFirstName(customer.getFirstName());
+		customerDto.setLastName(customer.getLastName());
+		customerDto.setEmail(customer.getEmail());
+		customerDto.setRoles(customer.getRoles());
+		customerDto.setAddressLine1(customer.getAddressLine1());
+		customerDto.setAddressLine1(customer.getAddressLine2());
+		customerDto.setCity(customer.getCity());
+		customerDto.setCountry(customer.getCountry());
+		customerDto.setPostCode(customer.getPostCode());
+		customerDto.setPhoneNumber(customer.getPhoneNumber());
+		return customerDto;
+	}
+
+	private UserDto createEmployeeDtoObject(Employee employee) {
+		EmployeeDto employeeDto = new EmployeeDto();
+		employeeDto.setId(employee.getId());
+		employeeDto.setUsername(employee.getUsername());
+		employeeDto.setPassword(employee.getPassword());
+		employeeDto.setMatchingPassword(employee.getPassword());
+		employeeDto.setFirstName(employee.getFirstName());
+		employeeDto.setLastName(employee.getLastName());
+		employeeDto.setEmail(employee.getEmail());
+		employeeDto.setRoles(employee.getRoles());
+		employeeDto.setDepartment(employee.getDepartment());
+		employeeDto.setTitle(employee.getTitle());
+		employeeDto.setIsAdmin(checkEmployeeIsAdmin(employee));
+		return employeeDto;
+	}
+	
+	private boolean checkEmployeeIsAdmin(Employee employee) {
+		for(Role role: employee.getRoles()) {
+			if(role.getName().equals("ROLE_ADMIN")){
+				return true;
+			}
+		}
+		return false;
+	}
 
 	private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
 		return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());

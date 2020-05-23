@@ -73,7 +73,7 @@ public class RegistrationController {
 		}
 		
 		//userService.save(user);
-		userService.save(customer);
+		userService.saveUser(customer);
 		logger.info("Successfully created user: " + username);
 
         return "customer/registration-confirmation";	

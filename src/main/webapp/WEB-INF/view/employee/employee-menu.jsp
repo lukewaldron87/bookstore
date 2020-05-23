@@ -53,7 +53,7 @@
 	<security:authorize access="hasRole('ADMIN')">
 	<p>
 		<input type="button" value="Employees"
-			   onclick="window.location.href='employee/list'; return false;"
+			   onclick="window.location.href='list'; return false;"
 			   class="add-button" />
 	</p>
 	</security:authorize>
