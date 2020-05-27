@@ -26,27 +26,4 @@ public class CustomerServiceImpl implements CustomerService {
 		return customerDao.getCustomers();
 	}
 
-	@Override
-	@Transactional
-	public Customer getCustomer(Long id) {
-		User user = userDao.findUserById(id);
-		if(user instanceof Customer) {
-			return (Customer)user;
-		}else {
-			return new Customer();
-		}
-	}
-
-	@Override
-	@Transactional
-	public void saveCustomer(Customer customer) {
-		userDao.save(customer);
-	}
-
-	@Override
-	@Transactional
-	public void deleteCustomer(Long id) {
-		userDao.deleteUser(id);
-	}
-
 }

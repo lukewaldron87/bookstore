@@ -17,14 +17,6 @@ import javax.validation.constraints.Size;
 @Table(name="Employee")
 public class Employee extends User{
 
-	/*@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="id")
-	private Long id;
-	
-	@Column(name="user_id")
-	private int userId;*/
-	
 	@Column(name="department")
 	@NotNull(message = "is required")
 	@Size(min = 1, message = "is required")

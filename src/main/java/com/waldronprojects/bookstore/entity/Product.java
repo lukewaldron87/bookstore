@@ -26,6 +26,9 @@ public class Product {
 	@Column(name="unit_price")
 	private double unitPrice;
 	
+	@Column(name="description")
+	private String description;
+	
 	// Products will have many OrderDetails so create a list to store those OrderDetails
 	/*@OneToMany(mappedBy="product",
 			cascade= {CascadeType.PERSIST, CascadeType.MERGE,
@@ -60,5 +63,12 @@ public class Product {
 		this.unitPrice = unitPrice;
 	}
 	
+	public String getDiscription() {
+		return description;
+	}
+	
+	public void setDescrpition(String description) {
+		this .description = description;
+	}
 	
 }

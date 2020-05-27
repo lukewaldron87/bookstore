@@ -151,7 +151,7 @@ public class UserServiceImpl implements UserService {
 		customerDto.setEmail(customer.getEmail());
 		customerDto.setRoles(customer.getRoles());
 		customerDto.setAddressLine1(customer.getAddressLine1());
-		customerDto.setAddressLine1(customer.getAddressLine2());
+		customerDto.setAddressLine2(customer.getAddressLine2());
 		customerDto.setCity(customer.getCity());
 		customerDto.setCountry(customer.getCountry());
 		customerDto.setPostCode(customer.getPostCode());

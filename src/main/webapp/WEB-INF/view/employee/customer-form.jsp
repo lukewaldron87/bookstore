@@ -24,6 +24,7 @@
 		<form:hidden path="id"/>
 		<form:hidden path="username"/>
 		<form:hidden path="password"/>
+		<form:hidden path="matchingPassword"/>
 		<form:hidden path="email"/>
 		<form:hidden path="phoneNumber"/>
 		
