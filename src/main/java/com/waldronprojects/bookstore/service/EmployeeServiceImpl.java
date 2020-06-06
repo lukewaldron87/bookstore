@@ -41,13 +41,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	@Transactional
 	public void saveEmployee(Employee employee) {
-		userDao.save(employee);
+		userDao.addUser(employee);
 	}
 
 	@Override
 	@Transactional
 	public void deleteEmployee(Employee employee) {
-		userDao.save(employee);
+		userDao.addUser(employee);
 	}
 
 }

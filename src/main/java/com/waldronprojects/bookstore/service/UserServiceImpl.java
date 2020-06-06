@@ -54,7 +54,7 @@ public class UserServiceImpl implements UserService {
 
 		/****** CREATE UTILITY TO CONVERT DTO TO ENTITY ******/
 		User user = createUserObject(userDto);
-		userDao.save(user);
+		userDao.addUser(user);
 	}
 	
 	

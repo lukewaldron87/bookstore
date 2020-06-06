@@ -6,7 +6,7 @@ public interface UserDao {
 
     public User findByUsername(String username);
     
-    public void save(User user);
+    public void addUser(User user);
 
     public User findUserById(Long id);
 
