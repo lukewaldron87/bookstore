@@ -35,6 +35,20 @@
 			<version>${springframework.version}</version>
 		</dependency>
 
+        <!-- Spring Transactions -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-tx</artifactId>
+            <version>${springframework.version}</version>
+        </dependency>
+        
+        <!-- Spring ORM -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
+            <version>${springframework.version}</version>
+        </dependency>
+
 		<!-- Spring Security -->
 		<!-- spring-security-web and spring-security-config -->
 		
@@ -64,6 +78,13 @@
     		<version>${springsecurity.version}</version>
     		<scope>test</scope>
 		</dependency>
+        
+        <!-- modelmapper for converting DTOs to Entities and back -->
+        <dependency>
+		    <groupId>org.modelmapper</groupId>
+		    <artifactId>modelmapper</artifactId>
+		    <version>2.3.8</version>
+		</dependency>
 
 		<!-- Servlet, JSP and JSTL support -->
 		<dependency>
@@ -84,32 +105,18 @@
 			<version>1.2</version>
 		</dependency>
 
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>3.8.1</version>
-			<scope>test</scope>
-		</dependency>
-
-        <!-- Spring Transactions -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-tx</artifactId>
-            <version>${springframework.version}</version>
-        </dependency>
-        
-        <!-- Spring ORM -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-orm</artifactId>
-            <version>${springframework.version}</version>
-        </dependency>
-
  		<!-- Hibernate Core -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
 			<version>${hibernate.version}</version>
+		</dependency>
+
+		<!-- Hibernate Validator -->
+		<dependency>
+		    <groupId>org.hibernate</groupId>
+		    <artifactId>hibernate-validator</artifactId>
+		    <version>6.0.7.Final</version>
 		</dependency>
 
         <!-- MySQL -->
@@ -126,27 +133,28 @@
             <version>${c3po.version}</version>
         </dependency>
 
-		<!-- Hibernate Validator -->
-		<dependency>
-		    <groupId>org.hibernate</groupId>
-		    <artifactId>hibernate-validator</artifactId>
-		    <version>6.0.7.Final</version>
-		</dependency>
-
 		<!-- to compensate for java 9 not including jaxb -->
 		<dependency>
 		    <groupId>javax.xml.bind</groupId>
 		    <artifactId>jaxb-api</artifactId>
 		    <version>2.3.0</version>
 		</dependency>
-
-		<!-- junit  -->
+		
+		<!-- junit 5 Jupiter -->
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.13</version>
-			<scope>test</scope>
-		</dependency>	
+		    <groupId>org.junit.jupiter</groupId>
+		    <artifactId>junit-jupiter-engine</artifactId>
+		    <version>5.6.2</version>
+		    <scope>test</scope>
+		</dependency>
+		
+		<!-- junit 5 Vintage allows junit 4 and 3 commands -->
+		<dependency>
+		    <groupId>org.junit.vintage</groupId>
+		    <artifactId>junit-vintage-engine</artifactId>
+		    <version>5.6.2</version>
+		    <scope>test</scope>
+		</dependency>
 		
 		<!-- mockito  -->
 		<dependency>
