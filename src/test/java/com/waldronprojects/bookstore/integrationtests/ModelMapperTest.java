@@ -18,7 +18,7 @@ public class ModelMapperTest {
 	public void testDtoToEntity() {
 		UserDtoFactory userDtoFactory = new UnitTestUserDtoFactory();
 		CustomerDto customerDto = 
-				(CustomerDto)userDtoFactory.createUser(UnitTestUserDtoFactory.CUSTOMER);
+				(CustomerDto)userDtoFactory.createUserDto(UnitTestUserDtoFactory.CUSTOMER);
 		ModelMapper modelMapper = new ModelMapper();
 		Customer customerEntity = modelMapper.map(customerDto, Customer.class);
 		checkVariables(customerEntity, customerDto);
