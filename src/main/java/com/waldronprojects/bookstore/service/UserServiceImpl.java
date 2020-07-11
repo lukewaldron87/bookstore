@@ -1,7 +1,6 @@
 package com.waldronprojects.bookstore.service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
@@ -96,6 +95,10 @@ public class UserServiceImpl implements UserService {
 		return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
 				mapRolesToAuthorities(user.getRoles()));
 	}
+
+	private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
+		return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
+	}
 	
 	@Override
 	@Transactional
@@ -108,58 +111,16 @@ public class UserServiceImpl implements UserService {
 		UserDto userDto = new UserDto();
 		ModelMapper modelMapper = new ModelMapper();
 		if(user instanceof Customer) {
-			userDto = modelMapper.map(userDto, CustomerDto.class);
+			userDto = modelMapper.map(user, CustomerDto.class);
 		}else if(user instanceof Employee) {
-			userDto = modelMapper.map(userDto, EmployeeDto.class);
-			userDto = checkIfAdmin((EmployeeDto) userDto);
+			userDto = modelMapper.map(user, EmployeeDto.class);
+			if(checkEmployeeIsAdmin((Employee)user)) {
+				userDto = setUserDtoAsAdmin((EmployeeDto) userDto);
+			}
 		}
 		return userDto;
 	}
-	
-	private UserDto checkIfAdmin(EmployeeDto employeeDto) {
-		Collection<Role> roleCollection = employeeDto.getRoles();
-		Role adminRole = roleDao.findRoleByName("ROLE_ADMIN");
-		if(roleCollection.contains(adminRole)) {
-			employeeDto.setIsAdmin(true);
-		}
-		return employeeDto;
-	}
 
-	/*private UserDto createCustomerDtoObject(Customer customer) {
-		CustomerDto customerDto = new CustomerDto();
-		customerDto.setId(customer.getId());
-		customerDto.setUsername(customer.getUsername());
-		customerDto.setPassword(customer.getPassword());
-		customerDto.setMatchingPassword(customer.getPassword());
-		customerDto.setFirstName(customer.getFirstName());
-		customerDto.setLastName(customer.getLastName());
-		customerDto.setEmail(customer.getEmail());
-		customerDto.setRoles(customer.getRoles());
-		customerDto.setAddressLine1(customer.getAddressLine1());
-		customerDto.setAddressLine2(customer.getAddressLine2());
-		customerDto.setCity(customer.getCity());
-		customerDto.setCountry(customer.getCountry());
-		customerDto.setPostCode(customer.getPostCode());
-		customerDto.setPhoneNumber(customer.getPhoneNumber());
-		return customerDto;
-	}
-
-	private UserDto createEmployeeDtoObject(Employee employee) {
-		EmployeeDto employeeDto = new EmployeeDto();
-		employeeDto.setId(employee.getId());
-		employeeDto.setUsername(employee.getUsername());
-		employeeDto.setPassword(employee.getPassword());
-		employeeDto.setMatchingPassword(employee.getPassword());
-		employeeDto.setFirstName(employee.getFirstName());
-		employeeDto.setLastName(employee.getLastName());
-		employeeDto.setEmail(employee.getEmail());
-		employeeDto.setRoles(employee.getRoles());
-		employeeDto.setDepartment(employee.getDepartment());
-		employeeDto.setTitle(employee.getTitle());
-		employeeDto.setIsAdmin(checkEmployeeIsAdmin(employee));
-		return employeeDto;
-	}*/
-	
 	private boolean checkEmployeeIsAdmin(Employee employee) {
 		for(Role role: employee.getRoles()) {
 			if(role.getName().equals("ROLE_ADMIN")){
@@ -169,7 +130,8 @@ public class UserServiceImpl implements UserService {
 		return false;
 	}
 
-	private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
-		return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
+	private UserDto setUserDtoAsAdmin(EmployeeDto employeeDto) {
+		employeeDto.setIsAdmin(true);
+		return employeeDto;
 	}
 }
