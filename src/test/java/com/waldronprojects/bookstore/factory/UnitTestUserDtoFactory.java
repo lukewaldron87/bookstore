@@ -15,7 +15,7 @@ public class UnitTestUserDtoFactory extends UserDtoFactory {
 	public static final String ADMIN = "admin";
 
 	@Override
-	public UserDto createUser(String type) {
+	public UserDto createUserDto(String type) {
 
 		UserDto user = null;
 
@@ -34,9 +34,9 @@ public class UnitTestUserDtoFactory extends UserDtoFactory {
 		return user;	
 	}
 
-	private UserDto buildCustomer(int id) {
+	private UserDto buildCustomer(long id) {
 		CustomerDto customerDto = new CustomerDto();
-		//customerDto.setId(customer.getId());
+		customerDto.setId(id);
 		customerDto.setUsername("username"+id);
 		customerDto.setPassword("password"+id);
 		customerDto.setMatchingPassword("password"+id);
@@ -77,9 +77,9 @@ public class UnitTestUserDtoFactory extends UserDtoFactory {
 		return employeeDto;
 	}
 	
-	private EmployeeDto createEmployeeObject(int id) {
+	private EmployeeDto createEmployeeObject(long id) {
 		EmployeeDto employeeDto = new EmployeeDto();
-		//employeeDto.setId(employee.getId());
+		employeeDto.setId(id);
 		employeeDto.setUsername("username"+id);
 		employeeDto.setPassword("password"+id);
 		employeeDto.setMatchingPassword("password"+id);

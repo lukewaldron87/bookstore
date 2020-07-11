@@ -4,7 +4,7 @@ import com.waldronprojects.bookstore.dto.UserDto;
 
 public abstract class UserDtoFactory {
 	
-	public abstract UserDto createUser(String type);
+	public abstract UserDto createUserDto(String type);
 	
 
 }
