@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -52,54 +53,28 @@ public class UserServiceImpl implements UserService {
 	@Transactional
 	public void saveUser(UserDto userDto) {
 
-		/****** CREATE UTILITY TO CONVERT DTO TO ENTITY ******/
-		User user = createUserObject(userDto);
+		/****** CHANGE TO BE TRANSLATED AUTOMATICALLY IN THE CONTROLLER ******/
+		User user = mapDtoToEntity(userDto);
 		userDao.addUser(user);
 	}
 	
-	
-	/**************** CREATE UTILITY TO CONVERT DTO TO ENTITY ****************/
-	private User createUserObject(UserDto userDto) {
+	private User mapDtoToEntity(UserDto userDto){
 		User user = new User();
+		Collection<Role> roleCollection = new ArrayList<Role>();
+		Role role;
+		ModelMapper modelMapper = new ModelMapper();
 		if(userDto instanceof CustomerDto) {
-			user = createCustomerObjectFromDto((CustomerDto)userDto);
+			user = modelMapper.map(userDto, Customer.class);
+			role = roleDao.findRoleByName("ROLE_CUSTOMER");
+			roleCollection.add(role);
 		}else if(userDto instanceof EmployeeDto) {
-			user = createEmployeeObjectFromDto((EmployeeDto)userDto);
+			user = modelMapper.map(userDto, Employee.class);
+			roleCollection = createEmployeeRoleCollection((EmployeeDto)userDto);
 		}
+		String encodedPassword = passwordEncoder.encode(userDto.getPassword());
+		user.setPassword(encodedPassword);
+		user.setRoles(roleCollection);
 		return user;
-	}
-	
-	private Customer createCustomerObjectFromDto(CustomerDto  customerDto) {
-			Customer customer = new Customer();
-			customer.setId(customerDto.getId());
-			customer.setUsername(customerDto.getUsername());
-			customer.setPassword(passwordEncoder.encode(customerDto.getPassword()));
-			customer.setFirstName(customerDto.getFirstName());
-			customer.setLastName(customerDto.getLastName());
-			customer.setEmail(customerDto.getEmail());
-			customer.setAddressLine1(customerDto.getAddressLine1());
-			customer.setAddressLine2(customerDto.getAddressLine2());
-			customer.setCity(customerDto.getCity());
-			customer.setCountry(customerDto.getCountry());
-			customer.setPostCode(customerDto.getPostCode());
-			customer.setPhoneNumber(customerDto.getPhoneNumber());
-			customer.setRoles(Arrays.asList(roleDao.findRoleByName("ROLE_CUSTOMER")));
-			return customer;
-	}
-	
-	private Employee createEmployeeObjectFromDto(EmployeeDto employeeDto) {
-			Employee employee = new Employee();
-			employee.setId(employeeDto.getId());
-			employee.setUsername(employeeDto.getUsername());
-			employee.setPassword(passwordEncoder.encode(employeeDto.getPassword()));
-			employee.setFirstName(employeeDto.getFirstName());
-			employee.setLastName(employeeDto.getLastName());
-			employee.setEmail(employeeDto.getEmail());
-			employee.setDepartment(employeeDto.getDepartment());
-			employee.setTitle(employeeDto.getTitle());
-			Collection<Role> roleCollection = createEmployeeRoleCollection(employeeDto);
-			employee.setRoles(roleCollection);
-			return employee;
 	}
 	
 	private Collection<Role> createEmployeeRoleCollection(EmployeeDto employeeDto) {
@@ -126,21 +101,31 @@ public class UserServiceImpl implements UserService {
 	@Transactional
 	public  UserDto getUser(Long id) {
 		User user = userDao.findUserById(id);
-		return createUserDtoObject(user);
+		return mapEntityToDto(user);
 	}
 	
-	/**************** CREATE UTILITY TO CONVERT ENTITY TO DTO ****************/
-	private UserDto createUserDtoObject(User user) {
+	private UserDto mapEntityToDto(User user) {
 		UserDto userDto = new UserDto();
+		ModelMapper modelMapper = new ModelMapper();
 		if(user instanceof Customer) {
-			userDto = createCustomerDtoObject((Customer)user);
-		}else if(userDto.getClass().isInstance(new EmployeeDto())) {
-			userDto = createEmployeeDtoObject((Employee)user);
+			userDto = modelMapper.map(userDto, CustomerDto.class);
+		}else if(user instanceof Employee) {
+			userDto = modelMapper.map(userDto, EmployeeDto.class);
+			userDto = checkIfAdmin((EmployeeDto) userDto);
 		}
 		return userDto;
 	}
+	
+	private UserDto checkIfAdmin(EmployeeDto employeeDto) {
+		Collection<Role> roleCollection = employeeDto.getRoles();
+		Role adminRole = roleDao.findRoleByName("ROLE_ADMIN");
+		if(roleCollection.contains(adminRole)) {
+			employeeDto.setIsAdmin(true);
+		}
+		return employeeDto;
+	}
 
-	private UserDto createCustomerDtoObject(Customer customer) {
+	/*private UserDto createCustomerDtoObject(Customer customer) {
 		CustomerDto customerDto = new CustomerDto();
 		customerDto.setId(customer.getId());
 		customerDto.setUsername(customer.getUsername());
@@ -173,7 +158,7 @@ public class UserServiceImpl implements UserService {
 		employeeDto.setTitle(employee.getTitle());
 		employeeDto.setIsAdmin(checkEmployeeIsAdmin(employee));
 		return employeeDto;
-	}
+	}*/
 	
 	private boolean checkEmployeeIsAdmin(Employee employee) {
 		for(Role role: employee.getRoles()) {

@@ -117,7 +117,7 @@ public class CustomerDto extends UserDto{
 
 	@Override
 	public String toString() {
-		return "Customer [addressLine1=" + addressLine1 + ", addressLine2=" + addressLine2 + ", city=" + city
+		return "Customer ["+super.toString()+" addressLine1=" + addressLine1 + ", addressLine2=" + addressLine2 + ", city=" + city
 				+ ", country=" + country + ", postCode=" + postCode + ", phoneNumber=" + phoneNumber + "]";
 	}
 }

@@ -79,6 +79,6 @@ public class EmployeeDto extends UserDto{
 
 	@Override
 	public String toString() {
-		return "Employee [department=" + department + ", title=" + title + "]";
+		return "Employee [" + super.toString() + " department=" + department + ", title=" + title + " isAdmin=" + isAdmin + "]";
 	}
 }
