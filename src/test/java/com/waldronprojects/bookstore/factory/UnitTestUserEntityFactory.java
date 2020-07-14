@@ -14,8 +14,6 @@ public class UnitTestUserEntityFactory extends UserEntityFactory {
 	public static final String CUSTOMER = "customer";
 	public static final String EMPLOYEE = "employee";
 	public static final String ADMIN = "admin";
-	
-	
 
 	@Override
 	public User createUser(String type) {
@@ -23,16 +21,18 @@ public class UnitTestUserEntityFactory extends UserEntityFactory {
 		User user = null;
 		
 		switch (type) {
-		case CUSTOMER: 
-			user = buildCustomer(0);
-			break;
-		case EMPLOYEE:
-			user = createRegularEmployeeObject(0);
-			break;
-		case ADMIN:
-			user =  createAdminEmployeeObject(0);
-			break;
-	}
+			case CUSTOMER:
+				user = buildCustomer(0);
+				break;
+			case EMPLOYEE:
+				user = createRegularEmployeeObject(0);
+				break;
+			case ADMIN:
+				user =  createAdminEmployeeObject(0);
+				break;
+				default:
+					throw new IllegalArgumentException("Argument " + type + " strange supported");
+		}
 
 		return user;
 	}

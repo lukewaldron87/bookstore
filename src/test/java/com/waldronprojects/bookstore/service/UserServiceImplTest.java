@@ -33,7 +33,7 @@ import com.waldronprojects.bookstore.factory.UserEntityFactory;
 import java.util.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class UserServiceTest {
+public class UserServiceImplTest {
 	
 	@Captor
 	private ArgumentCaptor<User> captor;

@@ -29,6 +29,8 @@ public class UnitTestUserDtoFactory extends UserDtoFactory {
 			case ADMIN:
 				user =  createAdminEmployeeObject(0);
 				break;
+			default:
+				throw new IllegalArgumentException("Argument " + type + " strange supported");
 		}
 
 		return user;	
