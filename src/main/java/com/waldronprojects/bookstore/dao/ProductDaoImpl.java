@@ -50,7 +50,7 @@ public class ProductDaoImpl implements ProductDao {
 	}
 
 	@Override
-	public void deteteProduct(int id) {
+	public void deleteProduct(int id) {
 
 		Session currentSession = sessionFactory.getCurrentSession();
 	

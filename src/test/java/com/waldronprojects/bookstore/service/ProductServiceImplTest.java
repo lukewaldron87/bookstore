@@ -6,10 +6,14 @@ import com.waldronprojects.bookstore.factory.ProductEntityFactory;
 import com.waldronprojects.bookstore.factory.UnitTestProductEntityFactory;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -30,20 +34,49 @@ public class ProductServiceImplTest {
         assertEquals(product, returnedProduct);
     }
 
-    private Product createProductObject(String type){
-        ProductEntityFactory productEntityFactory = new UnitTestProductEntityFactory();
-        return productEntityFactory.createProduct(type);
-    }
-
     @Test
     public void testGetProducts() {
+        List<Product> productList =
+                createProductList(UnitTestProductEntityFactory.GENERIC);
+        Mockito.when(productDao.getProducts()).thenReturn(productList);
+        List<Product> returnedProductList = productService.getProducts();
+        assertEquals(productList, returnedProductList);
+        Mockito.verify(productDao,Mockito.times(1)).getProducts();
+    }
+
+    private List<Product> createProductList(String type){
+        Product product = createProductObject(UnitTestProductEntityFactory.GENERIC);
+        List<Product> productList = new ArrayList<Product>();
+        productList.add(product);
+        productList.add(product);
+        return productList;
     }
 
     @Test
     public void testSaveProduct() {
+        Product product =
+                createProductObject(UnitTestProductEntityFactory.GENERIC);
+        productService.saveProduct(product);
+        ArgumentCaptor<Product>  argumentCaptor = ArgumentCaptor.forClass(Product.class);
+        Mockito.verify(productDao, Mockito.times(1))
+                .saveProduct(argumentCaptor.capture());
+        Product capturedProduct = argumentCaptor.getValue();
+        assertEquals(product, capturedProduct);
     }
 
     @Test
-    public void testDeteteProduct() {
+    public void testDeleteProduct() {
+        Integer id = 1;
+        productService.deleteProduct(id);
+        ArgumentCaptor<Integer> argumentCaptor = ArgumentCaptor.forClass(Integer.class);
+        Mockito.verify(productDao, Mockito.times(1))
+                .deleteProduct(argumentCaptor.capture());
+        Integer capturedInt = argumentCaptor.getValue();
+        assertEquals(id, capturedInt);
+    }
+
+    private Product createProductObject(String type){
+        ProductEntityFactory productEntityFactory = new UnitTestProductEntityFactory();
+        return productEntityFactory.createProduct(type);
     }
 }
