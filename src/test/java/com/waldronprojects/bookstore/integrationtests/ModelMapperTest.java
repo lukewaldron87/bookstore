@@ -2,15 +2,12 @@ package com.waldronprojects.bookstore.integrationtests;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import com.waldronprojects.bookstore.factory.*;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
 
 import com.waldronprojects.bookstore.dto.CustomerDto;
 import com.waldronprojects.bookstore.entity.Customer;
-import com.waldronprojects.bookstore.factory.UnitTestUserDtoFactory;
-import com.waldronprojects.bookstore.factory.UnitTestUserEntityFactory;
-import com.waldronprojects.bookstore.factory.UserDtoFactory;
-import com.waldronprojects.bookstore.factory.UserEntityFactory;
 
 public class ModelMapperTest {
 	
@@ -18,7 +15,7 @@ public class ModelMapperTest {
 	public void testDtoToEntity() {
 		UserDtoFactory userDtoFactory = new UnitTestUserDtoFactory();
 		CustomerDto customerDto = 
-				(CustomerDto)userDtoFactory.createUserDto(UnitTestUserDtoFactory.CUSTOMER);
+				(CustomerDto)userDtoFactory.createUserDto(UserType.CUSTOMER);
 		ModelMapper modelMapper = new ModelMapper();
 		Customer customerEntity = modelMapper.map(customerDto, Customer.class);
 		checkVariables(customerEntity, customerDto);
@@ -28,7 +25,7 @@ public class ModelMapperTest {
 	public void testEntityToDto() {
 		UserEntityFactory userEntityFactory = new UnitTestUserEntityFactory();
 		Customer customerEntity = 
-				(Customer)userEntityFactory.createUser(UnitTestUserEntityFactory.CUSTOMER);
+				(Customer)userEntityFactory.createUser(UserType.CUSTOMER);
 		ModelMapper modelMapper = new ModelMapper();
 		CustomerDto customerDto = modelMapper.map(customerEntity, CustomerDto.class);
 		checkVariables(customerEntity, customerDto);

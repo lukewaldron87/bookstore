@@ -5,17 +5,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public class UnitTestProductEntityFactory extends ProductEntityFactory {
 
-    public static final String GENERIC = "GENERIC";
-
     @Override
-    public Product createProduct(String type) {
+    public Product createProduct(ProductType productType) {
         Product product = null;
-        switch (type){
+        switch (productType){
             case GENERIC:
                 product = createGenericProduct();
                 break;
             default:
-                throw new IllegalArgumentException("Argument " + type + " strange supported");
+                throw new IllegalArgumentException("Argument " + productType + " strange supported");
         }
         return product;
     }

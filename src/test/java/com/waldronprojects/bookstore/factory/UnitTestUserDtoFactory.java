@@ -9,17 +9,13 @@ import com.waldronprojects.bookstore.dto.UserDto;
 import com.waldronprojects.bookstore.entity.Role;
 
 public class UnitTestUserDtoFactory extends UserDtoFactory {
-	
-	public static final String CUSTOMER = "customer";
-	public static final String EMPLOYEE = "employee";
-	public static final String ADMIN = "admin";
 
 	@Override
-	public UserDto createUserDto(String type) {
+	public UserDto createUserDto(UserType userType) {
 
 		UserDto user = null;
 
-		switch (type) {
+		switch (userType) {
 			case CUSTOMER: 
 				user = buildCustomer(0);
 				break;
@@ -30,7 +26,7 @@ public class UnitTestUserDtoFactory extends UserDtoFactory {
 				user =  createAdminEmployeeObject(0);
 				break;
 			default:
-				throw new IllegalArgumentException("Argument " + type + " strange supported");
+				throw new IllegalArgumentException("Argument " + userType + " strange supported");
 		}
 
 		return user;	

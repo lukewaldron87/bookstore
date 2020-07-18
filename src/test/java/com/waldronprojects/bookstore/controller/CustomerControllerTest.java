@@ -2,9 +2,6 @@ package com.waldronprojects.bookstore.controller;
 
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.hasSize;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
@@ -16,12 +13,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
-import javax.annotation.Resource;
-
+import com.waldronprojects.bookstore.factory.UserType;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -29,15 +24,16 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.waldronprojects.bookstore.config.MvcConfig;
 import com.waldronprojects.bookstore.config.TestContext;
 import com.waldronprojects.bookstore.config.WebAppContext;
 import com.waldronprojects.bookstore.dao.RoleDao;
 import com.waldronprojects.bookstore.entity.Customer;
 import com.waldronprojects.bookstore.entity.Role;
+import com.waldronprojects.bookstore.entity.User;
+import com.waldronprojects.bookstore.factory.UnitTestUserEntityFactory;
+import com.waldronprojects.bookstore.factory.UserEntityFactory;
 import com.waldronprojects.bookstore.service.CustomerService;
 import com.waldronprojects.bookstore.service.UserService;
 
@@ -80,12 +76,13 @@ public class CustomerControllerTest {
 	@Test
 	//@Transactional
 	public void listCustomersTest() throws Exception {
+		UserEntityFactory userEntityFactory = new UnitTestUserEntityFactory();
 		
-		Customer customer1 = createCustomer(1);
-		Customer customer2 = createCustomer(2);
+		User customer1 = userEntityFactory.createUser(UserType.CUSTOMER);
+		User customer2 = userEntityFactory.createUser(UserType.CUSTOMER);
 		
 		when(customerService.getCustomers())
-			.thenReturn(Arrays.asList(customer1, customer2));
+			.thenReturn(Arrays.asList((Customer)customer1, (Customer)customer2));
 		
 		//mockMvc.perform(get("/"))
 		mockMvc.perform(get("/employee/customer/list"))
@@ -102,35 +99,6 @@ public class CustomerControllerTest {
 		
 		//verify(customerService, times(1)).findAll();
 		//verifyNoMoreInteractions(customerService);
-	}
-	
-	private Customer createCustomer(int customerNumber) {
-		Customer customer = buildCustomer(customerNumber);
-		Collection<Role> roleCollection = createCustomerRoleCollection();
-		customer.setRoles(roleCollection);
-		return customer;
-	}
-	
-	private Customer buildCustomer(int customerNumber) {
-		Customer customer = new Customer();
-		customer.setUsername("username"+customerNumber);
-		customer.setPassword("password"+customerNumber);
-		customer.setFirstName("firstName"+customerNumber);
-		customer.setLastName("lastName"+customerNumber);
-		customer.setEmail(customerNumber+"@email.com");
-		customer.setAddressLine1("addressLine1"+customerNumber);
-		customer.setAddressLine2("addressLine2"+customerNumber);
-		customer.setCity("city"+customerNumber);
-		customer.setCountry("country"+customerNumber);
-		customer.setPostCode("postCode"+customerNumber);
-		customer.setPhoneNumber(1234+customerNumber);
-		return customer;
-	}
-	
-	private Collection<Role> createCustomerRoleCollection() {
-		Collection<Role> roleCollection = new ArrayList<Role>();
-		roleCollection.add(roleDao.findRoleByName("ROLE_CUSTOMER"));
-		return roleCollection;
 	}
 
 }

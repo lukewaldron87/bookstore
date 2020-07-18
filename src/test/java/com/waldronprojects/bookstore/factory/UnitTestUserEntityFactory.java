@@ -10,17 +10,13 @@ import com.waldronprojects.bookstore.entity.Role;
 import com.waldronprojects.bookstore.entity.User;
 
 public class UnitTestUserEntityFactory extends UserEntityFactory {
-	
-	public static final String CUSTOMER = "customer";
-	public static final String EMPLOYEE = "employee";
-	public static final String ADMIN = "admin";
 
 	@Override
-	public User createUser(String type) {
+	public User createUser(UserType userType) {
 
 		User user = null;
 		
-		switch (type) {
+		switch (userType) {
 			case CUSTOMER:
 				user = buildCustomer(0);
 				break;
@@ -31,7 +27,7 @@ public class UnitTestUserEntityFactory extends UserEntityFactory {
 				user =  createAdminEmployeeObject(0);
 				break;
 				default:
-					throw new IllegalArgumentException("Argument " + type + " strange supported");
+					throw new IllegalArgumentException("Argument " + userType + " strange supported");
 		}
 
 		return user;

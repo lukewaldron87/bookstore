@@ -3,6 +3,7 @@ package com.waldronprojects.bookstore.service;
 import com.waldronprojects.bookstore.dao.ProductDao;
 import com.waldronprojects.bookstore.entity.Product;
 import com.waldronprojects.bookstore.factory.ProductEntityFactory;
+import com.waldronprojects.bookstore.factory.ProductType;
 import com.waldronprojects.bookstore.factory.UnitTestProductEntityFactory;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,7 +29,7 @@ public class ProductServiceImplTest {
 
     @Test
     public void testGetProduct() {
-        Product product = createProductObject(UnitTestProductEntityFactory.GENERIC);
+        Product product = createProductObject(ProductType.GENERIC);
         Mockito.when(productDao.getProduct(product.getId())).thenReturn(product);
         Product returnedProduct = productService.getProduct(product.getId());
         assertEquals(product, returnedProduct);
@@ -37,15 +38,15 @@ public class ProductServiceImplTest {
     @Test
     public void testGetProducts() {
         List<Product> productList =
-                createProductList(UnitTestProductEntityFactory.GENERIC);
+                createProductList(ProductType.GENERIC);
         Mockito.when(productDao.getProducts()).thenReturn(productList);
         List<Product> returnedProductList = productService.getProducts();
         assertEquals(productList, returnedProductList);
         Mockito.verify(productDao,Mockito.times(1)).getProducts();
     }
 
-    private List<Product> createProductList(String type){
-        Product product = createProductObject(UnitTestProductEntityFactory.GENERIC);
+    private List<Product> createProductList(ProductType type){
+        Product product = createProductObject(ProductType.GENERIC);
         List<Product> productList = new ArrayList<Product>();
         productList.add(product);
         productList.add(product);
@@ -55,7 +56,7 @@ public class ProductServiceImplTest {
     @Test
     public void testSaveProduct() {
         Product product =
-                createProductObject(UnitTestProductEntityFactory.GENERIC);
+                createProductObject(ProductType.GENERIC);
         productService.saveProduct(product);
         ArgumentCaptor<Product>  argumentCaptor = ArgumentCaptor.forClass(Product.class);
         Mockito.verify(productDao, Mockito.times(1))
@@ -75,7 +76,7 @@ public class ProductServiceImplTest {
         assertEquals(id, capturedInt);
     }
 
-    private Product createProductObject(String type){
+    private Product createProductObject(ProductType type){
         ProductEntityFactory productEntityFactory = new UnitTestProductEntityFactory();
         return productEntityFactory.createProduct(type);
     }
