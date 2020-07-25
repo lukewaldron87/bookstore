@@ -17,7 +17,6 @@ public class UserDaoImpl implements UserDao{
 	
 	@Override
 	public User findByUsername(String username) {
-
 		Session currentSession = sessionFactory.getCurrentSession();
 		Query<User>  query = currentSession
 								.createQuery("from User where username = :username",
@@ -36,14 +35,12 @@ public class UserDaoImpl implements UserDao{
 
 	@Override
 	public void addUser(User user) {
-		
 		Session currentSession = sessionFactory.getCurrentSession();
 		currentSession.saveOrUpdate(user);
 	}
 
 	@Override
 	public User findUserById(Long id) {
-		
 		Session currentSession = sessionFactory.getCurrentSession();
 		return currentSession.get(User.class, id);
 	}
@@ -54,7 +51,6 @@ public class UserDaoImpl implements UserDao{
 		Query query = currentSession.createQuery("delete from User where id=:userId");
 		query.setParameter("userId", id);
 		query.executeUpdate();
-		
 	}
 
 }
