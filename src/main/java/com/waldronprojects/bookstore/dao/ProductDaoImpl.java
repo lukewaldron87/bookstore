@@ -49,9 +49,7 @@ public class ProductDaoImpl implements ProductDao {
 
 	@Override
 	public void deleteProduct(int id) {
-
 		Session currentSession = sessionFactory.getCurrentSession();
-	
 		Query query = currentSession.createQuery("delete from Product where id=:productId");
 		query.setParameter("productId", id);
 		query.executeUpdate();

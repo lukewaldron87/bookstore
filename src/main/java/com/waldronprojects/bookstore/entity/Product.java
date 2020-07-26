@@ -36,7 +36,19 @@ public class Product {
 	private List<OrderDetail> orderDetails;*/
 	
 	public Product() {
-		
+	}
+
+	public Product(String productName, double unitPrice, String description) {
+		this.productName = productName;
+		this.unitPrice = unitPrice;
+		this.description = description;
+	}
+
+	public Product(int id, String productName, double unitPrice, String description) {
+		this.id = id;
+		this.productName = productName;
+		this.unitPrice = unitPrice;
+		this.description = description;
 	}
 
 	public int getId() {
