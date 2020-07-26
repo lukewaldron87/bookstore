@@ -1,6 +1,5 @@
 package com.waldronprojects.bookstore.dao;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 import com.waldronprojects.bookstore.entity.Customer;
@@ -34,8 +33,6 @@ public class UserDaoImplTest {
 
 	@Autowired
 	UserDao userDao;
-	@Autowired
-	RoleDao roleDao;
 
 	UserEntityFactory userEntityFactory;
 
@@ -81,7 +78,7 @@ public class UserDaoImplTest {
 	@Rollback(true)
 	public void testAddCustomerUser(){
 		User createdCustomerUser =  userEntityFactory.createUser(UserType.CUSTOMER);
-		User returnedCustomerUser = testAddUserHelper(createdCustomerUser);
+		User returnedCustomerUser = addAndFindUser(createdCustomerUser);
 		boolean containsRole = testAssignedRoles(returnedCustomerUser, "ROLE_CUSTOMER");
 		assertEquals(createdCustomerUser, returnedCustomerUser);
 		assertTrue(returnedCustomerUser instanceof Customer);
@@ -93,7 +90,7 @@ public class UserDaoImplTest {
 	@Rollback(true)
 	public void testAddEmployeeUser() {
 		User createdEmployeeUser =  userEntityFactory.createUser(UserType.EMPLOYEE);
-		User returnedEmployeeUser = testAddUserHelper(createdEmployeeUser);
+		User returnedEmployeeUser = addAndFindUser(createdEmployeeUser);
 		boolean containsRole = testAssignedRoles(returnedEmployeeUser, "ROLE_EMPLOYEE");
 		assertEquals(createdEmployeeUser, returnedEmployeeUser);
 		assertTrue(returnedEmployeeUser instanceof Employee);
@@ -105,14 +102,14 @@ public class UserDaoImplTest {
 	@Rollback(true)
 	public void testAddAdminUser(){
 		User createdAdminUser =  userEntityFactory.createUser(UserType.ADMIN);
-		User returnedAdminUser = testAddUserHelper(createdAdminUser);
+		User returnedAdminUser = addAndFindUser(createdAdminUser);
 		boolean containsRole = testAssignedRoles(returnedAdminUser, "ROLE_ADMIN");
 		assertEquals(createdAdminUser, returnedAdminUser);
 		assertTrue(returnedAdminUser instanceof Employee);
 		assertTrue(containsRole);
 	}
 
-	private User testAddUserHelper(User user){
+	private User addAndFindUser(User user){
 		userDao.addUser(user);
 		return userDao.findByUsername(user.getUsername());
 	}

@@ -28,7 +28,7 @@ public class RoleDaoImpl implements RoleDao {
 		try {
 			role = query.getSingleResult();
 		}catch (Exception e) {
-			role = null;
+			role = new Role();
 		}
 		
 		return role;
