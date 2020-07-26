@@ -44,10 +44,29 @@ public class ProductDaoImplTest {
     }
 
     @Test
+    @Transactional
+    @Rollback(true)
     public void saveProduct() {
+        int id = 99;
+        String productName = "Unit Test Product";
+        double unitPrice = 9.9;
+        String description = "Unit Test Product Description";
+        Product product = new Product(id,
+                                      productName,
+                                      unitPrice,
+                                      description);
+        productDao.saveProduct(product);
+        Product returnedProduct = productDao.getProduct(id);
+        assertEquals(id, returnedProduct.getId());
     }
 
     @Test
+    @Transactional
+    @Rollback(true)
     public void deleteProduct() {
+        int id = 3;
+        productDao.deleteProduct(id);
+        Product product = productDao.getProduct(id);
+        assertNull(product);
     }
 }
