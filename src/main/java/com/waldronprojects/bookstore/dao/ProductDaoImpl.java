@@ -18,9 +18,7 @@ public class ProductDaoImpl implements ProductDao {
 
 	@Override
 	public Product getProduct(int id) {
-		
 		Session currentSession = sessionFactory.getCurrentSession();
-		
 		return currentSession.get(Product.class, id);
 	}
 	
