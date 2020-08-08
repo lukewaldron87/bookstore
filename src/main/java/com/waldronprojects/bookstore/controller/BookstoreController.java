@@ -8,7 +8,6 @@ public class BookstoreController {
 
 	@GetMapping("/")
 	public String showHome() {
-		System.out.println("in BookstoreController showHome");
 		return "home";
 	}
 

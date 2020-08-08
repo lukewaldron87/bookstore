@@ -5,21 +5,18 @@ import static org.junit.Assert.assertEquals;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.waldronprojects.bookstore.factory.UserType;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
-
-import com.waldronprojects.bookstore.config.MvcConfig;
 import com.waldronprojects.bookstore.dao.CustomerDao;
-import com.waldronprojects.bookstore.dao.UserDao;
 import com.waldronprojects.bookstore.entity.Customer;
+import com.waldronprojects.bookstore.entity.User;
+import com.waldronprojects.bookstore.factory.UnitTestUserEntityFactory;
+import com.waldronprojects.bookstore.factory.UserEntityFactory;
 
 //@RunWith(SpringRunner.class)
 //@WebAppConfiguration
@@ -41,12 +38,15 @@ public class CustomerServiceTest {
 		Mockito.when(customerDao.getCustomers()).thenReturn(customerList);
 		List<Customer> returnedList = customerServiceImpl.getCustomers();
 		assertEquals(customerList.size(), returnedList.size());
+		Mockito.verify(customerDao, Mockito.times(1)).getCustomers();
 	}
 	
 	private List<Customer> createCustomerList(){
+		UserEntityFactory userEntityFactory = new UnitTestUserEntityFactory();
 		List<Customer> customerList = new ArrayList<Customer>();
-		customerList.add(new Customer());
-		customerList.add(new Customer());
+		User customer = userEntityFactory.createUser(UserType.CUSTOMER);
+		customerList.add((Customer)customer);
+		customerList.add((Customer)customer);
 		return customerList;
 	}
 	

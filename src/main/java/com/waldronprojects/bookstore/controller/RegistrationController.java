@@ -1,9 +1,8 @@
 package com.waldronprojects.bookstore.controller;
 
-import java.util.logging.Logger;
-
-import javax.validation.Valid;
-
+import com.waldronprojects.bookstore.dto.CustomerDto;
+import com.waldronprojects.bookstore.entity.User;
+import com.waldronprojects.bookstore.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -12,16 +11,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-import com.waldronprojects.bookstore.dto.CustomerDto;
-import com.waldronprojects.bookstore.entity.Customer;
-import com.waldronprojects.bookstore.entity.User;
-import com.waldronprojects.bookstore.service.UserService;
+import javax.validation.Valid;
+import java.util.logging.Logger;
 
 @Controller
 @RequestMapping("/register")
@@ -36,16 +29,12 @@ public class RegistrationController {
 
 	@InitBinder
 	public void initBinder(WebDataBinder dataBinder) {
-		
 		StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
 		dataBinder .registerCustomEditor(String.class, stringTrimmerEditor);
 	}
 	
 	@GetMapping("/showRegistrationForm")
 	public String showRegistrationForm(Model model) {
-		
-		// should be a customer class????
-		//model.addAttribute("crmUser", new CrmUser());
 		model.addAttribute("customer", new CustomerDto());
 		return "customer/registration-form";
 	}

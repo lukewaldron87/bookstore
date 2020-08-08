@@ -1,41 +1,37 @@
 package com.waldronprojects.bookstore.controller;
 
-import static org.hamcrest.Matchers.hasItem;
-import static org.hamcrest.Matchers.hasSize;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-
-import com.waldronprojects.bookstore.factory.UserType;
+import com.waldronprojects.bookstore.config.TestContext;
+import com.waldronprojects.bookstore.config.WebAppContext;
+import com.waldronprojects.bookstore.dao.RoleDao;
+import com.waldronprojects.bookstore.dto.UserDto;
+import com.waldronprojects.bookstore.entity.Customer;
+import com.waldronprojects.bookstore.entity.User;
+import com.waldronprojects.bookstore.factory.*;
+import com.waldronprojects.bookstore.service.CustomerService;
+import com.waldronprojects.bookstore.service.UserService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
-import com.waldronprojects.bookstore.config.TestContext;
-import com.waldronprojects.bookstore.config.WebAppContext;
-import com.waldronprojects.bookstore.dao.RoleDao;
-import com.waldronprojects.bookstore.entity.Customer;
-import com.waldronprojects.bookstore.entity.Role;
-import com.waldronprojects.bookstore.entity.User;
-import com.waldronprojects.bookstore.factory.UnitTestUserEntityFactory;
-import com.waldronprojects.bookstore.factory.UserEntityFactory;
-import com.waldronprojects.bookstore.service.CustomerService;
-import com.waldronprojects.bookstore.service.UserService;
+import java.util.Arrays;
+
+import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.hasSize;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
 /**
@@ -45,60 +41,101 @@ import com.waldronprojects.bookstore.service.UserService;
  * 
  */
 
-@RunWith(SpringJUnit4ClassRunner.class)
+@RunWith(MockitoJUnitRunner.class)
 @ContextConfiguration(classes = {TestContext.class, WebAppContext.class})
 @WebAppConfiguration
 public class CustomerControllerTest {
 	
 	private MockMvc mockMvc;
-	
-	@Autowired
+	private UserDtoFactory userDtoFactory;
+
+	@InjectMocks
+	private CustomerController controller;
+
+	@Mock
 	private CustomerService customerService;
 	
-	@Autowired
+	@Mock
 	private UserService userService;
 	
-	@Autowired
-	//@InjectMocks
-	RoleDao roleDao;
+	@Mock
+	private RoleDao roleDao;
 	
-	 @Autowired
-	//@Resource
+	@Autowired
 	private WebApplicationContext webApplicationContext;
 	  
 	@Before
 	public void setUp() {
-		Mockito.reset(customerService);
-		mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
-								.build();
+		userDtoFactory = new UnitTestUserDtoFactory();
+		MockitoAnnotations.initMocks(this);
+
+		InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
+		viewResolver.setPrefix("/WEB-INF/view/");
+		viewResolver.setSuffix(".jsp");
+
+		mockMvc = MockMvcBuilders.standaloneSetup(controller)
+				.setViewResolvers(viewResolver)
+				.build();
 	}
 	
 	@Test
-	//@Transactional
-	public void listCustomersTest() throws Exception {
+	public void testListCustomers() throws Exception {
 		UserEntityFactory userEntityFactory = new UnitTestUserEntityFactory();
-		
 		User customer1 = userEntityFactory.createUser(UserType.CUSTOMER);
 		User customer2 = userEntityFactory.createUser(UserType.CUSTOMER);
-		
 		when(customerService.getCustomers())
 			.thenReturn(Arrays.asList((Customer)customer1, (Customer)customer2));
 		
-		//mockMvc.perform(get("/"))
 		mockMvc.perform(get("/employee/customer/list"))
 				.andExpect(status().isOk())
-				//.andExpect(view().name("/employee/customer/list"))
-				.andExpect(view().name("/employee/list-customers"))
-				//.andExpect(forwardedUrl("/WEB-INF/view/employee/list-customers.jsp"))
-				.andExpect(forwardedUrl("/WEB-INF/view//employee/list-customers.jsp"))
+				.andExpect(view().name("employee/list-customers"))
+				.andExpect(forwardedUrl("/WEB-INF/view/employee/list-customers.jsp"))
 				.andExpect(model().attribute("customers", hasSize(2)))
 				.andExpect(model().attribute("customers", hasItem(customer1)))
 				.andExpect(model().attribute("customers", hasItem(customer2)));
-		
-		//.andExpect(forwardedUrl("/WEB-INF/jsp/todo/list.jsp"))
-		
-		//verify(customerService, times(1)).findAll();
-		//verifyNoMoreInteractions(customerService);
+
+		Mockito.verify(customerService, Mockito.times(1)).getCustomers();
+		Mockito.verifyNoMoreInteractions(customerService);
 	}
 
+	@Test
+	public void testShowFormForUpdate() throws Exception{
+		UserDto userDto = userDtoFactory.createUserDto(UserType.CUSTOMER);
+		when(userService.getUser(userDto.getId())).thenReturn(userDto);
+
+		mockMvc.perform(get("/employee/customer/showFormForUpdate")
+						.param("userId",Long.toString(userDto.getId())))
+				.andExpect(status().isOk())
+				.andExpect(view().name("employee/customer-form"))
+				.andExpect(forwardedUrl("/WEB-INF/view/employee/customer-form.jsp"))
+				.andExpect(model().attribute("customer", userDto));
+
+		Mockito.verify(userService, Mockito.times(1)).getUser(userDto.getId());
+		Mockito.verifyNoMoreInteractions(userService);
+	}
+
+	@Test
+	public void testSaveCustomer() throws Exception{
+		UserDto userDto = userDtoFactory.createUserDto(UserType.CUSTOMER);
+		mockMvc.perform(get("/employee/customer/saveCustomer")
+						.flashAttr("customer",userDto))
+				.andExpect(status().isFound())
+				.andExpect(view().name("redirect:list"))
+				.andExpect(redirectedUrl("list"));
+		Mockito.verify(userService, Mockito.times(1)).saveUser(userDto);
+		Mockito.verifyNoMoreInteractions(userService);
+	}
+
+	@Test
+	public void testDelete() throws Exception{
+		Long id = 1l;
+		mockMvc.perform(get("/employee/customer/delete")
+						.param("userId", Long.toString(id)))
+				.andExpect(status().isFound())
+				.andExpect(view().name("redirect:list"))
+				.andExpect(redirectedUrl("list?userId="+id))
+				.andExpect(model().attribute("userId", id));
+		Mockito.verify(userService, Mockito.times(1)).deleteUser(id);
+		Mockito.verifyNoMoreInteractions(userService);
+	}
 }
