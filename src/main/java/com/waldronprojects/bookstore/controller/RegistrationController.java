@@ -38,7 +38,7 @@ public class RegistrationController {
 		model.addAttribute("customer", new CustomerDto());
 		return "customer/registration-form";
 	}
-	
+
 	@PostMapping("/processRegistrationForm")
 	public String processRegistrationForm(
 					@Valid @ModelAttribute("customer") CustomerDto customer,

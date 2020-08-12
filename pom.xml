@@ -119,6 +119,17 @@
 		    <version>6.0.7.Final</version>
 		</dependency>
 
+		<!-- Expression Language 3.0
+			 Version dependent on Hibernate Validator version
+			 (This allows junit to Validate calls to the controller.
+			 Spring expects that this dependency will be "provided" by runtime.
+			 However when testing runtime does not have it, so we need to include it in the pom file) -->
+		<dependency>
+			<groupId>org.glassfish</groupId>
+			<artifactId>javax.el</artifactId>
+			<version>3.0.1-b08</version>
+		</dependency>
+
         <!-- MySQL -->
         <dependency>
             <groupId>mysql</groupId>

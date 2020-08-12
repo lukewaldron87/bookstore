@@ -7,7 +7,6 @@ import com.waldronprojects.bookstore.dto.UserDto;
 import com.waldronprojects.bookstore.entity.User;
 import com.waldronprojects.bookstore.factory.*;
 import com.waldronprojects.bookstore.service.UserService;
-import com.waldronprojects.bookstore.validation.EmailValidator;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,7 +14,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
@@ -31,19 +29,16 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(MockitoJUnitRunner.class)
 @ContextConfiguration(classes =  {TestContext.class, WebAppContext.class})
 @WebAppConfiguration
-@Import(EmailValidator.class)
 public class RegistrationControllerTest {
 
     private MockMvc mockMvc;
+    private UserDtoFactory userDtoFactory;
 
     @InjectMocks
     private RegistrationController registrationController;
 
     @Mock
     private UserService userService;
-
-    /*@Mock
-    private BindingResult bindingResult;*/
 
     @Before
     public void setUp() throws Exception {
@@ -57,6 +52,8 @@ public class RegistrationControllerTest {
         mockMvc = MockMvcBuilders.standaloneSetup(registrationController)
                 .setViewResolvers(viewResolver)
                 .build();
+
+        userDtoFactory = new UnitTestUserDtoFactory();
     }
 
     @Test
@@ -71,7 +68,6 @@ public class RegistrationControllerTest {
 
     @Test
     public void testProcessRegistrationFormForNewUser() throws Exception {
-        UserDtoFactory userDtoFactory = new UnitTestUserDtoFactory();
         CustomerDto customer = (CustomerDto) userDtoFactory
                 .createUserDto(UserType.CUSTOMER);
         UserEntityFactory userEntityFactory = new UnitTestUserEntityFactory();
@@ -90,15 +86,11 @@ public class RegistrationControllerTest {
         verifyNoMoreInteractions(userService);
     }
 
-    /*@Test
+    @Test
     public void testProcessRegistrationFormBadBindingResult() throws Exception {
-        UserDtoFactory userDtoFactory = new UnitTestUserDtoFactory();
         CustomerDto customer = (CustomerDto) userDtoFactory
                 .createUserDto(UserType.CUSTOMER);
-
         customer.setEmail("bad email");
-        BindingResult bindingResult = mock(BindingResult.class);
-        when(bindingResult.hasErrors()).thenReturn(true);
 
         mockMvc.perform(post("/register/processRegistrationForm")
                 .flashAttr("customer", customer))
@@ -107,32 +99,9 @@ public class RegistrationControllerTest {
                 .andExpect(forwardedUrl("/WEB-INF/view/customer/registration-form.jsp"));
         verifyNoInteractions(userService);
     }
-    @Test
-    public void testProcessRegistrationInvalidEmail() throws Exception {
-
-        mockMvc.perform(post("/register/processRegistrationForm")
-                        .accept(MediaType.TEXT_HTML)
-                        .param("username", "username")
-                .param("username", "username")
-                .param("password", "password")
-                .param("matchingPassword", "password")
-                .param("firstName", "firstName")
-                .param("lastName", "lastName")
-                .param("email", "Bad Email")
-                .param("addressLine1", "addressLine1")
-                .param("city", "city")
-                .param("country", "country")
-                .param("postCode", "postCode")
-                .param("phoneNumber", "123456798"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("customer/registration-form"))
-                .andExpect(forwardedUrl("/WEB-INF/view/customer/registration-form.jsp"));
-        verifyNoInteractions(userService);
-    }*/
 
     @Test
     public void testProcessRegistrationFormForExistingUser() throws Exception {
-        UserDtoFactory userDtoFactory = new UnitTestUserDtoFactory();
         CustomerDto customer = (CustomerDto) userDtoFactory
                 .createUserDto(UserType.CUSTOMER);
 
