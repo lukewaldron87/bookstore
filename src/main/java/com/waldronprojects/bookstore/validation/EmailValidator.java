@@ -1,10 +1,9 @@
 package com.waldronprojects.bookstore.validation;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * taken from com.luv2code sprint tutorial
