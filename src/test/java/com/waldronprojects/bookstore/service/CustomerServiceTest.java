@@ -5,7 +5,7 @@ import static org.junit.Assert.assertEquals;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.waldronprojects.bookstore.factory.UserType;
+import com.waldronprojects.bookstore.entity.factory.UserType;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -15,8 +15,8 @@ import org.mockito.junit.MockitoJUnitRunner;
 import com.waldronprojects.bookstore.dao.CustomerDao;
 import com.waldronprojects.bookstore.entity.Customer;
 import com.waldronprojects.bookstore.entity.User;
-import com.waldronprojects.bookstore.factory.UnitTestUserEntityFactory;
-import com.waldronprojects.bookstore.factory.UserEntityFactory;
+import com.waldronprojects.bookstore.entity.factory.UnitTestUserEntityFactory;
+import com.waldronprojects.bookstore.entity.factory.UserEntityFactory;
 
 //@RunWith(SpringRunner.class)
 //@WebAppConfiguration

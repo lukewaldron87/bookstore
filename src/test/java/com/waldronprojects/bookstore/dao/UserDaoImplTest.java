@@ -3,7 +3,7 @@ package com.waldronprojects.bookstore.dao;
 import java.util.Collection;
 
 import com.waldronprojects.bookstore.entity.Customer;
-import com.waldronprojects.bookstore.factory.UserType;
+import com.waldronprojects.bookstore.entity.factory.UserType;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,8 +18,8 @@ import com.waldronprojects.bookstore.config.MvcConfig;
 import com.waldronprojects.bookstore.entity.Employee;
 import com.waldronprojects.bookstore.entity.Role;
 import com.waldronprojects.bookstore.entity.User;
-import com.waldronprojects.bookstore.factory.UnitTestUserEntityFactory;
-import com.waldronprojects.bookstore.factory.UserEntityFactory;
+import com.waldronprojects.bookstore.entity.factory.UnitTestUserEntityFactory;
+import com.waldronprojects.bookstore.entity.factory.UserEntityFactory;
 
 import static org.junit.Assert.*;
 

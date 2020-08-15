@@ -2,9 +2,9 @@ package com.waldronprojects.bookstore.service;
 
 import com.waldronprojects.bookstore.dao.ProductDao;
 import com.waldronprojects.bookstore.entity.Product;
-import com.waldronprojects.bookstore.factory.ProductEntityFactory;
-import com.waldronprojects.bookstore.factory.ProductType;
-import com.waldronprojects.bookstore.factory.UnitTestProductEntityFactory;
+import com.waldronprojects.bookstore.entity.factory.ProductEntityFactory;
+import com.waldronprojects.bookstore.entity.factory.ProductType;
+import com.waldronprojects.bookstore.entity.factory.UnitTestProductEntityFactory;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
