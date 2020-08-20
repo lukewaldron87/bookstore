@@ -18,8 +18,7 @@ public class UnitTestProductEntityFactory extends ProductEntityFactory {
 
     @Override
     public Product createProduct(ProductType productType) {
-        Product product = FACTORY_MAP.get(productType);
-        return product;
+        return FACTORY_MAP.get(productType);
     }
 
     private static Product createGenericProduct() {

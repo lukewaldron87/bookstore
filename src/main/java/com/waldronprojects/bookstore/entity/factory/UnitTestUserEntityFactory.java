@@ -5,87 +5,76 @@ import com.waldronprojects.bookstore.entity.Employee;
 import com.waldronprojects.bookstore.entity.Role;
 import com.waldronprojects.bookstore.entity.User;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.*;
 
 public class UnitTestUserEntityFactory extends UserEntityFactory {
 
+	private static final Map<UserType, User> FACTORY_MAP;
+
+	static{
+		final HashMap<UserType, User> factoryMap = new HashMap<>();
+		factoryMap.put(UserType.CUSTOMER, buildCustomer());
+		factoryMap.put(UserType.EMPLOYEE, createRegularEmployeeObject());
+		factoryMap.put(UserType.ADMIN, createAdminEmployeeObject());
+		FACTORY_MAP = Collections.unmodifiableMap(factoryMap);
+	}
+
 	@Override
 	public User createUser(UserType userType) {
-
-		User user = null;
-		
-		switch (userType) {
-			case CUSTOMER:
-				user = buildCustomer(0);
-				break;
-			case EMPLOYEE:
-				user = createRegularEmployeeObject(0);
-				break;
-			case ADMIN:
-				user =  createAdminEmployeeObject(0);
-				break;
-				default:
-					throw new IllegalArgumentException("Argument " + userType + " strange supported");
-		}
-
-		return user;
+		return FACTORY_MAP.get(userType);
 	}
 	
-	private Customer buildCustomer(long id) {
+	private static Customer buildCustomer() {
 		Customer customer = new Customer();
-		//customer.setId(id);
-		customer.setUsername("username"+id);
-		customer.setPassword("password"+id);
-		customer.setFirstName("firstName"+id);
-		customer.setLastName("lastName"+id);
-		customer.setEmail(id+"@email.com");
-		customer.setAddressLine1("addressLine1"+id);
-		customer.setAddressLine2("addressLine2"+id);
-		customer.setCity("city"+id);
-		customer.setCountry("country"+id);
-		customer.setPostCode("postCode"+id);
-		customer.setPhoneNumber(1234+(int)id);
+		customer.setUsername("username0");
+		customer.setPassword("password0");
+		customer.setFirstName("firstName0");
+		customer.setLastName("lastName0");
+		customer.setEmail("0@email.com");
+		customer.setAddressLine1("addressLine10");
+		customer.setAddressLine2("addressLine20");
+		customer.setCity("city0");
+		customer.setCountry("country0");
+		customer.setPostCode("postCode0");
+		customer.setPhoneNumber(12340);
 		Collection<Role> roleCollection = createCustomerRoleCollection();
 		customer.setRoles(roleCollection);
 		return customer;
 	}
 	
-	private Collection<Role> createCustomerRoleCollection() {
+	private static Collection<Role> createCustomerRoleCollection() {
 		Collection<Role> roleCollection = new ArrayList<Role>();
-		//roleCollection.add(roleDao.findRoleByName("ROLE_CUSTOMER"));
 		roleCollection.add(new Role("ROLE_CUSTOMER"));
 		return roleCollection;
 	}
 	
-	private Employee createRegularEmployeeObject(long id) {
-		Employee employee = createEmployeeObject(id);
+	private static Employee createRegularEmployeeObject() {
+		Employee employee = createEmployeeObject();
 		Collection<Role> roleCollection = createEmployeeRoleCollection(false);
 		employee.setRoles(roleCollection);
 		return employee;
 	}
 	
-	private Employee createAdminEmployeeObject(long id) {
-		Employee employee = createEmployeeObject(id);
+	private static Employee createAdminEmployeeObject() {
+		Employee employee = createEmployeeObject();
 		Collection<Role> roleCollection = createEmployeeRoleCollection(true);
 		employee.setRoles(roleCollection);
 		return employee;
 	}
 	
-	private Employee createEmployeeObject(long id) {
+	private static Employee createEmployeeObject() {
 		Employee employee = new Employee();
-		//employee.setId(id);
-		employee.setUsername("username"+id);
-		employee.setPassword("password"+id);
-		employee.setFirstName("firstName"+id);
-		employee.setLastName("lastName"+id);
-		employee.setEmail(id+"@email.com");
-		employee.setDepartment("department"+id);
-		employee.setTitle("title"+id);
+		employee.setUsername("username0");
+		employee.setPassword("password0");
+		employee.setFirstName("firstName0");
+		employee.setLastName("lastName0");
+		employee.setEmail("0@email.com");
+		employee.setDepartment("department0");
+		employee.setTitle("title0");
 		return employee;
 	}
 	
-	private Collection<Role> createEmployeeRoleCollection(boolean isAdmin) {
+	private static Collection<Role> createEmployeeRoleCollection(boolean isAdmin) {
 		Collection<Role> roleCollection = new ArrayList<Role>();
 		roleCollection.add(new Role("ROLE_EMPLOYEE"));
 		if(isAdmin) {
