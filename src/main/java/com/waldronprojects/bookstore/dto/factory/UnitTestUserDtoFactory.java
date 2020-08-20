@@ -1,98 +1,87 @@
 package com.waldronprojects.bookstore.dto.factory;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
 import com.waldronprojects.bookstore.dto.CustomerDto;
 import com.waldronprojects.bookstore.dto.EmployeeDto;
 import com.waldronprojects.bookstore.dto.UserDto;
 import com.waldronprojects.bookstore.entity.Role;
 import com.waldronprojects.bookstore.entity.factory.UserType;
 
+import java.util.*;
+
 public class UnitTestUserDtoFactory extends UserDtoFactory {
+
+	private static final Map<UserType, UserDto> FACTORY_MAP;
+
+	static {
+		final HashMap<UserType, UserDto> factoryMap = new HashMap<>();
+		factoryMap.put(UserType.CUSTOMER, buildCustomer());
+		factoryMap.put(UserType.EMPLOYEE, createRegularEmployeeObject());
+		factoryMap.put(UserType.ADMIN, createAdminEmployeeObject());
+		FACTORY_MAP = Collections.unmodifiableMap(factoryMap);
+	}
 
 	@Override
 	public UserDto createUserDto(UserType userType) {
-
-		UserDto user = null;
-
-		switch (userType) {
-			case CUSTOMER: 
-				user = buildCustomer(0);
-				break;
-			case EMPLOYEE:
-				user = createRegularEmployeeObject(0);
-				break;
-			case ADMIN:
-				user =  createAdminEmployeeObject(0);
-				break;
-			default:
-				throw new IllegalArgumentException("Argument " + userType + " strange supported");
-		}
-
-		return user;	
+		return FACTORY_MAP.get(userType);
 	}
 
-	private UserDto buildCustomer(long id) {
+	private static UserDto buildCustomer() {
 		CustomerDto customerDto = new CustomerDto();
-		customerDto.setId(id);
-		customerDto.setUsername("username"+id);
-		customerDto.setPassword("password"+id);
-		customerDto.setMatchingPassword("password"+id);
-		customerDto.setFirstName("firstName"+id);
-		customerDto.setLastName("lastName"+id);
-		customerDto.setEmail(id+"@email.com");
-		customerDto.setAddressLine1("addressLine1"+id);
-		customerDto.setAddressLine2("addressLine2"+id);
-		customerDto.setCity("city"+id);
-		customerDto.setCountry("country"+id);
-		customerDto.setPostCode("postCode"+id);
-		customerDto.setPhoneNumber(1234+(int)id);
+		customerDto.setId(0L);
+		customerDto.setUsername("username0");
+		customerDto.setPassword("password0");
+		customerDto.setMatchingPassword("password0");
+		customerDto.setFirstName("firstName0");
+		customerDto.setLastName("lastName0");
+		customerDto.setEmail("0@email.com");
+		customerDto.setAddressLine1("addressLine10");
+		customerDto.setAddressLine2("addressLine20");
+		customerDto.setCity("city0");
+		customerDto.setCountry("country0");
+		customerDto.setPostCode("postCode0");
+		customerDto.setPhoneNumber(12340);
 		Collection<Role> roleCollection = createCustomerRoleCollection();
 		customerDto.setRoles(roleCollection);
 		return customerDto;
 	}
 
-	private Collection<Role> createCustomerRoleCollection() {
+	private static Collection<Role> createCustomerRoleCollection() {
 		Collection<Role> roleCollection = new ArrayList<Role>();
-		//roleCollection.add(roleDao.findRoleByName("ROLE_CUSTOMER"));
 		roleCollection.add(new Role("ROLE_CUSTOMER"));
 		return roleCollection;
 	}
 
-	private UserDto createRegularEmployeeObject(int id) {
-		EmployeeDto employeeDto = createEmployeeObject(id);
+	private static UserDto createRegularEmployeeObject() {
+		EmployeeDto employeeDto = createEmployeeObject();
 		Collection<Role> roleCollection = createEmployeeRoleCollection(false);
 		employeeDto.setRoles(roleCollection);
 		employeeDto.setIsAdmin(false);
 		return employeeDto;
 	}
 
-	private UserDto createAdminEmployeeObject(int id) {
-		EmployeeDto employeeDto = createEmployeeObject(id);
+	private static UserDto createAdminEmployeeObject() {
+		EmployeeDto employeeDto = createEmployeeObject();
 		Collection<Role> roleCollection = createEmployeeRoleCollection(true);
 		employeeDto.setRoles(roleCollection);
 		employeeDto.setIsAdmin(true);
 		return employeeDto;
 	}
 	
-	private EmployeeDto createEmployeeObject(long id) {
+	private static EmployeeDto createEmployeeObject() {
 		EmployeeDto employeeDto = new EmployeeDto();
-		employeeDto.setId(id);
-		employeeDto.setUsername("username"+id);
-		employeeDto.setPassword("password"+id);
-		employeeDto.setMatchingPassword("password"+id);
-		employeeDto.setUsername("username"+id);
-		employeeDto.setPassword("password"+id);
-		employeeDto.setFirstName("firstName"+id);
-		employeeDto.setLastName("lastName"+id);
-		employeeDto.setEmail(id+"@email.com");
-		employeeDto.setDepartment("department"+id);
-		employeeDto.setTitle("title"+id);
+		employeeDto.setId(0L);
+		employeeDto.setUsername("username0");
+		employeeDto.setPassword("password0");
+		employeeDto.setMatchingPassword("password0");
+		employeeDto.setFirstName("firstName0");
+		employeeDto.setLastName("lastName0");
+		employeeDto.setEmail("0@email.com");
+		employeeDto.setDepartment("department0");
+		employeeDto.setTitle("title0");
 		return employeeDto;
 	}
 	
-	private Collection<Role> createEmployeeRoleCollection(boolean isAdmin) {
+	private static Collection<Role> createEmployeeRoleCollection(boolean isAdmin) {
 		Collection<Role> roleCollection = new ArrayList<Role>();
 		roleCollection.add(new Role("ROLE_EMPLOYEE"));
 		if(isAdmin) {
