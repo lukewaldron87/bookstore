@@ -1,7 +1,7 @@
 package com.waldronprojects.bookstore.validation;
 
 import com.waldronprojects.bookstore.dto.UserDto;
-import com.waldronprojects.bookstore.dto.factory.UnitTestUserDtoFactory;
+import com.waldronprojects.bookstore.util.UnitTestUserDtoFactory;
 import com.waldronprojects.bookstore.dto.factory.UserDtoFactory;
 import com.waldronprojects.bookstore.entity.factory.UserType;
 import org.hibernate.annotations.common.annotationfactory.AnnotationDescriptor;

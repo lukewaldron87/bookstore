@@ -4,6 +4,7 @@ import com.waldronprojects.bookstore.entity.Customer;
 import com.waldronprojects.bookstore.entity.Employee;
 import com.waldronprojects.bookstore.entity.Role;
 import com.waldronprojects.bookstore.entity.User;
+import com.waldronprojects.bookstore.util.UnitTestUserEntityFactory;
 import org.junit.Before;
 import org.junit.Test;
 

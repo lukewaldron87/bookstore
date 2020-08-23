@@ -15,7 +15,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import com.waldronprojects.bookstore.dao.CustomerDao;
 import com.waldronprojects.bookstore.entity.Customer;
 import com.waldronprojects.bookstore.entity.User;
-import com.waldronprojects.bookstore.entity.factory.UnitTestUserEntityFactory;
+import com.waldronprojects.bookstore.util.UnitTestUserEntityFactory;
 import com.waldronprojects.bookstore.entity.factory.UserEntityFactory;
 
 //@RunWith(SpringRunner.class)

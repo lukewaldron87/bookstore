@@ -1,6 +1,8 @@
-package com.waldronprojects.bookstore.entity.factory;
+package com.waldronprojects.bookstore.util;
 
 import com.waldronprojects.bookstore.entity.Product;
+import com.waldronprojects.bookstore.entity.factory.ProductEntityFactory;
+import com.waldronprojects.bookstore.entity.factory.ProductType;
 
 import java.util.Collections;
 import java.util.HashMap;

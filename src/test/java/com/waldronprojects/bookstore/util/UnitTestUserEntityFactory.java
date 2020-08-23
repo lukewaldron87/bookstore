@@ -1,9 +1,11 @@
-package com.waldronprojects.bookstore.entity.factory;
+package com.waldronprojects.bookstore.util;
 
 import com.waldronprojects.bookstore.entity.Customer;
 import com.waldronprojects.bookstore.entity.Employee;
 import com.waldronprojects.bookstore.entity.Role;
 import com.waldronprojects.bookstore.entity.User;
+import com.waldronprojects.bookstore.entity.factory.UserEntityFactory;
+import com.waldronprojects.bookstore.entity.factory.UserType;
 
 import java.util.*;
 

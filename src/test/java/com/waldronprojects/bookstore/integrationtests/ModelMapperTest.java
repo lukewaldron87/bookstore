@@ -2,9 +2,9 @@ package com.waldronprojects.bookstore.integrationtests;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import com.waldronprojects.bookstore.dto.factory.UnitTestUserDtoFactory;
+import com.waldronprojects.bookstore.util.UnitTestUserDtoFactory;
 import com.waldronprojects.bookstore.dto.factory.UserDtoFactory;
-import com.waldronprojects.bookstore.entity.factory.UnitTestUserEntityFactory;
+import com.waldronprojects.bookstore.util.UnitTestUserEntityFactory;
 import com.waldronprojects.bookstore.entity.factory.UserEntityFactory;
 import com.waldronprojects.bookstore.entity.factory.UserType;
 import org.junit.jupiter.api.Test;

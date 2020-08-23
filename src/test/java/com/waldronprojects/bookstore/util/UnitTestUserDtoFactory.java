@@ -1,8 +1,9 @@
-package com.waldronprojects.bookstore.dto.factory;
+package com.waldronprojects.bookstore.util;
 
 import com.waldronprojects.bookstore.dto.CustomerDto;
 import com.waldronprojects.bookstore.dto.EmployeeDto;
 import com.waldronprojects.bookstore.dto.UserDto;
+import com.waldronprojects.bookstore.dto.factory.UserDtoFactory;
 import com.waldronprojects.bookstore.entity.Role;
 import com.waldronprojects.bookstore.entity.factory.UserType;
 

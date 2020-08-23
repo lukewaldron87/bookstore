@@ -18,7 +18,7 @@ import com.waldronprojects.bookstore.config.MvcConfig;
 import com.waldronprojects.bookstore.entity.Employee;
 import com.waldronprojects.bookstore.entity.Role;
 import com.waldronprojects.bookstore.entity.User;
-import com.waldronprojects.bookstore.entity.factory.UnitTestUserEntityFactory;
+import com.waldronprojects.bookstore.util.UnitTestUserEntityFactory;
 import com.waldronprojects.bookstore.entity.factory.UserEntityFactory;
 
 import static org.junit.Assert.*;

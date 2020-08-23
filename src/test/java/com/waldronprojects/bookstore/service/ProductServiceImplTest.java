@@ -4,7 +4,7 @@ import com.waldronprojects.bookstore.dao.ProductDao;
 import com.waldronprojects.bookstore.entity.Product;
 import com.waldronprojects.bookstore.entity.factory.ProductEntityFactory;
 import com.waldronprojects.bookstore.entity.factory.ProductType;
-import com.waldronprojects.bookstore.entity.factory.UnitTestProductEntityFactory;
+import com.waldronprojects.bookstore.util.UnitTestProductEntityFactory;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;

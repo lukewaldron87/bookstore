@@ -1,6 +1,7 @@
 package com.waldronprojects.bookstore.entity.factory;
 
 import com.waldronprojects.bookstore.entity.Product;
+import com.waldronprojects.bookstore.util.UnitTestProductEntityFactory;
 import org.junit.Before;
 import org.junit.Test;
 

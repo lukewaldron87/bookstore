@@ -5,6 +5,7 @@ import com.waldronprojects.bookstore.dto.EmployeeDto;
 import com.waldronprojects.bookstore.dto.UserDto;
 import com.waldronprojects.bookstore.entity.Role;
 import com.waldronprojects.bookstore.entity.factory.UserType;
+import com.waldronprojects.bookstore.util.UnitTestUserDtoFactory;
 import org.junit.Before;
 import org.junit.Test;
 
