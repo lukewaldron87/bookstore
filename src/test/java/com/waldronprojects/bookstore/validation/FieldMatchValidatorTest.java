@@ -67,7 +67,7 @@ public class FieldMatchValidatorTest {
 
     @Test
     public void testIsValid() {
-        boolean stringsMatch = validator.isValid(userDto, null);
+        boolean stringsMatch = validator.isValid(userDto, context);
         assertTrue(stringsMatch);
     }
 
