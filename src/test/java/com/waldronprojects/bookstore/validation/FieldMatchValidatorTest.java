@@ -28,8 +28,8 @@ public class FieldMatchValidatorTest {
         UserDtoFactory factory = new UnitTestUserDtoFactory();
         userDto = factory.createUserDto(UserType.CUSTOMER);
         FieldMatch fieldMatch = createAnnotation("password",
-                                                    "matchingPassword",
-                                                    "The password fields must match");
+                                                "matchingPassword",
+                                                "The password fields must match");
         validator = createFieldMatchValidator(fieldMatch);
         mockConstraintValidatorContext();
     }

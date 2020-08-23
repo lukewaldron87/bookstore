@@ -8,9 +8,9 @@ import java.util.Map;
 
 public class UnitTestProductEntityFactory extends ProductEntityFactory {
 
-    private static final Map<ProductType, Product> FACTORY_MAP;
+    private final Map<ProductType, Product> FACTORY_MAP;
 
-    static {
+    public UnitTestProductEntityFactory() {
         final HashMap<ProductType, Product> factoryMap = new HashMap<>();
         factoryMap.put(ProductType.GENERIC, createGenericProduct());
         FACTORY_MAP = Collections.unmodifiableMap(factoryMap);
@@ -21,7 +21,7 @@ public class UnitTestProductEntityFactory extends ProductEntityFactory {
         return FACTORY_MAP.get(productType);
     }
 
-    private static Product createGenericProduct() {
+    private Product createGenericProduct() {
         Product product = new Product();
         product.setId(1);
         product.setProductName("genericProduct");

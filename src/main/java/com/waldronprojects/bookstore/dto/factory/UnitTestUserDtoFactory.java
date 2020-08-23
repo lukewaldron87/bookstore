@@ -10,9 +10,9 @@ import java.util.*;
 
 public class UnitTestUserDtoFactory extends UserDtoFactory {
 
-	private static final Map<UserType, UserDto> FACTORY_MAP;
+	private final Map<UserType, UserDto> FACTORY_MAP;
 
-	static {
+	public UnitTestUserDtoFactory(){
 		final HashMap<UserType, UserDto> factoryMap = new HashMap<>();
 		factoryMap.put(UserType.CUSTOMER, buildCustomer());
 		factoryMap.put(UserType.EMPLOYEE, createRegularEmployeeObject());
@@ -25,7 +25,7 @@ public class UnitTestUserDtoFactory extends UserDtoFactory {
 		return FACTORY_MAP.get(userType);
 	}
 
-	private static UserDto buildCustomer() {
+	private UserDto buildCustomer() {
 		CustomerDto customerDto = new CustomerDto();
 		customerDto.setId(0L);
 		customerDto.setUsername("username0");
@@ -45,13 +45,13 @@ public class UnitTestUserDtoFactory extends UserDtoFactory {
 		return customerDto;
 	}
 
-	private static Collection<Role> createCustomerRoleCollection() {
+	private Collection<Role> createCustomerRoleCollection() {
 		Collection<Role> roleCollection = new ArrayList<Role>();
 		roleCollection.add(new Role("ROLE_CUSTOMER"));
 		return roleCollection;
 	}
 
-	private static UserDto createRegularEmployeeObject() {
+	private UserDto createRegularEmployeeObject() {
 		EmployeeDto employeeDto = createEmployeeObject();
 		Collection<Role> roleCollection = createEmployeeRoleCollection(false);
 		employeeDto.setRoles(roleCollection);
@@ -59,7 +59,7 @@ public class UnitTestUserDtoFactory extends UserDtoFactory {
 		return employeeDto;
 	}
 
-	private static UserDto createAdminEmployeeObject() {
+	private UserDto createAdminEmployeeObject() {
 		EmployeeDto employeeDto = createEmployeeObject();
 		Collection<Role> roleCollection = createEmployeeRoleCollection(true);
 		employeeDto.setRoles(roleCollection);
@@ -67,7 +67,7 @@ public class UnitTestUserDtoFactory extends UserDtoFactory {
 		return employeeDto;
 	}
 	
-	private static EmployeeDto createEmployeeObject() {
+	private EmployeeDto createEmployeeObject() {
 		EmployeeDto employeeDto = new EmployeeDto();
 		employeeDto.setId(0L);
 		employeeDto.setUsername("username0");
@@ -81,7 +81,7 @@ public class UnitTestUserDtoFactory extends UserDtoFactory {
 		return employeeDto;
 	}
 	
-	private static Collection<Role> createEmployeeRoleCollection(boolean isAdmin) {
+	private Collection<Role> createEmployeeRoleCollection(boolean isAdmin) {
 		Collection<Role> roleCollection = new ArrayList<Role>();
 		roleCollection.add(new Role("ROLE_EMPLOYEE"));
 		if(isAdmin) {

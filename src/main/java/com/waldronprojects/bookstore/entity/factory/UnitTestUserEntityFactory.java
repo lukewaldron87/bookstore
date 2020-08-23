@@ -9,9 +9,9 @@ import java.util.*;
 
 public class UnitTestUserEntityFactory extends UserEntityFactory {
 
-	private static final Map<UserType, User> FACTORY_MAP;
+	private final Map<UserType, User> FACTORY_MAP;
 
-	static{
+	public UnitTestUserEntityFactory() {
 		final HashMap<UserType, User> factoryMap = new HashMap<>();
 		factoryMap.put(UserType.CUSTOMER, buildCustomer());
 		factoryMap.put(UserType.EMPLOYEE, createRegularEmployeeObject());
@@ -24,7 +24,7 @@ public class UnitTestUserEntityFactory extends UserEntityFactory {
 		return FACTORY_MAP.get(userType);
 	}
 	
-	private static Customer buildCustomer() {
+	private Customer buildCustomer() {
 		Customer customer = new Customer();
 		customer.setUsername("username0");
 		customer.setPassword("password0");
@@ -42,27 +42,27 @@ public class UnitTestUserEntityFactory extends UserEntityFactory {
 		return customer;
 	}
 	
-	private static Collection<Role> createCustomerRoleCollection() {
+	private Collection<Role> createCustomerRoleCollection() {
 		Collection<Role> roleCollection = new ArrayList<Role>();
 		roleCollection.add(new Role("ROLE_CUSTOMER"));
 		return roleCollection;
 	}
 	
-	private static Employee createRegularEmployeeObject() {
+	private Employee createRegularEmployeeObject() {
 		Employee employee = createEmployeeObject();
 		Collection<Role> roleCollection = createEmployeeRoleCollection(false);
 		employee.setRoles(roleCollection);
 		return employee;
 	}
 	
-	private static Employee createAdminEmployeeObject() {
+	private Employee createAdminEmployeeObject() {
 		Employee employee = createEmployeeObject();
 		Collection<Role> roleCollection = createEmployeeRoleCollection(true);
 		employee.setRoles(roleCollection);
 		return employee;
 	}
 	
-	private static Employee createEmployeeObject() {
+	private Employee createEmployeeObject() {
 		Employee employee = new Employee();
 		employee.setUsername("username0");
 		employee.setPassword("password0");
@@ -74,7 +74,7 @@ public class UnitTestUserEntityFactory extends UserEntityFactory {
 		return employee;
 	}
 	
-	private static Collection<Role> createEmployeeRoleCollection(boolean isAdmin) {
+	private Collection<Role> createEmployeeRoleCollection(boolean isAdmin) {
 		Collection<Role> roleCollection = new ArrayList<Role>();
 		roleCollection.add(new Role("ROLE_EMPLOYEE"));
 		if(isAdmin) {
