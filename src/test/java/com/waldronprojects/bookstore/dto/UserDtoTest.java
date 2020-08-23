@@ -1,10 +1,10 @@
 package com.waldronprojects.bookstore.dto;
 
 import com.waldronprojects.bookstore.entity.Role;
+import com.waldronprojects.bookstore.util.FieldModifier;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -12,11 +12,13 @@ import static org.junit.Assert.assertEquals;
 
 public class UserDtoTest {
 
-    UserDto userDto;
+    private UserDto userDto;
+    private FieldModifier fieldModifier;
 
     @Before
     public void setUp(){
         userDto = new UserDto();
+        fieldModifier = new FieldModifier(userDto);
     }
 
     @Test
@@ -31,11 +33,12 @@ public class UserDtoTest {
                             firstName,
                             lastName,
                             email);
-        assertEquals(username, getFieldValue("username"));
-        assertEquals(password, getFieldValue("password"));
-        assertEquals(firstName, getFieldValue("firstName"));
-        assertEquals(lastName, getFieldValue("lastName"));
-        assertEquals(email, getFieldValue("email"));
+        fieldModifier = new FieldModifier(userDto);
+        assertEquals(username, fieldModifier.getFieldValue("username"));
+        assertEquals(password, fieldModifier.getFieldValue("password"));
+        assertEquals(firstName, fieldModifier.getFieldValue("firstName"));
+        assertEquals(lastName, fieldModifier.getFieldValue("lastName"));
+        assertEquals(email, fieldModifier.getFieldValue("email"));
     }
 
     @Test
@@ -52,18 +55,19 @@ public class UserDtoTest {
                               lastName,
                               email,
                               roleCollection);
-        assertEquals(username, getFieldValue("username"));
-        assertEquals(password, getFieldValue("password"));
-        assertEquals(firstName, getFieldValue("firstName"));
-        assertEquals(lastName, getFieldValue("lastName"));
-        assertEquals(email, getFieldValue("email"));
-        assertEquals(roleCollection, getFieldValue("roles"));
+        fieldModifier = new FieldModifier(userDto);
+        assertEquals(username, fieldModifier.getFieldValue("username"));
+        assertEquals(password, fieldModifier.getFieldValue("password"));
+        assertEquals(firstName, fieldModifier.getFieldValue("firstName"));
+        assertEquals(lastName, fieldModifier.getFieldValue("lastName"));
+        assertEquals(email, fieldModifier.getFieldValue("email"));
+        assertEquals(roleCollection, fieldModifier.getFieldValue("roles"));
     }
 
     @Test
     public void testGetId_getsValue() throws NoSuchFieldException, IllegalAccessException {
         Long id = 1L;
-        setField("id", id);
+        fieldModifier.setField("id", id);
         Long returnedId = userDto.getId();
         assertEquals(id, returnedId);
     }
@@ -73,7 +77,7 @@ public class UserDtoTest {
         Long id = 1L;
         String fieldName = "id";
         userDto.setId(id);
-        Object fieldValue = getFieldValue(fieldName);
+        Object fieldValue = fieldModifier.getFieldValue(fieldName);
         assertEquals(id, fieldValue);
     }
 
@@ -81,7 +85,7 @@ public class UserDtoTest {
     public void testGetUsername_getsValue() throws NoSuchFieldException, IllegalAccessException {
         String userName = "userName";
         String fieldName = "username";
-        setField(fieldName, userName);
+        fieldModifier.setField(fieldName, userName);
         String returnedUserName = userDto.getUsername();
         assertEquals(userName, returnedUserName);
     }
@@ -91,7 +95,7 @@ public class UserDtoTest {
         String userName = "userName";
         String fieldName = "username";
         userDto.setUsername(userName);
-        Object fieldValue = getFieldValue(fieldName);
+        Object fieldValue = fieldModifier.getFieldValue(fieldName);
         assertEquals(userName, fieldValue);
     }
 
@@ -99,7 +103,7 @@ public class UserDtoTest {
     public void testGetPassword_getsValue() throws NoSuchFieldException, IllegalAccessException {
         String fieldName = "password";
         String fieldValue = "password";
-        setField(fieldName, fieldValue);
+        fieldModifier.setField(fieldName, fieldValue);
         String returnedValue = userDto.getPassword();
         assertEquals(fieldValue, returnedValue);
     }
@@ -109,7 +113,7 @@ public class UserDtoTest {
         String fieldValue = "password";
         String fieldName = "password";
         userDto.setPassword(fieldValue);
-        Object returnedFieldValue = getFieldValue(fieldName);
+        Object returnedFieldValue = fieldModifier.getFieldValue(fieldName);
         assertEquals(fieldValue, returnedFieldValue);
 
     }
@@ -118,7 +122,7 @@ public class UserDtoTest {
     public void testGetMatchingPassword_getsValue() throws NoSuchFieldException, IllegalAccessException {
         String fieldName = "matchingPassword";
         String fieldValue = "password";
-        setField(fieldName, fieldValue);
+        fieldModifier.setField(fieldName, fieldValue);
         String returnedValue = userDto.getMatchingPassword();
         assertEquals(fieldValue, returnedValue);
     }
@@ -128,7 +132,7 @@ public class UserDtoTest {
         String fieldName = "matchingPassword";
         String fieldValue = "password";
         userDto.setMatchingPassword(fieldValue);
-        Object returnedFieldValue = getFieldValue(fieldName);
+        Object returnedFieldValue = fieldModifier.getFieldValue(fieldName);
         assertEquals(fieldValue, returnedFieldValue);
     }
 
@@ -136,7 +140,7 @@ public class UserDtoTest {
     public void testGetFirstName_getsValue() throws NoSuchFieldException, IllegalAccessException {
         String fieldName = "firstName";
         String fieldValue = "firstName";
-        setField(fieldName, fieldValue);
+        fieldModifier.setField(fieldName, fieldValue);
         String returnedValue = userDto.getFirstName();
         assertEquals(fieldValue, returnedValue);
     }
@@ -146,7 +150,7 @@ public class UserDtoTest {
         String fieldName = "firstName";
         String fieldValue = "firstName";
         userDto.setFirstName(fieldValue);
-        Object returnedFieldValue = getFieldValue(fieldName);
+        Object returnedFieldValue = fieldModifier.getFieldValue(fieldName);
         assertEquals(fieldValue, returnedFieldValue);
     }
 
@@ -154,7 +158,7 @@ public class UserDtoTest {
     public void testGetLastName_getsValue() throws NoSuchFieldException, IllegalAccessException {
         String fieldName = "lastName";
         String fieldValue = "lastName";
-        setField(fieldName, fieldValue);
+        fieldModifier.setField(fieldName, fieldValue);
         String returnedValue = userDto.getLastName();
         assertEquals(fieldValue, returnedValue);
     }
@@ -164,7 +168,7 @@ public class UserDtoTest {
         String fieldName = "lastName";
         String fieldValue = "lastName";
         userDto.setLastName(fieldValue);
-        Object returnedFieldValue = getFieldValue(fieldName);
+        Object returnedFieldValue = fieldModifier.getFieldValue(fieldName);
         assertEquals(fieldValue, returnedFieldValue);
     }
 
@@ -172,7 +176,7 @@ public class UserDtoTest {
     public void testGetEmail_getsValue() throws NoSuchFieldException, IllegalAccessException {
         String fieldName = "email";
         String fieldValue = "email";
-        setField(fieldName, fieldValue);
+        fieldModifier.setField(fieldName, fieldValue);
         String returnedValue = userDto.getEmail();
         assertEquals(fieldValue, returnedValue);
     }
@@ -182,7 +186,7 @@ public class UserDtoTest {
         String fieldName = "email";
         String fieldValue = "email";
         userDto.setEmail(fieldValue);
-        Object returnedFieldValue = getFieldValue(fieldName);
+        Object returnedFieldValue = fieldModifier.getFieldValue(fieldName);
         assertEquals(fieldValue, returnedFieldValue);
     }
 
@@ -190,7 +194,7 @@ public class UserDtoTest {
     public void testGetRoles_getsValue() throws NoSuchFieldException, IllegalAccessException {
         String fieldName = "roles";
         Collection<Role> roleCollection = createAdminEmployeeRoleCollection();
-        setField(fieldName, (Object) roleCollection);
+        fieldModifier.setField(fieldName, (Object) roleCollection);
         Collection<Role> returnedRoleCollection = userDto.getRoles();
         assertEquals(roleCollection, returnedRoleCollection);
     }
@@ -200,7 +204,7 @@ public class UserDtoTest {
         String fieldName = "roles";
         Collection<Role> roleCollection = createAdminEmployeeRoleCollection();
         userDto.setRoles(roleCollection);
-        Object returnedRoleCollection = getFieldValue(fieldName);
+        Object returnedRoleCollection = fieldModifier.getFieldValue(fieldName);
         assertEquals(roleCollection, returnedRoleCollection);
     }
 
@@ -224,31 +228,15 @@ public class UserDtoTest {
             role.setId(idIndex);
             idIndex++;
         }
-        setField("username", username);
-        setField("password", password);
-        setField("firstName", firstName);
-        setField("lastName", lastName);
-        setField("email", email);
-        setField("roles", roleCollection);
+        fieldModifier.setField("username", username);
+        fieldModifier.setField("password", password);
+        fieldModifier.setField("firstName", firstName);
+        fieldModifier.setField("lastName", lastName);
+        fieldModifier.setField("email", email);
+        fieldModifier.setField("roles", roleCollection);
         String expected = "User{id=null, username='username', password='*********', firstName='firstName', lastName='lastName', email='email', roles=[Role{id=1, name='ROLE_EMPLOYEE'}, Role{id=2, name='ROLE_ADMIN'}]}";
         String returnedString = userDto.toString();
         assertEquals(expected, returnedString);
-    }
-
-    private void setField(String fieldName, Object inputVariable) throws NoSuchFieldException, IllegalAccessException {
-        Field field = getField(fieldName);
-        field.set(userDto, inputVariable);
-    }
-
-    private Object getFieldValue(String fieldName) throws NoSuchFieldException, IllegalAccessException {
-        Field field = getField(fieldName);
-        return field.get(userDto);
-    }
-
-    private Field getField(String fieldName) throws NoSuchFieldException {
-        Field field = userDto.getClass().getDeclaredField(fieldName);
-        field.setAccessible(true);
-        return field;
     }
 
 }
