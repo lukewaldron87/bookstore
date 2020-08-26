@@ -8,7 +8,7 @@ import static org.junit.Assert.assertEquals;
 
 public class RoleTest {
 
-    Role role;
+    private Role role;
     private FieldModifier fieldModifier;
 
     @Before
@@ -26,7 +26,7 @@ public class RoleTest {
     }
 
     @Test
-    public void getId() throws NoSuchFieldException, IllegalAccessException {
+    public void testGetId_setsProperly() throws NoSuchFieldException, IllegalAccessException {
         Long id = 1L;
         fieldModifier.setField("id", id);
         Long returnedId = role.getId();
@@ -34,7 +34,7 @@ public class RoleTest {
     }
 
     @Test
-    public void setId() throws NoSuchFieldException, IllegalAccessException {
+    public void testSetId_getsValue() throws NoSuchFieldException, IllegalAccessException {
         Long id = 1L;
         String fieldName = "id";
         role.setId(id);
@@ -43,7 +43,7 @@ public class RoleTest {
     }
 
     @Test
-    public void getName() throws NoSuchFieldException, IllegalAccessException {
+    public void testGetName_setsProperly() throws NoSuchFieldException, IllegalAccessException {
         String name = "name";
         String fieldName = "name";
         fieldModifier.setField(fieldName, name);
@@ -52,7 +52,7 @@ public class RoleTest {
     }
 
     @Test
-    public void setName() throws NoSuchFieldException, IllegalAccessException {
+    public void testSetName_getsValue() throws NoSuchFieldException, IllegalAccessException {
         String name = "name";
         String fieldName = "name";
         role.setName(name);
@@ -61,7 +61,7 @@ public class RoleTest {
     }
 
     @Test
-    public void testToString() {
+    public void testToString_returnsCorrectString() {
         role = new Role("name");
         role.setId(1L);
         fieldModifier = new FieldModifier(role);String expected = "Role{id=1, name='name'}";

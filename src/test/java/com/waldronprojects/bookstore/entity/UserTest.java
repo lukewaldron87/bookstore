@@ -189,13 +189,6 @@ public class UserTest {
         assertEquals(roleCollection, returnedRoleCollection);
     }
 
-    private static Collection<Role> createAdminEmployeeRoleCollection() {
-        Collection<Role> roleCollection = new ArrayList<Role>();
-        roleCollection.add(new Role("ROLE_EMPLOYEE"));
-        roleCollection.add(new Role("ROLE_ADMIN"));
-        return roleCollection;
-    }
-
     @Test
     public void testToString_returnsCorrectString() throws NoSuchFieldException, IllegalAccessException {
         String username = "username";
@@ -218,5 +211,12 @@ public class UserTest {
         String expected = "User{id=null, username='username', password='*********', firstName='firstName', lastName='lastName', email='email', roles=[Role{id=1, name='ROLE_EMPLOYEE'}, Role{id=2, name='ROLE_ADMIN'}]}";
         String returnedString = user.toString();
         assertEquals(expected, returnedString);
+    }
+
+    private static Collection<Role> createAdminEmployeeRoleCollection() {
+        Collection<Role> roleCollection = new ArrayList<Role>();
+        roleCollection.add(new Role("ROLE_EMPLOYEE"));
+        roleCollection.add(new Role("ROLE_ADMIN"));
+        return roleCollection;
     }
 }
