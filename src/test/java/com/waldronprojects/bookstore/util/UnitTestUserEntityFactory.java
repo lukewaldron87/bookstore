@@ -4,6 +4,8 @@ import com.waldronprojects.bookstore.entity.Customer;
 import com.waldronprojects.bookstore.entity.Employee;
 import com.waldronprojects.bookstore.entity.Role;
 import com.waldronprojects.bookstore.entity.User;
+import com.waldronprojects.bookstore.entity.factory.RoleEntityCollectionFactory;
+import com.waldronprojects.bookstore.entity.factory.RoleType;
 import com.waldronprojects.bookstore.entity.factory.UserEntityFactory;
 import com.waldronprojects.bookstore.entity.factory.UserType;
 
@@ -11,13 +13,15 @@ import java.util.*;
 
 public class UnitTestUserEntityFactory extends UserEntityFactory {
 
+	private RoleEntityCollectionFactory roleEntityCollectionFactory;
 	private final Map<UserType, User> FACTORY_MAP;
 
 	public UnitTestUserEntityFactory() {
+		roleEntityCollectionFactory = new UnitTestRoleEntityCollectionFactory();
 		final HashMap<UserType, User> factoryMap = new HashMap<>();
-		factoryMap.put(UserType.CUSTOMER, buildCustomer());
-		factoryMap.put(UserType.EMPLOYEE, createRegularEmployeeObject());
-		factoryMap.put(UserType.ADMIN, createAdminEmployeeObject());
+		factoryMap.put(UserType.CUSTOMER, createCustomerUser());
+		factoryMap.put(UserType.EMPLOYEE, createRegularEmployeeUser());
+		factoryMap.put(UserType.ADMIN, createAdminEmployeeUser());
 		FACTORY_MAP = Collections.unmodifiableMap(factoryMap);
 	}
 
@@ -26,7 +30,7 @@ public class UnitTestUserEntityFactory extends UserEntityFactory {
 		return FACTORY_MAP.get(userType);
 	}
 	
-	private Customer buildCustomer() {
+	private Customer createCustomerUser() {
 		Customer customer = new Customer();
 		customer.setUsername("username0");
 		customer.setPassword("password0");
@@ -39,27 +43,24 @@ public class UnitTestUserEntityFactory extends UserEntityFactory {
 		customer.setCountry("country0");
 		customer.setPostCode("postCode0");
 		customer.setPhoneNumber(12340);
-		Collection<Role> roleCollection = createCustomerRoleCollection();
+		Collection<Role> roleCollection = roleEntityCollectionFactory
+				.createRole(RoleType.ROLE_CUSTOMER);
 		customer.setRoles(roleCollection);
 		return customer;
 	}
 	
-	private Collection<Role> createCustomerRoleCollection() {
-		Collection<Role> roleCollection = new ArrayList<Role>();
-		roleCollection.add(new Role("ROLE_CUSTOMER"));
-		return roleCollection;
-	}
-	
-	private Employee createRegularEmployeeObject() {
+	private Employee createRegularEmployeeUser() {
 		Employee employee = createEmployeeObject();
-		Collection<Role> roleCollection = createEmployeeRoleCollection(false);
+		Collection<Role> roleCollection = roleEntityCollectionFactory
+				.createRole(RoleType.ROLE_EMPLOYEE);
 		employee.setRoles(roleCollection);
 		return employee;
 	}
 	
-	private Employee createAdminEmployeeObject() {
+	private Employee createAdminEmployeeUser() {
 		Employee employee = createEmployeeObject();
-		Collection<Role> roleCollection = createEmployeeRoleCollection(true);
+		Collection<Role> roleCollection = roleEntityCollectionFactory
+				.createRole(RoleType.ROLE_ADMIN);
 		employee.setRoles(roleCollection);
 		return employee;
 	}
@@ -74,15 +75,6 @@ public class UnitTestUserEntityFactory extends UserEntityFactory {
 		employee.setDepartment("department0");
 		employee.setTitle("title0");
 		return employee;
-	}
-	
-	private Collection<Role> createEmployeeRoleCollection(boolean isAdmin) {
-		Collection<Role> roleCollection = new ArrayList<Role>();
-		roleCollection.add(new Role("ROLE_EMPLOYEE"));
-		if(isAdmin) {
-			roleCollection.add(new Role("ROLE_ADMIN"));
-		}
-		return roleCollection;
 	}
 
 }

@@ -18,7 +18,7 @@ public class UnitTestUserEntityFactoryTest {
     private UserEntityFactory userEntityFactory;
 
     @Before
-    public void getUp() {
+    public void setUp() {
         userEntityFactory = new UnitTestUserEntityFactory();
     }
 

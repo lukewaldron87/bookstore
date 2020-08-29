@@ -1,11 +1,13 @@
 package com.waldronprojects.bookstore.dto;
 
 import com.waldronprojects.bookstore.entity.Role;
+import com.waldronprojects.bookstore.entity.factory.RoleEntityCollectionFactory;
+import com.waldronprojects.bookstore.entity.factory.RoleType;
 import com.waldronprojects.bookstore.util.FieldModifier;
+import com.waldronprojects.bookstore.util.UnitTestRoleEntityCollectionFactory;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 import static org.junit.Assert.assertEquals;
@@ -14,11 +16,13 @@ public class UserDtoTest {
 
     private UserDto userDto;
     private FieldModifier fieldModifier;
+    private RoleEntityCollectionFactory roleEntityCollectionFactory;
 
     @Before
     public void setUp(){
         userDto = new UserDto();
         fieldModifier = new FieldModifier(userDto);
+        roleEntityCollectionFactory = new UnitTestRoleEntityCollectionFactory();
     }
 
     @Test
@@ -48,7 +52,7 @@ public class UserDtoTest {
         String firstName = "firstName";
         String lastName = "lastName";
         String email = "email";
-        Collection<Role> roleCollection = createAdminEmployeeRoleCollection();
+        Collection<Role> roleCollection = roleEntityCollectionFactory.createRole(RoleType.ROLE_ADMIN);
         userDto = new UserDto(username,
                               password,
                               firstName,
@@ -193,7 +197,7 @@ public class UserDtoTest {
     @Test
     public void testGetRoles_getsValue() throws NoSuchFieldException, IllegalAccessException {
         String fieldName = "roles";
-        Collection<Role> roleCollection = createAdminEmployeeRoleCollection();
+        Collection<Role> roleCollection = roleEntityCollectionFactory.createRole(RoleType.ROLE_ADMIN);
         fieldModifier.setField(fieldName, (Object) roleCollection);
         Collection<Role> returnedRoleCollection = userDto.getRoles();
         assertEquals(roleCollection, returnedRoleCollection);
@@ -202,17 +206,10 @@ public class UserDtoTest {
     @Test
     public void testSetRoles_setsProperly() throws NoSuchFieldException, IllegalAccessException {
         String fieldName = "roles";
-        Collection<Role> roleCollection = createAdminEmployeeRoleCollection();
+        Collection<Role> roleCollection = roleEntityCollectionFactory.createRole(RoleType.ROLE_ADMIN);
         userDto.setRoles(roleCollection);
         Object returnedRoleCollection = fieldModifier.getFieldValue(fieldName);
         assertEquals(roleCollection, returnedRoleCollection);
-    }
-
-    private static Collection<Role> createAdminEmployeeRoleCollection() {
-        Collection<Role> roleCollection = new ArrayList<Role>();
-        roleCollection.add(new Role("ROLE_EMPLOYEE"));
-        roleCollection.add(new Role("ROLE_ADMIN"));
-        return roleCollection;
     }
 
     @Test
@@ -222,7 +219,7 @@ public class UserDtoTest {
         String firstName = "firstName";
         String lastName = "lastName";
         String email = "email";
-        Collection<Role> roleCollection = createAdminEmployeeRoleCollection();
+        Collection<Role> roleCollection = roleEntityCollectionFactory.createRole(RoleType.ROLE_ADMIN);
         Long idIndex = 1L;
         for(Role role: roleCollection){
             role.setId(idIndex);

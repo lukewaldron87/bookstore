@@ -1,10 +1,12 @@
 package com.waldronprojects.bookstore.entity;
 
+import com.waldronprojects.bookstore.entity.factory.RoleEntityCollectionFactory;
+import com.waldronprojects.bookstore.entity.factory.RoleType;
 import com.waldronprojects.bookstore.util.FieldModifier;
+import com.waldronprojects.bookstore.util.UnitTestRoleEntityCollectionFactory;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 import static org.junit.Assert.assertEquals;
@@ -21,7 +23,8 @@ public class CustomerTest {
     }
 
     @Test
-    public void testConstructorWithoutRole_setsAllFields() throws NoSuchFieldException, IllegalAccessException {
+    public void testConstructorWithoutRole_setsAllFields() throws NoSuchFieldException,
+                                                                    IllegalAccessException {
         String username = "username";
         String password = "password";
         String firstName = "firstName";
@@ -56,7 +59,8 @@ public class CustomerTest {
     }
 
     @Test
-    public void testConstructorWithRole_setsAllFields() throws NoSuchFieldException, IllegalAccessException {
+    public void testConstructorWithRole_setsAllFields() throws NoSuchFieldException,
+                                                                IllegalAccessException {
         String username = "username";
         String password = "password";
         String firstName = "firstName";
@@ -68,7 +72,10 @@ public class CustomerTest {
         String country = "country";
         String postCode = "postCode";
         int phoneNumber = 1234;
-        Collection<Role> roleCollection = createAdminEmployeeRoleCollection();
+        RoleEntityCollectionFactory roleEntityCollectionFactory =
+                new UnitTestRoleEntityCollectionFactory();
+        Collection<Role> roleCollection = roleEntityCollectionFactory
+                .createRole(RoleType.ROLE_ADMIN);
 
         customer = new Customer(username,
                 password,
@@ -212,7 +219,10 @@ public class CustomerTest {
         String country = "country";
         String postCode = "postCode";
         int phoneNumber = 1234;
-        Collection<Role> roleCollection = createAdminEmployeeRoleCollection();
+        RoleEntityCollectionFactory roleEntityCollectionFactory =
+                new UnitTestRoleEntityCollectionFactory();
+        Collection<Role> roleCollection = roleEntityCollectionFactory
+                .createRole(RoleType.ROLE_ADMIN);
         customer = new Customer(username,
                 password,
                 firstName,
@@ -229,12 +239,5 @@ public class CustomerTest {
         String expectedString = "Customer [User{id=null, username='username', password='*********', firstName='firstName', lastName='lastName', email='email', roles=[Role{id=null, name='ROLE_EMPLOYEE'}, Role{id=null, name='ROLE_ADMIN'}]}  addressLine1=addressLine1, addressLine2=addressLine2, city=city, country=country, postCode=postCode, phoneNumber=1234]";
         String returnedString = customer.toString();
         assertEquals(expectedString, returnedString);
-    }
-
-    private static Collection<Role> createAdminEmployeeRoleCollection() {
-        Collection<Role> roleCollection = new ArrayList<Role>();
-        roleCollection.add(new Role("ROLE_EMPLOYEE"));
-        roleCollection.add(new Role("ROLE_ADMIN"));
-        return roleCollection;
     }
 }

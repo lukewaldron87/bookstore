@@ -1,10 +1,12 @@
 package com.waldronprojects.bookstore.entity;
 
+import com.waldronprojects.bookstore.entity.factory.RoleEntityCollectionFactory;
+import com.waldronprojects.bookstore.entity.factory.RoleType;
 import com.waldronprojects.bookstore.util.FieldModifier;
+import com.waldronprojects.bookstore.util.UnitTestRoleEntityCollectionFactory;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 import static org.junit.Assert.assertEquals;
@@ -47,7 +49,10 @@ public class UserTest {
         String firstName = "firstName";
         String lastName = "lastName";
         String email = "email";
-        Collection<Role> roleCollection = createAdminEmployeeRoleCollection();
+        RoleEntityCollectionFactory roleEntityCollectionFactory =
+                new UnitTestRoleEntityCollectionFactory();
+        Collection<Role> roleCollection = roleEntityCollectionFactory
+                .createRole(RoleType.ROLE_ADMIN);
         user = new User(username,
                 password,
                 firstName,
@@ -174,7 +179,10 @@ public class UserTest {
     @Test
     public void testGetRoles_getsValue() throws NoSuchFieldException, IllegalAccessException {
         String fieldName = "roles";
-        Collection<Role> roleCollection = createAdminEmployeeRoleCollection();
+        RoleEntityCollectionFactory roleEntityCollectionFactory =
+                new UnitTestRoleEntityCollectionFactory();
+        Collection<Role> roleCollection = roleEntityCollectionFactory
+                .createRole(RoleType.ROLE_ADMIN);
         fieldModifier.setField(fieldName, (Object) roleCollection);
         Collection<Role> returnedRoleCollection = user.getRoles();
         assertEquals(roleCollection, returnedRoleCollection);
@@ -183,7 +191,10 @@ public class UserTest {
     @Test
     public void testSetRoles_setsProperly() throws NoSuchFieldException, IllegalAccessException {
         String fieldName = "roles";
-        Collection<Role> roleCollection = createAdminEmployeeRoleCollection();
+        RoleEntityCollectionFactory roleEntityCollectionFactory =
+                new UnitTestRoleEntityCollectionFactory();
+        Collection<Role> roleCollection = roleEntityCollectionFactory
+                .createRole(RoleType.ROLE_ADMIN);
         user.setRoles(roleCollection);
         Object returnedRoleCollection = fieldModifier.getFieldValue(fieldName);
         assertEquals(roleCollection, returnedRoleCollection);
@@ -196,7 +207,10 @@ public class UserTest {
         String firstName = "firstName";
         String lastName = "lastName";
         String email = "email";
-        Collection<Role> roleCollection = createAdminEmployeeRoleCollection();
+        RoleEntityCollectionFactory roleEntityCollectionFactory =
+                new UnitTestRoleEntityCollectionFactory();
+        Collection<Role> roleCollection = roleEntityCollectionFactory
+                .createRole(RoleType.ROLE_ADMIN);
         Long idIndex = 1L;
         for(Role role: roleCollection){
             role.setId(idIndex);
@@ -211,12 +225,5 @@ public class UserTest {
         String expected = "User{id=null, username='username', password='*********', firstName='firstName', lastName='lastName', email='email', roles=[Role{id=1, name='ROLE_EMPLOYEE'}, Role{id=2, name='ROLE_ADMIN'}]}";
         String returnedString = user.toString();
         assertEquals(expected, returnedString);
-    }
-
-    private static Collection<Role> createAdminEmployeeRoleCollection() {
-        Collection<Role> roleCollection = new ArrayList<Role>();
-        roleCollection.add(new Role("ROLE_EMPLOYEE"));
-        roleCollection.add(new Role("ROLE_ADMIN"));
-        return roleCollection;
     }
 }
