@@ -30,7 +30,7 @@ public class UnitTestProductEntityFactoryTest {
         assertEquals(product.getId(), 1);
         assertEquals(product.getProductName(), "genericProduct");
         assertEquals(product.getUnitPrice(), 1.1, 0.001);
-        assertEquals(product.getDiscription(), "productDescription");
+        assertEquals(product.getDescription(), "productDescription");
     }
 
     @Test(expected = IllegalArgumentException.class)

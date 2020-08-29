@@ -28,7 +28,7 @@ public class UnitTestProductEntityFactory extends ProductEntityFactory {
         product.setId(1);
         product.setProductName("genericProduct");
         product.setUnitPrice(1.1);
-        product.setDescrpition("productDescription");
+        product.setDescription("productDescription");
         return product;
     }
 }
