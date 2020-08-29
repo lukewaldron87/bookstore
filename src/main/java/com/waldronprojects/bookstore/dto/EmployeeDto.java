@@ -1,18 +1,10 @@
 package com.waldronprojects.bookstore.dto;
 
-import java.util.Collection;
+import com.waldronprojects.bookstore.entity.Role;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.PrimaryKeyJoinColumn;
-import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import com.waldronprojects.bookstore.entity.Role;
+import java.util.Collection;
 
 public class EmployeeDto extends UserDto{
 
@@ -79,6 +71,6 @@ public class EmployeeDto extends UserDto{
 
 	@Override
 	public String toString() {
-		return "Employee [" + super.toString() + " department=" + department + ", title=" + title + " isAdmin=" + isAdmin + "]";
+		return "EmployeeDto [" + super.toString() + " department=" + department + ", title=" + title + " isAdmin=" + isAdmin + "]";
 	}
 }

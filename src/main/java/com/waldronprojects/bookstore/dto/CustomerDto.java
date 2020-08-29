@@ -1,16 +1,10 @@
 package com.waldronprojects.bookstore.dto;
 
-import java.util.Collection;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.PrimaryKeyJoinColumn;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
-
 import com.waldronprojects.bookstore.entity.Role;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import java.util.Collection;
 
 public class CustomerDto extends UserDto{
 	
@@ -117,7 +111,7 @@ public class CustomerDto extends UserDto{
 
 	@Override
 	public String toString() {
-		return "Customer ["+super.toString()+" addressLine1=" + addressLine1 + ", addressLine2=" + addressLine2 + ", city=" + city
+		return "CustomerDto ["+super.toString()+" addressLine1=" + addressLine1 + ", addressLine2=" + addressLine2 + ", city=" + city
 				+ ", country=" + country + ", postCode=" + postCode + ", phoneNumber=" + phoneNumber + "]";
 	}
 }

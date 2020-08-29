@@ -231,7 +231,7 @@ public class UserDtoTest {
         fieldModifier.setField("lastName", lastName);
         fieldModifier.setField("email", email);
         fieldModifier.setField("roles", roleCollection);
-        String expected = "User{id=null, username='username', password='*********', firstName='firstName', lastName='lastName', email='email', roles=[Role{id=1, name='ROLE_EMPLOYEE'}, Role{id=2, name='ROLE_ADMIN'}]}";
+        String expected = "UserDto{id=null, username='username', password='*********', firstName='firstName', lastName='lastName', email='email', roles=[Role{id=1, name='ROLE_EMPLOYEE'}, Role{id=2, name='ROLE_ADMIN'}]}";
         String returnedString = userDto.toString();
         assertEquals(expected, returnedString);
     }

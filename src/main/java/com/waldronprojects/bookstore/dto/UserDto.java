@@ -1,27 +1,12 @@
 package com.waldronprojects.bookstore.dto;
 
-import java.util.Collection;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
-import javax.persistence.Transient;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
 import com.waldronprojects.bookstore.entity.Role;
 import com.waldronprojects.bookstore.validation.FieldMatch;
 import com.waldronprojects.bookstore.validation.ValidEmail;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import java.util.Collection;
 
 @FieldMatch.List({
     @FieldMatch(first = "password", second = "matchingPassword", message = "The password fields must match")
@@ -144,7 +129,7 @@ public class UserDto{
 
 	@Override
 	public String toString() {
-		return "User{" + "id=" + id + ", username='" + username + '\'' + ", password='" + "*********" + '\''
+		return "UserDto{" + "id=" + id + ", username='" + username + '\'' + ", password='" + "*********" + '\''
 				+ ", firstName='" + firstName + '\'' + ", lastName='" + lastName + '\'' + ", email='" + email + '\''
 				+ ", roles=" + roles + '}';
 	}
