@@ -1,17 +1,21 @@
 package com.waldronprojects.bookstore.service;
 
-import org.springframework.security.core.userdetails.UserDetailsService;
-
 import com.waldronprojects.bookstore.dto.UserDto;
 import com.waldronprojects.bookstore.entity.User;
+import com.waldronprojects.bookstore.entity.factory.UserType;
+import org.springframework.security.core.userdetails.UserDetailsService;
+
+import java.util.List;
 
 public interface UserService extends UserDetailsService{
 
-	public User findUsername(String username);
+	User findUsername(String username);
 	
-    public void saveUser(UserDto user);
+    void saveUser(UserDto user);
     
-    public UserDto getUser(Long id);
+    UserDto getUser(Long id);
     
-    public void deleteUser(Long id);
+    void deleteUser(Long id);
+
+    List<User> getUsersOfType(UserType customer);
 }

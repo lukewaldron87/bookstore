@@ -4,11 +4,10 @@ import com.waldronprojects.bookstore.config.TestContext;
 import com.waldronprojects.bookstore.config.WebAppContext;
 import com.waldronprojects.bookstore.dto.UserDto;
 import com.waldronprojects.bookstore.dto.factory.UserDtoFactory;
-import com.waldronprojects.bookstore.entity.Customer;
 import com.waldronprojects.bookstore.entity.User;
 import com.waldronprojects.bookstore.entity.factory.RoleType;
 import com.waldronprojects.bookstore.entity.factory.UserEntityFactory;
-import com.waldronprojects.bookstore.service.CustomerService;
+import com.waldronprojects.bookstore.entity.factory.UserType;
 import com.waldronprojects.bookstore.service.UserService;
 import com.waldronprojects.bookstore.util.UnitTestUserDtoFactory;
 import com.waldronprojects.bookstore.util.UnitTestUserEntityFactory;
@@ -52,9 +51,6 @@ public class CustomerControllerTest {
 
 	@InjectMocks
 	private CustomerController controller;
-
-	@Mock
-	private CustomerService customerService;
 	
 	@Mock
 	private UserService userService;
@@ -75,11 +71,12 @@ public class CustomerControllerTest {
 	
 	@Test
 	public void testListCustomers() throws Exception {
+		UserType userType = UserType.CUSTOMER;
 		UserEntityFactory userEntityFactory = new UnitTestUserEntityFactory();
 		User customer1 = userEntityFactory.createUser(RoleType.ROLE_CUSTOMER);
 		User customer2 = userEntityFactory.createUser(RoleType.ROLE_CUSTOMER);
-		when(customerService.getCustomers())
-			.thenReturn(Arrays.asList((Customer)customer1, (Customer)customer2));
+		when(userService.getUsersOfType(userType))
+			.thenReturn(Arrays.asList(customer1, customer2));
 
 		mockMvc.perform(get("/employee/customer/list"))
 				.andExpect(status().isOk())
@@ -89,8 +86,8 @@ public class CustomerControllerTest {
 				.andExpect(model().attribute("customers", hasItem(customer1)))
 				.andExpect(model().attribute("customers", hasItem(customer2)));
 
-		Mockito.verify(customerService, Mockito.times(1)).getCustomers();
-		Mockito.verifyNoMoreInteractions(customerService);
+		Mockito.verify(userService, Mockito.times(1)).getUsersOfType(userType);
+		Mockito.verifyNoMoreInteractions(userService);
 	}
 
 	@Test

@@ -5,10 +5,10 @@ import com.waldronprojects.bookstore.config.WebAppContext;
 import com.waldronprojects.bookstore.dto.EmployeeDto;
 import com.waldronprojects.bookstore.dto.UserDto;
 import com.waldronprojects.bookstore.dto.factory.UserDtoFactory;
-import com.waldronprojects.bookstore.entity.Employee;
+import com.waldronprojects.bookstore.entity.User;
 import com.waldronprojects.bookstore.entity.factory.RoleType;
 import com.waldronprojects.bookstore.entity.factory.UserEntityFactory;
-import com.waldronprojects.bookstore.service.EmployeeService;
+import com.waldronprojects.bookstore.entity.factory.UserType;
 import com.waldronprojects.bookstore.service.UserService;
 import com.waldronprojects.bookstore.util.UnitTestUserDtoFactory;
 import com.waldronprojects.bookstore.util.UnitTestUserEntityFactory;
@@ -44,9 +44,6 @@ public class EmployeeControllerTest {
     private EmployeeController controller;
 
     @Mock
-    private EmployeeService employeeService;
-
-    @Mock
     private UserService userService;
 
     @Before
@@ -72,8 +69,9 @@ public class EmployeeControllerTest {
 
     @Test
     public void testListEmployee() throws Exception{
-        List<Employee> employeeList = createEmployeeList();
-        when(employeeService.getEmployees()).thenReturn(employeeList);
+        UserType userType = UserType.EMPLOYEE;
+        List<User> employeeList = createEmployeeList();
+        when(userService.getUsersOfType(userType)).thenReturn(employeeList);
         mockMvc.perform(get("/employee/list"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("employee/list-employees"))
@@ -81,15 +79,15 @@ public class EmployeeControllerTest {
                 .andExpect(model().attribute("employees", hasSize(2)))
                 .andExpect(model().attribute("employees", hasItem(employeeList.get(0))))
                 .andExpect(model().attribute("employees", hasItem(employeeList.get(1))));
-        verify(employeeService, times(1)).getEmployees();
-        verifyNoMoreInteractions(employeeService);
+        verify(userService, times(1)).getUsersOfType(userType);
+        verifyNoMoreInteractions(userService);
     }
 
-    private List<Employee> createEmployeeList(){
+    private List<User> createEmployeeList(){
         UserEntityFactory userEntityFactory = new UnitTestUserEntityFactory();
-        Employee employee1 = (Employee) userEntityFactory.createUser(RoleType.ROLE_EMPLOYEE);
-        Employee employee2 = (Employee) userEntityFactory.createUser(RoleType.ROLE_EMPLOYEE);
-        return Arrays.asList(employee1, employee2);
+        User user1 = userEntityFactory.createUser(RoleType.ROLE_EMPLOYEE);
+        User user2 = userEntityFactory.createUser(RoleType.ROLE_EMPLOYEE);
+        return Arrays.asList(user1, user2);
     }
 
     @Test

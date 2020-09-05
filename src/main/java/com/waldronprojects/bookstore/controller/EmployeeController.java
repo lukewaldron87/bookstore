@@ -2,8 +2,8 @@ package com.waldronprojects.bookstore.controller;
 
 import com.waldronprojects.bookstore.dto.EmployeeDto;
 import com.waldronprojects.bookstore.dto.UserDto;
-import com.waldronprojects.bookstore.entity.Employee;
-import com.waldronprojects.bookstore.service.EmployeeService;
+import com.waldronprojects.bookstore.entity.User;
+import com.waldronprojects.bookstore.entity.factory.UserType;
 import com.waldronprojects.bookstore.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,9 +16,6 @@ import java.util.List;
 @Controller
 @RequestMapping("/employee")
 public class EmployeeController {
-
-	@Autowired
-	private EmployeeService employeeService;
 	
 	@Autowired
 	private UserService userService;
@@ -30,7 +27,7 @@ public class EmployeeController {
 	
 	@RequestMapping("/list")
 	public String listEmployee(Model employeeModel) {
-		List<Employee> employeeList = employeeService.getEmployees();
+		List<User> employeeList = userService.getUsersOfType(UserType.EMPLOYEE);
 		employeeModel.addAttribute("employees", employeeList);
 		return "employee/list-employees";
 	}

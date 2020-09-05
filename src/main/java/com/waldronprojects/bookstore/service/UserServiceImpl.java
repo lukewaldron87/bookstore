@@ -1,9 +1,15 @@
 package com.waldronprojects.bookstore.service;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.stream.Collectors;
-
+import com.waldronprojects.bookstore.dao.RoleDao;
+import com.waldronprojects.bookstore.dao.UserDao;
+import com.waldronprojects.bookstore.dto.CustomerDto;
+import com.waldronprojects.bookstore.dto.EmployeeDto;
+import com.waldronprojects.bookstore.dto.UserDto;
+import com.waldronprojects.bookstore.entity.Customer;
+import com.waldronprojects.bookstore.entity.Employee;
+import com.waldronprojects.bookstore.entity.Role;
+import com.waldronprojects.bookstore.entity.User;
+import com.waldronprojects.bookstore.entity.factory.UserType;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -14,15 +20,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.waldronprojects.bookstore.dao.RoleDao;
-import com.waldronprojects.bookstore.dao.UserDao;
-import com.waldronprojects.bookstore.dto.CustomerDto;
-import com.waldronprojects.bookstore.dto.EmployeeDto;
-import com.waldronprojects.bookstore.dto.UserDto;
-import com.waldronprojects.bookstore.entity.Customer;
-import com.waldronprojects.bookstore.entity.Employee;
-import com.waldronprojects.bookstore.entity.Role;
-import com.waldronprojects.bookstore.entity.User;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -47,7 +48,13 @@ public class UserServiceImpl implements UserService {
 	public void deleteUser(Long id) {
 		userDao.deleteUser(id);
 	}
-	
+
+	@Override
+	@Transactional
+	public List<User> getUsersOfType(UserType customer) {
+		return userDao.getUsersOfType(customer);
+	}
+
 	@Override
 	@Transactional
 	public void saveUser(UserDto userDto) {
@@ -59,7 +66,7 @@ public class UserServiceImpl implements UserService {
 	
 	private User mapDtoToEntity(UserDto userDto){
 		User user = new User();
-		Collection<Role> roleCollection = new ArrayList<Role>();
+		Collection<Role> roleCollection = new ArrayList<>();
 		Role role;
 		ModelMapper modelMapper = new ModelMapper();
 		if(userDto instanceof CustomerDto) {
@@ -77,7 +84,7 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	private Collection<Role> createEmployeeRoleCollection(EmployeeDto employeeDto) {
-		Collection<Role> roleCollection = new ArrayList<Role>();
+		Collection<Role> roleCollection = new ArrayList<>();
 		roleCollection.add(roleDao.findRoleByName("ROLE_EMPLOYEE"));
 		if(employeeDto.getIsAdmin()) {
 			roleCollection.add(roleDao.findRoleByName("ROLE_ADMIN"));

@@ -12,6 +12,7 @@ import com.waldronprojects.bookstore.entity.Role;
 import com.waldronprojects.bookstore.entity.User;
 import com.waldronprojects.bookstore.entity.factory.RoleType;
 import com.waldronprojects.bookstore.entity.factory.UserEntityFactory;
+import com.waldronprojects.bookstore.entity.factory.UserType;
 import com.waldronprojects.bookstore.util.UnitTestUserDtoFactory;
 import com.waldronprojects.bookstore.util.UnitTestUserEntityFactory;
 import org.junit.Before;
@@ -29,14 +30,10 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserServiceImplTest {
-	
-	@Captor
-	private ArgumentCaptor<User> captor;
 	
 	@Mock
 	private UserDao userDao;
@@ -121,7 +118,7 @@ public class UserServiceImplTest {
 	@Test
 	public void testSaveAdminEmployeeUser() {
 		UserDto userDto = dtoFactory.createUserDto(RoleType.ROLE_ADMIN);
-		// return unencoded password to allow assert comparision
+		// return unencoded password to allow assert comparison
 		String password = userDto.getPassword();
 		Mockito.when(passwordEncoder.encode(password))
 				.thenReturn(password);
@@ -260,7 +257,33 @@ public class UserServiceImplTest {
 	@Test(expected = UsernameNotFoundException.class)
 	public void testLoadNullUsername(){
 		Mockito.when(userDao.findByUsername(null)).thenReturn(null);
-		UserDetails userDetails = userServiceImpl.loadUserByUsername(null);
+		userServiceImpl.loadUserByUsername(null);
+	}
+
+	@Test
+	public void testGetUsersOfType_getsCustomers(){
+		UserType userType = UserType.CUSTOMER;
+		List<User> userList = createUserListOfType(RoleType.ROLE_CUSTOMER);
+		Mockito.when(userDao.getUsersOfType(userType)).thenReturn(userList);
+		List<User> returnedUserList = userServiceImpl.getUsersOfType(userType);
+		assertEquals(userList, returnedUserList);
+	}
+
+	@Test
+	public void testGetUsersOfType_getsEmployee(){
+		UserType userType = UserType.EMPLOYEE;
+		List<User> userList = createUserListOfType(RoleType.ROLE_EMPLOYEE);
+		Mockito.when(userDao.getUsersOfType(userType)).thenReturn(userList);
+		List<User> returnedUserList = userServiceImpl.getUsersOfType(userType);
+		assertEquals(userList, returnedUserList);
+	}
+
+	private List<User> createUserListOfType(RoleType roleType){
+		List<User> userList = new ArrayList<>();
+		for(int i = 0; i<3; i++){
+			userList.add(userEntityFactory.createUser(roleType));
+		}
+		return userList;
 	}
 
 }

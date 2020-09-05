@@ -22,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Tests uses the bookstore_test database
@@ -129,6 +130,7 @@ public class UserDaoImplTest {
 	@Rollback
 	public void testGetUsersOfType_getCustomers(){
 		List<User> customerList = userDao.getUsersOfType(UserType.CUSTOMER);
+		assertTrue(customerList.size() > 0);
 		for(User customer: customerList) {
 			assertTrue(customer instanceof Customer);
 		}
@@ -139,6 +141,7 @@ public class UserDaoImplTest {
 	@Rollback
 	public void testGetUsersOfType_getEmployees(){
 		List<User> employeeList = userDao.getUsersOfType(UserType.EMPLOYEE);
+		assertTrue(employeeList.size() > 0);
 		for(User employee: employeeList) {
 			assertTrue(employee instanceof Employee);
 		}
@@ -164,6 +167,7 @@ public class UserDaoImplTest {
 		List<User> userList = userDao.getUsersOfType(UserType.EMPLOYEE);
 		boolean isOrderedByLastName = true;
 		String previousLastName = "";
+		assertTrue(userList.size() > 0);
 		for(User user: userList){
 			if(!previousLastName.isEmpty()){
 				if(user.getLastName().compareTo(previousLastName) < 0){
