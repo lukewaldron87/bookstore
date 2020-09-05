@@ -1,9 +1,14 @@
 package com.waldronprojects.bookstore.dao;
 
-import java.util.Collection;
-
+import com.waldronprojects.bookstore.config.MvcConfig;
 import com.waldronprojects.bookstore.entity.Customer;
+import com.waldronprojects.bookstore.entity.Employee;
+import com.waldronprojects.bookstore.entity.Role;
+import com.waldronprojects.bookstore.entity.User;
+import com.waldronprojects.bookstore.entity.factory.UserEntityFactory;
 import com.waldronprojects.bookstore.entity.factory.UserType;
+import com.waldronprojects.bookstore.util.UnitTestUserEntityFactory;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,12 +19,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.waldronprojects.bookstore.config.MvcConfig;
-import com.waldronprojects.bookstore.entity.Employee;
-import com.waldronprojects.bookstore.entity.Role;
-import com.waldronprojects.bookstore.entity.User;
-import com.waldronprojects.bookstore.util.UnitTestUserEntityFactory;
-import com.waldronprojects.bookstore.entity.factory.UserEntityFactory;
+import java.util.Collection;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -133,6 +134,26 @@ public class UserDaoImplTest {
 		userDao.deleteUser(id);
 		User user = userDao.findUserById(id);
 		assertNull(user);
+	}
+
+	@Test
+	@Transactional
+	@Rollback
+	public void testGetUsersOfType_getCustomer(){
+		List<User> customerList = userDao.getUsersOfType(UserType.CUSTOMER);
+		for(User customer: customerList) {
+			Assert.assertTrue(customer instanceof Customer);
+		}
+	}
+
+	@Test
+	@Transactional
+	@Rollback
+	public void testGetUsersOfType_getEmployee(){
+		List<User> employeeList = userDao.getUsersOfType(UserType.EMPLOYEE);
+		for(User employee: employeeList) {
+			Assert.assertTrue(employee instanceof Employee);
+		}
 	}
 	
 }

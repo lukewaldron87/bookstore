@@ -2,17 +2,16 @@ package com.waldronprojects.bookstore.controller;
 
 import com.waldronprojects.bookstore.config.TestContext;
 import com.waldronprojects.bookstore.config.WebAppContext;
-import com.waldronprojects.bookstore.dao.RoleDao;
 import com.waldronprojects.bookstore.dto.UserDto;
-import com.waldronprojects.bookstore.util.UnitTestUserDtoFactory;
 import com.waldronprojects.bookstore.dto.factory.UserDtoFactory;
 import com.waldronprojects.bookstore.entity.Customer;
 import com.waldronprojects.bookstore.entity.User;
-import com.waldronprojects.bookstore.util.UnitTestUserEntityFactory;
 import com.waldronprojects.bookstore.entity.factory.UserEntityFactory;
 import com.waldronprojects.bookstore.entity.factory.UserType;
 import com.waldronprojects.bookstore.service.CustomerService;
 import com.waldronprojects.bookstore.service.UserService;
+import com.waldronprojects.bookstore.util.UnitTestUserDtoFactory;
+import com.waldronprojects.bookstore.util.UnitTestUserEntityFactory;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,12 +20,10 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import java.util.Arrays;
@@ -61,12 +58,6 @@ public class CustomerControllerTest {
 	
 	@Mock
 	private UserService userService;
-	
-	@Mock
-	private RoleDao roleDao;
-	
-	@Autowired
-	private WebApplicationContext webApplicationContext;
 	  
 	@Before
 	public void setUp() {

@@ -16,10 +16,6 @@ import java.util.Properties;
  
 @Configuration
 @EnableWebMvc
-/*@ComponentScan(basePackages = {
-        "net.petrikainulainen.spring.testmvc.common.controller",
-        "net.petrikainulainen.spring.testmvc.todo.controller"
-})*/
 @ComponentScan(basePackages = {
         "com.waldronprojects.bookstore"
 })
@@ -40,8 +36,7 @@ public class WebAppContext implements WebMvcConfigurer {
         SimpleMappingExceptionResolver exceptionResolver = new SimpleMappingExceptionResolver();
  
         Properties exceptionMappings = new Properties();
- 
-        //exceptionMappings.put("net.petrikainulainen.spring.testmvc.todo.exception.TodoNotFoundException", "error/404");
+
         exceptionMappings.put("java.lang.Exception", "error/error");
         exceptionMappings.put("java.lang.RuntimeException", "error/error");
  
@@ -62,7 +57,6 @@ public class WebAppContext implements WebMvcConfigurer {
         InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
  
         viewResolver.setViewClass(JstlView.class);
-        //viewResolver.setPrefix("/WEB-INF/jsp/");
         viewResolver.setPrefix("/WEB-INF/view/");
         viewResolver.setSuffix(".jsp");
  
