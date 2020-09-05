@@ -1,14 +1,19 @@
 package com.waldronprojects.bookstore.dao;
 
 import com.waldronprojects.bookstore.entity.User;
+import com.waldronprojects.bookstore.entity.factory.UserType;
+
+import java.util.List;
 
 public interface UserDao {
 
-    public User findByUsername(String username);
+    User findByUsername(String username);
     
-    public void addUser(User user);
+    void addUser(User user);
 
-    public User findUserById(Long id);
+    User findUserById(Long id);
 
-	public void deleteUser(Long id);
+	void deleteUser(Long id);
+
+    List<User> getUsersOfType(UserType userType);
 }
