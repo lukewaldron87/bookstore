@@ -3,11 +3,11 @@ package com.waldronprojects.bookstore.dao;
 import com.waldronprojects.bookstore.config.MvcConfig;
 import com.waldronprojects.bookstore.entity.Customer;
 import com.waldronprojects.bookstore.entity.Employee;
-import com.waldronprojects.bookstore.entity.Role;
 import com.waldronprojects.bookstore.entity.User;
 import com.waldronprojects.bookstore.entity.factory.RoleType;
 import com.waldronprojects.bookstore.entity.factory.UserEntityFactory;
 import com.waldronprojects.bookstore.entity.factory.UserType;
+import com.waldronprojects.bookstore.util.RoleTestUtils;
 import com.waldronprojects.bookstore.util.UnitTestUserEntityFactory;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,7 +19,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collection;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -68,7 +67,7 @@ public class UserDaoImplTest {
 		Long id = 1L;
 		String expectedUsername = "customer1";
 		User user = userDao.findUserById(id);
-		boolean containsRole = testAssignedRoles(user, RoleType.ROLE_CUSTOMER);
+		boolean containsRole = RoleTestUtils.testAssignedRoles(user, RoleType.ROLE_CUSTOMER);
 		assertEquals(id, user.getId());
 		assertEquals(expectedUsername, user.getUsername());
 		assertTrue(containsRole);
@@ -80,7 +79,7 @@ public class UserDaoImplTest {
 	public void testAddCustomerUser(){
 		User createdCustomerUser =  userEntityFactory.createUser(RoleType.ROLE_CUSTOMER);
 		User returnedCustomerUser = addAndFindUser(createdCustomerUser);
-		boolean containsRole = testAssignedRoles(returnedCustomerUser, RoleType.ROLE_CUSTOMER);
+		boolean containsRole = RoleTestUtils.testAssignedRoles(returnedCustomerUser, RoleType.ROLE_CUSTOMER);
 		assertEquals(createdCustomerUser, returnedCustomerUser);
 		assertTrue(returnedCustomerUser instanceof Customer);
 		assertTrue(containsRole);
@@ -92,7 +91,7 @@ public class UserDaoImplTest {
 	public void testAddEmployeeUser() {
 		User createdEmployeeUser =  userEntityFactory.createUser(RoleType.ROLE_EMPLOYEE);
 		User returnedEmployeeUser = addAndFindUser(createdEmployeeUser);
-		boolean containsRole = testAssignedRoles(returnedEmployeeUser, RoleType.ROLE_EMPLOYEE);
+		boolean containsRole = RoleTestUtils.testAssignedRoles(returnedEmployeeUser, RoleType.ROLE_EMPLOYEE);
 		assertEquals(createdEmployeeUser, returnedEmployeeUser);
 		assertTrue(returnedEmployeeUser instanceof Employee);
 		assertTrue(containsRole);
@@ -104,7 +103,7 @@ public class UserDaoImplTest {
 	public void testAddAdminUser(){
 		User createdAdminUser =  userEntityFactory.createUser(RoleType.ROLE_ADMIN);
 		User returnedAdminUser = addAndFindUser(createdAdminUser);
-		boolean containsRole = testAssignedRoles(returnedAdminUser, RoleType.ROLE_ADMIN);
+		boolean containsRole = RoleTestUtils.testAssignedRoles(returnedAdminUser, RoleType.ROLE_ADMIN);
 		assertEquals(createdAdminUser, returnedAdminUser);
 		assertTrue(returnedAdminUser instanceof Employee);
 		assertTrue(containsRole);
@@ -155,19 +154,7 @@ public class UserDaoImplTest {
 		Customer customer = (Customer) customerList.get(0);
 		assertEquals(expectedUsername, customer.getUsername());
 		assertEquals(expectedAddressLine1, customer.getAddressLine1());
-		testAssignedRoles(customer, RoleType.ROLE_CUSTOMER);
-	}
-
-	private boolean testAssignedRoles(User user, RoleType roleType){
-		Collection<Role> roles = user.getRoles();
-		boolean containsRole = false;
-		for(Role role: roles){
-			if(role.getName().equals(roleType.toString())){
-				containsRole = true;
-				break;
-			}
-		}
-		return containsRole;
+		RoleTestUtils.testAssignedRoles(customer, RoleType.ROLE_CUSTOMER);
 	}
 
 	@Test

@@ -35,6 +35,10 @@ public class UnitTestRoleEntityCollectionFactory extends RoleEntityCollectionFac
         return roleCollection;
     }
 
+    /**
+     * Admins must be Employees so we need to return a list with both roles
+     * @return A Collection of roles with an Admin and Employee Role
+     */
     private Collection<Role> createAdminRole(){
         Collection<Role> roleCollection = createEmployeeRole();
         roleCollection.add(new Role(RoleType.ROLE_ADMIN.toString()));
