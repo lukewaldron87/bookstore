@@ -6,8 +6,8 @@ import com.waldronprojects.bookstore.dto.UserDto;
 import com.waldronprojects.bookstore.dto.factory.UserDtoFactory;
 import com.waldronprojects.bookstore.entity.Customer;
 import com.waldronprojects.bookstore.entity.User;
+import com.waldronprojects.bookstore.entity.factory.RoleType;
 import com.waldronprojects.bookstore.entity.factory.UserEntityFactory;
-import com.waldronprojects.bookstore.entity.factory.UserType;
 import com.waldronprojects.bookstore.service.CustomerService;
 import com.waldronprojects.bookstore.service.UserService;
 import com.waldronprojects.bookstore.util.UnitTestUserDtoFactory;
@@ -76,11 +76,11 @@ public class CustomerControllerTest {
 	@Test
 	public void testListCustomers() throws Exception {
 		UserEntityFactory userEntityFactory = new UnitTestUserEntityFactory();
-		User customer1 = userEntityFactory.createUser(UserType.CUSTOMER);
-		User customer2 = userEntityFactory.createUser(UserType.CUSTOMER);
+		User customer1 = userEntityFactory.createUser(RoleType.ROLE_CUSTOMER);
+		User customer2 = userEntityFactory.createUser(RoleType.ROLE_CUSTOMER);
 		when(customerService.getCustomers())
 			.thenReturn(Arrays.asList((Customer)customer1, (Customer)customer2));
-		
+
 		mockMvc.perform(get("/employee/customer/list"))
 				.andExpect(status().isOk())
 				.andExpect(view().name("employee/list-customers"))
@@ -95,7 +95,7 @@ public class CustomerControllerTest {
 
 	@Test
 	public void testShowFormForUpdate() throws Exception{
-		UserDto userDto = userDtoFactory.createUserDto(UserType.CUSTOMER);
+		UserDto userDto = userDtoFactory.createUserDto(RoleType.ROLE_CUSTOMER);
 		when(userService.getUser(userDto.getId())).thenReturn(userDto);
 
 		mockMvc.perform(get("/employee/customer/showFormForUpdate")
@@ -111,7 +111,7 @@ public class CustomerControllerTest {
 
 	@Test
 	public void testSaveCustomer() throws Exception{
-		UserDto userDto = userDtoFactory.createUserDto(UserType.CUSTOMER);
+		UserDto userDto = userDtoFactory.createUserDto(RoleType.ROLE_CUSTOMER);
 		mockMvc.perform(get("/employee/customer/saveCustomer")
 						.flashAttr("customer",userDto))
 				.andExpect(status().isFound())
@@ -123,7 +123,7 @@ public class CustomerControllerTest {
 
 	@Test
 	public void testDelete() throws Exception{
-		Long id = 1l;
+		Long id = 1L;
 		mockMvc.perform(get("/employee/customer/delete")
 						.param("userId", Long.toString(id)))
 				.andExpect(status().isFound())

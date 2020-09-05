@@ -4,13 +4,13 @@ import com.waldronprojects.bookstore.config.TestContext;
 import com.waldronprojects.bookstore.config.WebAppContext;
 import com.waldronprojects.bookstore.dto.CustomerDto;
 import com.waldronprojects.bookstore.dto.UserDto;
-import com.waldronprojects.bookstore.util.UnitTestUserDtoFactory;
 import com.waldronprojects.bookstore.dto.factory.UserDtoFactory;
 import com.waldronprojects.bookstore.entity.User;
-import com.waldronprojects.bookstore.util.UnitTestUserEntityFactory;
+import com.waldronprojects.bookstore.entity.factory.RoleType;
 import com.waldronprojects.bookstore.entity.factory.UserEntityFactory;
-import com.waldronprojects.bookstore.entity.factory.UserType;
 import com.waldronprojects.bookstore.service.UserService;
+import com.waldronprojects.bookstore.util.UnitTestUserDtoFactory;
+import com.waldronprojects.bookstore.util.UnitTestUserEntityFactory;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -45,7 +45,7 @@ public class RegistrationControllerTest {
     private UserService userService;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
 
         InternalResourceViewResolver viewResolver =
@@ -73,9 +73,9 @@ public class RegistrationControllerTest {
     @Test
     public void testProcessRegistrationFormForNewUser() throws Exception {
         CustomerDto customer = (CustomerDto) userDtoFactory
-                .createUserDto(UserType.CUSTOMER);
+                .createUserDto(RoleType.ROLE_CUSTOMER);
         UserEntityFactory userEntityFactory = new UnitTestUserEntityFactory();
-        User user = userEntityFactory.createUser(UserType.CUSTOMER);
+        User user = userEntityFactory.createUser(RoleType.ROLE_CUSTOMER);
         when(userService.findUsername(customer.getUsername()))
                 .thenReturn(user);
 
@@ -93,7 +93,7 @@ public class RegistrationControllerTest {
     @Test
     public void testProcessRegistrationFormBadBindingResult() throws Exception {
         CustomerDto customer = (CustomerDto) userDtoFactory
-                .createUserDto(UserType.CUSTOMER);
+                .createUserDto(RoleType.ROLE_CUSTOMER);
         customer.setEmail("bad email");
 
         mockMvc.perform(post("/register/processRegistrationForm")
@@ -107,7 +107,7 @@ public class RegistrationControllerTest {
     @Test
     public void testProcessRegistrationFormForExistingUser() throws Exception {
         CustomerDto customer = (CustomerDto) userDtoFactory
-                .createUserDto(UserType.CUSTOMER);
+                .createUserDto(RoleType.ROLE_CUSTOMER);
 
         when(userService.findUsername(customer.getUsername()))
                 .thenReturn(null);

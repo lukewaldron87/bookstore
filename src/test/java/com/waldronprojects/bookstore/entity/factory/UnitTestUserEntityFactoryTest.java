@@ -24,25 +24,25 @@ public class UnitTestUserEntityFactoryTest {
 
     @Test
     public void testCreateUserReturnsCorrectCustomerType(){
-        User user = userEntityFactory.createUser(UserType.CUSTOMER);
+        User user = userEntityFactory.createUser(RoleType.ROLE_CUSTOMER);
         assertTrue(user instanceof Customer);
     }
 
     @Test
     public void testCreateUserReturnsCorrectEmployeeType(){
-        User user = userEntityFactory.createUser(UserType.EMPLOYEE);
+        User user = userEntityFactory.createUser(RoleType.ROLE_EMPLOYEE);
         assertTrue(user instanceof Employee);
     }
 
     @Test
     public void testCreateUserReturnsCorrectAdminType(){
-        User user = userEntityFactory.createUser(UserType.ADMIN);
+        User user = userEntityFactory.createUser(RoleType.ROLE_ADMIN);
         assertTrue(user instanceof Employee);
     }
 
     @Test
     public void testCreateUserStaticValuesForCustomer(){
-        Customer customer = (Customer) userEntityFactory.createUser(UserType.CUSTOMER);
+        Customer customer = (Customer) userEntityFactory.createUser(RoleType.ROLE_CUSTOMER);
         assertEquals(customer.getUsername(), "username0");
         assertEquals(customer.getPassword(), "password0");
         assertEquals(customer.getFirstName(), "firstName0");
@@ -62,7 +62,7 @@ public class UnitTestUserEntityFactoryTest {
     
     @Test
     public void testCreateUserStaticValuesForEmployee(){
-        Employee employee = (Employee) userEntityFactory.createUser(UserType.EMPLOYEE);
+        Employee employee = (Employee) userEntityFactory.createUser(RoleType.ROLE_EMPLOYEE);
         testEmployeeStaticValues(employee);
         Collection<Role> roleCollection = employee.getRoles();
         boolean containsRole = isRoleInCollection(roleCollection, "ROLE_EMPLOYEE");
@@ -71,7 +71,7 @@ public class UnitTestUserEntityFactoryTest {
 
     @Test
     public void testCreateUserStaticValuesForAdmin(){
-        Employee adminEmployee = (Employee) userEntityFactory.createUser(UserType.ADMIN);
+        Employee adminEmployee = (Employee) userEntityFactory.createUser(RoleType.ROLE_ADMIN);
         testEmployeeStaticValues(adminEmployee);
         Collection<Role> roleCollection = adminEmployee.getRoles();
         boolean containsRole = isRoleInCollection(roleCollection, "ROLE_EMPLOYEE");
@@ -95,6 +95,7 @@ public class UnitTestUserEntityFactoryTest {
         for(Role role: roleCollection){
             if(role.getName().equals(roleName)){
                 containsRole = true;
+                break;
             }
         }
         return containsRole;

@@ -1,17 +1,16 @@
 package com.waldronprojects.bookstore.integrationtests;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import com.waldronprojects.bookstore.util.UnitTestUserDtoFactory;
+import com.waldronprojects.bookstore.dto.CustomerDto;
 import com.waldronprojects.bookstore.dto.factory.UserDtoFactory;
-import com.waldronprojects.bookstore.util.UnitTestUserEntityFactory;
+import com.waldronprojects.bookstore.entity.Customer;
+import com.waldronprojects.bookstore.entity.factory.RoleType;
 import com.waldronprojects.bookstore.entity.factory.UserEntityFactory;
-import com.waldronprojects.bookstore.entity.factory.UserType;
+import com.waldronprojects.bookstore.util.UnitTestUserDtoFactory;
+import com.waldronprojects.bookstore.util.UnitTestUserEntityFactory;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
 
-import com.waldronprojects.bookstore.dto.CustomerDto;
-import com.waldronprojects.bookstore.entity.Customer;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ModelMapperTest {
 	
@@ -19,7 +18,7 @@ public class ModelMapperTest {
 	public void testDtoToEntity() {
 		UserDtoFactory userDtoFactory = new UnitTestUserDtoFactory();
 		CustomerDto customerDto = 
-				(CustomerDto)userDtoFactory.createUserDto(UserType.CUSTOMER);
+				(CustomerDto)userDtoFactory.createUserDto(RoleType.ROLE_CUSTOMER);
 		ModelMapper modelMapper = new ModelMapper();
 		Customer customerEntity = modelMapper.map(customerDto, Customer.class);
 		checkVariables(customerEntity, customerDto);
@@ -29,7 +28,7 @@ public class ModelMapperTest {
 	public void testEntityToDto() {
 		UserEntityFactory userEntityFactory = new UnitTestUserEntityFactory();
 		Customer customerEntity = 
-				(Customer)userEntityFactory.createUser(UserType.CUSTOMER);
+				(Customer)userEntityFactory.createUser(RoleType.ROLE_CUSTOMER);
 		ModelMapper modelMapper = new ModelMapper();
 		CustomerDto customerDto = modelMapper.map(customerEntity, CustomerDto.class);
 		checkVariables(customerEntity, customerDto);

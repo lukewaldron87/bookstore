@@ -4,14 +4,14 @@ import com.waldronprojects.bookstore.config.TestContext;
 import com.waldronprojects.bookstore.config.WebAppContext;
 import com.waldronprojects.bookstore.dto.EmployeeDto;
 import com.waldronprojects.bookstore.dto.UserDto;
-import com.waldronprojects.bookstore.util.UnitTestUserDtoFactory;
 import com.waldronprojects.bookstore.dto.factory.UserDtoFactory;
 import com.waldronprojects.bookstore.entity.Employee;
-import com.waldronprojects.bookstore.util.UnitTestUserEntityFactory;
+import com.waldronprojects.bookstore.entity.factory.RoleType;
 import com.waldronprojects.bookstore.entity.factory.UserEntityFactory;
-import com.waldronprojects.bookstore.entity.factory.UserType;
 import com.waldronprojects.bookstore.service.EmployeeService;
 import com.waldronprojects.bookstore.service.UserService;
+import com.waldronprojects.bookstore.util.UnitTestUserDtoFactory;
+import com.waldronprojects.bookstore.util.UnitTestUserEntityFactory;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -50,7 +50,7 @@ public class EmployeeControllerTest {
     private UserService userService;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
 
         InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
@@ -87,8 +87,8 @@ public class EmployeeControllerTest {
 
     private List<Employee> createEmployeeList(){
         UserEntityFactory userEntityFactory = new UnitTestUserEntityFactory();
-        Employee employee1 = (Employee) userEntityFactory.createUser(UserType.EMPLOYEE);
-        Employee employee2 = (Employee) userEntityFactory.createUser(UserType.EMPLOYEE);
+        Employee employee1 = (Employee) userEntityFactory.createUser(RoleType.ROLE_EMPLOYEE);
+        Employee employee2 = (Employee) userEntityFactory.createUser(RoleType.ROLE_EMPLOYEE);
         return Arrays.asList(employee1, employee2);
     }
 
@@ -130,7 +130,7 @@ public class EmployeeControllerTest {
 
     private UserDto createEmployeeUserDto(){
         UserDtoFactory userDtoFactory = new UnitTestUserDtoFactory();
-        return userDtoFactory.createUserDto(UserType.EMPLOYEE);
+        return userDtoFactory.createUserDto(RoleType.ROLE_EMPLOYEE);
     }
 
     @Test
@@ -141,7 +141,7 @@ public class EmployeeControllerTest {
                 .andExpect(status().isFound())
                 .andExpect(view().name("redirect:list"))
                 .andExpect(redirectedUrl("list?userId=" + userId))
-                .andExpect(model().attribute("userId", userId));;
+                .andExpect(model().attribute("userId", userId));
         verify(userService, times(1)).deleteUser(userId);
         verifyNoMoreInteractions(userService);
     }

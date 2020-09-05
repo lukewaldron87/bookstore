@@ -1,9 +1,9 @@
 package com.waldronprojects.bookstore.validation;
 
 import com.waldronprojects.bookstore.dto.UserDto;
-import com.waldronprojects.bookstore.util.UnitTestUserDtoFactory;
 import com.waldronprojects.bookstore.dto.factory.UserDtoFactory;
-import com.waldronprojects.bookstore.entity.factory.UserType;
+import com.waldronprojects.bookstore.entity.factory.RoleType;
+import com.waldronprojects.bookstore.util.UnitTestUserDtoFactory;
 import org.hibernate.annotations.common.annotationfactory.AnnotationDescriptor;
 import org.hibernate.annotations.common.annotationfactory.AnnotationFactory;
 import org.junit.Before;
@@ -26,7 +26,7 @@ public class FieldMatchValidatorTest {
     @Before
     public void setUp(){
         UserDtoFactory factory = new UnitTestUserDtoFactory();
-        userDto = factory.createUserDto(UserType.CUSTOMER);
+        userDto = factory.createUserDto(RoleType.ROLE_CUSTOMER);
         FieldMatch fieldMatch = createAnnotation("password",
                                                 "matchingPassword",
                                                 "The password fields must match");

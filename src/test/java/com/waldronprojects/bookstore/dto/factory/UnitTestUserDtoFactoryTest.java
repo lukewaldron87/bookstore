@@ -4,7 +4,7 @@ import com.waldronprojects.bookstore.dto.CustomerDto;
 import com.waldronprojects.bookstore.dto.EmployeeDto;
 import com.waldronprojects.bookstore.dto.UserDto;
 import com.waldronprojects.bookstore.entity.Role;
-import com.waldronprojects.bookstore.entity.factory.UserType;
+import com.waldronprojects.bookstore.entity.factory.RoleType;
 import com.waldronprojects.bookstore.util.UnitTestUserDtoFactory;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,25 +25,25 @@ public class UnitTestUserDtoFactoryTest {
 
     @Test
     public void testCreateUserDtoReturnsCorrectCustomerType() {
-        UserDto user = userDtoFactory.createUserDto(UserType.CUSTOMER);
+        UserDto user = userDtoFactory.createUserDto(RoleType.ROLE_CUSTOMER);
         assertTrue(user instanceof CustomerDto);
     }
 
     @Test
     public void testCreateUserDtoReturnsCorrectEmployeeType() {
-        UserDto user = userDtoFactory.createUserDto(UserType.EMPLOYEE);
+        UserDto user = userDtoFactory.createUserDto(RoleType.ROLE_EMPLOYEE);
         assertTrue(user instanceof EmployeeDto);
     }
 
     @Test
     public void testCreateUserDtoReturnsCorrectAdminType() {
-        UserDto user = userDtoFactory.createUserDto(UserType.ADMIN);
+        UserDto user = userDtoFactory.createUserDto(RoleType.ROLE_ADMIN);
         assertTrue(user instanceof EmployeeDto);
     }
 
     @Test
     public void testCreateUserStaticValuesForCustomer(){
-        CustomerDto customer = (CustomerDto) userDtoFactory.createUserDto(UserType.CUSTOMER);
+        CustomerDto customer = (CustomerDto) userDtoFactory.createUserDto(RoleType.ROLE_CUSTOMER);
         Long id = 0L;
         assertEquals(id,customer.getId() );
         assertEquals("username0", customer.getUsername());
@@ -65,7 +65,7 @@ public class UnitTestUserDtoFactoryTest {
 
     @Test
     public void testCreateUserStaticValuesForEmployee(){
-        EmployeeDto employee = (EmployeeDto) userDtoFactory.createUserDto(UserType.EMPLOYEE);
+        EmployeeDto employee = (EmployeeDto) userDtoFactory.createUserDto(RoleType.ROLE_EMPLOYEE);
         testEmployeeStaticValues(employee);
         Collection<Role> roleCollection = employee.getRoles();
         boolean containsRole = isRoleInCollection(roleCollection, "ROLE_EMPLOYEE");
@@ -74,7 +74,7 @@ public class UnitTestUserDtoFactoryTest {
 
     @Test
     public void testCreateUserStaticValuesForAdmin(){
-        EmployeeDto adminEmployee = (EmployeeDto) userDtoFactory.createUserDto(UserType.ADMIN);
+        EmployeeDto adminEmployee = (EmployeeDto) userDtoFactory.createUserDto(RoleType.ROLE_ADMIN);
         testEmployeeStaticValues(adminEmployee);
         Collection<Role> roleCollection = adminEmployee.getRoles();
         boolean containsRole = isRoleInCollection(roleCollection, "ROLE_EMPLOYEE");
@@ -100,6 +100,7 @@ public class UnitTestUserDtoFactoryTest {
         for(Role role: roleCollection){
             if(role.getName().equals(roleName)){
                 containsRole = true;
+                break;
             }
         }
         return containsRole;

@@ -7,27 +7,29 @@ import com.waldronprojects.bookstore.dto.factory.UserDtoFactory;
 import com.waldronprojects.bookstore.entity.Role;
 import com.waldronprojects.bookstore.entity.factory.RoleEntityCollectionFactory;
 import com.waldronprojects.bookstore.entity.factory.RoleType;
-import com.waldronprojects.bookstore.entity.factory.UserType;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 public class UnitTestUserDtoFactory extends UserDtoFactory {
 
 	private	RoleEntityCollectionFactory roleEntityCollectionFactory;
-	private final Map<UserType, UserDto> FACTORY_MAP;
+	private final Map<RoleType, UserDto> FACTORY_MAP;
 
 	public UnitTestUserDtoFactory(){
 		roleEntityCollectionFactory = new UnitTestRoleEntityCollectionFactory();
-		final HashMap<UserType, UserDto> factoryMap = new HashMap<>();
-		factoryMap.put(UserType.CUSTOMER, createCustomerUser());
-		factoryMap.put(UserType.EMPLOYEE, createRegularEmployeeUser());
-		factoryMap.put(UserType.ADMIN, createAdminEmployeeUser());
+		final HashMap<RoleType, UserDto> factoryMap = new HashMap<>();
+		factoryMap.put(RoleType.ROLE_CUSTOMER, createCustomerUser());
+		factoryMap.put(RoleType.ROLE_EMPLOYEE, createRegularEmployeeUser());
+		factoryMap.put(RoleType.ROLE_ADMIN, createAdminEmployeeUser());
 		FACTORY_MAP = Collections.unmodifiableMap(factoryMap);
 	}
 
 	@Override
-	public UserDto createUserDto(UserType userType) {
-		return FACTORY_MAP.get(userType);
+	public UserDto createUserDto(RoleType roleType) {
+		return FACTORY_MAP.get(roleType);
 	}
 
 	private UserDto createCustomerUser() {

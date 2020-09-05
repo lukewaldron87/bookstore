@@ -10,8 +10,8 @@ import com.waldronprojects.bookstore.entity.Customer;
 import com.waldronprojects.bookstore.entity.Employee;
 import com.waldronprojects.bookstore.entity.Role;
 import com.waldronprojects.bookstore.entity.User;
+import com.waldronprojects.bookstore.entity.factory.RoleType;
 import com.waldronprojects.bookstore.entity.factory.UserEntityFactory;
-import com.waldronprojects.bookstore.entity.factory.UserType;
 import com.waldronprojects.bookstore.util.UnitTestUserDtoFactory;
 import com.waldronprojects.bookstore.util.UnitTestUserEntityFactory;
 import org.junit.Before;
@@ -62,7 +62,7 @@ public class UserServiceImplTest {
 	@Test
 	public void testFindUsername() {
 		// Create a customer for userDao.findByUsername to return
-		User mockUser = userEntityFactory.createUser(UserType.CUSTOMER);
+		User mockUser = userEntityFactory.createUser(RoleType.ROLE_CUSTOMER);
 		Mockito.when(userDao.findByUsername(mockUser.getUsername()))
 			.thenReturn(mockUser);
 		User returnedUser = userServiceImpl.findUsername(mockUser.getUsername());
@@ -81,7 +81,7 @@ public class UserServiceImplTest {
 	public void testSaveCustomerUser() {
 		
 		// call saveUser and pass a created userDto to it
-		UserDto userDto = dtoFactory.createUserDto(UserType.CUSTOMER);
+		UserDto userDto = dtoFactory.createUserDto(RoleType.ROLE_CUSTOMER);
 		// mock call to roleDao.findRoleByName
 		Mockito.when(roleDao.findRoleByName("ROLE_CUSTOMER"))
 				.thenReturn(new Role("ROLE_CUSTOMER"));
@@ -102,7 +102,7 @@ public class UserServiceImplTest {
 
 	@Test
 	public void testSaveEmployeeUser() {
-		UserDto userDto = dtoFactory.createUserDto(UserType.EMPLOYEE);
+		UserDto userDto = dtoFactory.createUserDto(RoleType.ROLE_EMPLOYEE);
 		Mockito.when(roleDao.findRoleByName("ROLE_EMPLOYEE"))
 				.thenReturn(new Role("ROLE_EMPLOYEE"));
 		String password = userDto.getPassword();
@@ -120,7 +120,7 @@ public class UserServiceImplTest {
 
 	@Test
 	public void testSaveAdminEmployeeUser() {
-		UserDto userDto = dtoFactory.createUserDto(UserType.ADMIN);
+		UserDto userDto = dtoFactory.createUserDto(RoleType.ROLE_ADMIN);
 		// return unencoded password to allow assert comparision
 		String password = userDto.getPassword();
 		Mockito.when(passwordEncoder.encode(password))
@@ -142,7 +142,7 @@ public class UserServiceImplTest {
 
 	@Test
 	public void testGetCustomerUser(){
-		User user = userEntityFactory.createUser(UserType.CUSTOMER);
+		User user = userEntityFactory.createUser(RoleType.ROLE_CUSTOMER);
 		Mockito.when(userDao.findUserById(user.getId()))
 				.thenReturn(user);
 		UserDto userDto = userServiceImpl.getUser(user.getId());
@@ -152,7 +152,7 @@ public class UserServiceImplTest {
 
 	@Test
 	public void testGetEmployeeUser(){
-		User user = userEntityFactory.createUser(UserType.EMPLOYEE);
+		User user = userEntityFactory.createUser(RoleType.ROLE_EMPLOYEE);
 		Mockito.when(userDao.findUserById(user.getId()))
 				.thenReturn(user);
 		UserDto userDto = userServiceImpl.getUser(user.getId());
@@ -162,7 +162,7 @@ public class UserServiceImplTest {
 
 	@Test
 	public void testGetAdminEmployeeUser(){
-		User user = userEntityFactory.createUser(UserType.ADMIN);
+		User user = userEntityFactory.createUser(RoleType.ROLE_ADMIN);
 		Mockito.when(userDao.findUserById(user.getId()))
 				.thenReturn(user);
 		UserDto userDto = userServiceImpl.getUser(user.getId());
@@ -218,7 +218,7 @@ public class UserServiceImplTest {
 
 	@Test
 	public void testLoadCustomerUserByUsername(){
-		User user = userEntityFactory.createUser(UserType.CUSTOMER);
+		User user = userEntityFactory.createUser(RoleType.ROLE_CUSTOMER);
 		Mockito.when(userDao.findByUsername(user.getUsername())).thenReturn(user);
 		UserDetails userDetails = userServiceImpl.loadUserByUsername(user.getUsername());
 		testUserDetails(userDetails, user);
@@ -226,7 +226,7 @@ public class UserServiceImplTest {
 
 	@Test
 	public void testLoadEmployeeUserByUsername(){
-		User user = userEntityFactory.createUser(UserType.EMPLOYEE);
+		User user = userEntityFactory.createUser(RoleType.ROLE_EMPLOYEE);
 		Mockito.when(userDao.findByUsername(user.getUsername())).thenReturn(user);
 		UserDetails userDetails = userServiceImpl.loadUserByUsername(user.getUsername());
 		testUserDetails(userDetails, user);
@@ -234,7 +234,7 @@ public class UserServiceImplTest {
 
 	@Test
 	public void testLoadAdminUserByUsername(){
-		User user = userEntityFactory.createUser(UserType.ADMIN);
+		User user = userEntityFactory.createUser(RoleType.ROLE_ADMIN);
 		Mockito.when(userDao.findByUsername(user.getUsername())).thenReturn(user);
 		UserDetails userDetails = userServiceImpl.loadUserByUsername(user.getUsername());
 		testUserDetails(userDetails, user);
@@ -245,7 +245,7 @@ public class UserServiceImplTest {
 		assertEquals(userDetails.getPassword(), user.getPassword());
 
 		Collection<Role> roleCollection = user.getRoles();
-		List<String> roleNameList = new ArrayList<String>();
+		List<String> roleNameList = new ArrayList<>();
 		for(Role role: roleCollection){
 			roleNameList.add(role.getName());
 		}
