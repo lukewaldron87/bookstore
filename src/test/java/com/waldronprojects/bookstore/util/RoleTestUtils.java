@@ -7,6 +7,11 @@ import com.waldronprojects.bookstore.entity.factory.RoleType;
 import java.util.Collection;
 
 public class RoleTestUtils {
+    
+    // Surpress default constructor for noninstantiability
+    private RoleTestUtils(){
+        throw new AssertionError();
+    }
 
     public static boolean testAssignedRoles(User user, RoleType roleType){
         Collection<Role> roles = user.getRoles();
