@@ -2,21 +2,34 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
+<c:set var="root" value="${pageContext.request.contextPath}"/>
 <head>
 	
 	<title>Customer Registration</title>
 	<meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	
-	<!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-	
+	<link rel='icon' href='${root}/resources/images/favicon.ico' type='image/x-icon' sizes="16x16" />
+
+	<!-- Bootstrap core CSS -->
+	<link href="https://getbootstrap.com/docs/4.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+	<!-- Custom styles for this template -->
+	<link href="https://getbootstrap.com/docs/4.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
 </head>
 <body>
 
-	<!-- Registration Form -->
+<nav class="navbar navbar-expand-md navbar-dark bg-dark static-top">
+	<a class="navbar-brand" href="#">Luke's Books</a>
+	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon"></span>
+	</button>
+</nav>
+
+<main role="main" class="container">
+    <!-- Registration Form -->
 	<form:form
-		action="${pageContext.request.contextPath}/register/processRegistrationForm"
+		action="${root}/register/processRegistrationForm"
 		modelAttribute="customer" class="form-horizontal">
 
 		<!-- Place for messages: error, alert etc ... -->
@@ -38,7 +51,8 @@
 		</div>
 
 		<!-- User name -->
-		<div style="margin-bottom: 25px" class="input-group">
+		<div class="form-group">
+			<label for="username">Username</label>
 			<span class="input-group-addon"><i
 				class="glyphicon glyphicon-user"></i></span>
 			<form:errors path="username" cssClass="error" />
@@ -47,7 +61,8 @@
 		</div>
 
 		<!-- Password -->
-		<div style="margin-bottom: 25px" class="input-group">
+		<div class="form-group">
+			<label for="password">Password</label>
 			<span class="input-group-addon"><i
 				class="glyphicon glyphicon-lock"></i></span>
 			<form:errors path="password" cssClass="error" />
@@ -56,7 +71,8 @@
 		</div>
 
 		<!-- Confirm Password -->
-		<div style="margin-bottom: 25px" class="input-group">
+		<div class="form-group">
+			<label for="matchingPassword">Confirm Password</label>
 			<span class="input-group-addon"><i
 				class="glyphicon glyphicon-lock"></i></span>
 			<form:errors path="matchingPassword" cssClass="error" />
@@ -65,7 +81,8 @@
 		</div>
 
 		<!-- First name -->
-		<div style="margin-bottom: 25px" class="input-group">
+		<div class="form-group">
+			<label for="firstName">First Name</label>
 			<span class="input-group-addon"><i
 				class="glyphicon glyphicon-user"></i></span>
 			<form:errors path="firstName" cssClass="error" />
@@ -74,7 +91,8 @@
 		</div>
 
 		<!-- Last name -->
-		<div style="margin-bottom: 25px" class="input-group">
+		<div class="form-group">
+			<label for="lastName">Last Name</label>
 			<span class="input-group-addon"><i
 				class="glyphicon glyphicon-user"></i></span>
 			<form:errors path="lastName" cssClass="error" />
@@ -83,7 +101,8 @@
 		</div>
 
 		<!-- Email -->
-		<div style="margin-bottom: 25px" class="input-group">
+		<div class="form-group">
+			<label for="email">Email</label>
 			<span class="input-group-addon"><i
 				class="glyphicon glyphicon-user"></i></span>
 			<form:errors path="email" cssClass="error" />
@@ -91,7 +110,8 @@
 		</div>
 
 		<!-- Address Line 1 -->
-		<div style="margin-bottom: 25px" class="input-group">
+		<div class="form-group">
+			<label for="addressLine1">Address Line 1</label>
 			<span class="input-group-addon"><i
 				class="glyphicon glyphicon-user"></i></span>
 			<form:errors path="addressLine1" cssClass="error" />
@@ -99,7 +119,8 @@
 		</div>
 
 		<!-- Address Line 2 -->
-		<div style="margin-bottom: 25px" class="input-group">
+		<div class="form-group">
+			<label for="addressLine2">Address Line 2</label>
 			<span class="input-group-addon"><i
 				class="glyphicon glyphicon-user"></i></span>
 			<form:errors path="addressLine2" cssClass="error" />
@@ -107,7 +128,8 @@
 		</div>
 
 		<!-- City -->
-		<div style="margin-bottom: 25px" class="input-group">
+		<div class="form-group">
+			<label for="city">City</label>
 			<span class="input-group-addon"><i
 				class="glyphicon glyphicon-user"></i></span>
 			<form:errors path="city" cssClass="error" />
@@ -115,7 +137,8 @@
 		</div>
 
 		<!-- Country -->
-		<div style="margin-bottom: 25px" class="input-group">
+		<div class="form-group">
+			<label for="country">Country</label>
 			<span class="input-group-addon"><i
 				class="glyphicon glyphicon-user"></i></span>
 			<form:errors path="country" cssClass="error" />
@@ -123,7 +146,8 @@
 		</div>
 
 		<!-- Post Code -->
-		<div style="margin-bottom: 25px" class="input-group">
+		<div class="form-group">
+			<label for="postCode">Post Code</label>
 			<span class="input-group-addon"><i
 				class="glyphicon glyphicon-user"></i></span>
 			<form:errors path="postCode" cssClass="error" />
@@ -131,7 +155,8 @@
 		</div>
 
 		<!-- Phone Number -->
-		<div style="margin-bottom: 25px" class="input-group">
+		<div class="form-group">
+			<label for="phoneNumber">Phone Number</label>
 			<span class="input-group-addon"><i
 				class="glyphicon glyphicon-user"></i></span>
 			<form:errors path="phoneNumber" cssClass="error" />
@@ -142,11 +167,20 @@
 		<div style="margin-top: 10px" class="form-group">
 			<div class="col-sm-6 controls">
 				<button type="submit" class="btn btn-primary">Register</button>
+				<a href=${root} id="cancel" name="cancel" class="btn btn-default">Cancel</a>
+
 			</div>
 		</div>
 
 
 	</form:form>
-
+</main>
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script>window.jQuery || document.write('<script src="https://getbootstrap.com/docs/4.0/assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+<script src="https://getbootstrap.com/docs/4.0/dist/js/bootstrap.min.js"></script>
 </body>
 </html>
