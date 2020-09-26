@@ -17,7 +17,7 @@
 	<link href="https://getbootstrap.com/docs/4.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
 	<!-- Custom styles for this template -->
-	<link href="${root}/resources/css/starter-template.css" rel="stylesheet">
+	<link href="${root}/resources/css/content-template.css" rel="stylesheet">
 
 </head>
 
