@@ -33,35 +33,28 @@
 	
 		<!-- associate data with product id -->
 		<form:hidden path="id"/>
-
-
-		
-		<table>
-			<tbody>
-				<tr>
-					<td><label>Product Name:</label></td>
-					<td><form:input path="productName" /></td>
-				</tr>
-				<tr>
-					<td><label>Unit Price:</label></td>
-					<td><form:input path="unitPrice" /></td>
-				</tr>
-				<tr>
-					<td><label>Description:</label></td>
-					<td><form:input path="description" /></td>
-				</tr>
-			</tbody>
-		</table>
+		<div class="form-group">
+			<label for="productName">Product Name</label>
+			<form:input path="productName" class="form-control" id="productName"/>
+		</div>
+		<div class="form-group">
+			<label for="unitPrice">Unit Price</label>
+			<form:input path="unitPrice" class="form-control" id="unitPrice"/>
+		</div>
+		<div class="form-group">
+			<label for="description">Description</label>
+			<form:input path="description" class="form-control" id="description"/>
+		</div>
 		<button class="btn btn-primary" type="submit">Save</button>
+		<button class="btn btn-primary" type="button"
+				onClick="window.location.href='${pageContext.request.contextPath}/employee/product/list'">
+			Cancel
+		</button>
 		<!-- only show the delete button if product has an id greater than 0 and therefore is not new -->
 		<c:if test="${product.id > 0}" >
-			<button class="btn btn-primary" onClick="deleteProduct()" type="submit"/>Delete</button>
+			<button class="btn btn-primary" type="button" onClick="deleteProduct()" >Delete</button>
 		</c:if>
 	</form:form>
-
-
-
-	<a href=${pageContext.request.contextPath}/employee/product/list>Back to List</a>
 </main>
 
 </body>
