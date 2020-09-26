@@ -33,6 +33,8 @@
 	
 		<!-- associate data with product id -->
 		<form:hidden path="id"/>
+
+
 		
 		<table>
 			<tbody>
@@ -48,18 +50,16 @@
 					<td><label>Description:</label></td>
 					<td><form:input path="description" /></td>
 				</tr>
-				<tr>
-					<td><input type="submit" value="Save" class="save" /></td>
-				</tr>
 			</tbody>
 		</table>
-	
+		<button class="btn btn-primary" type="submit">Save</button>
+		<!-- only show the delete button if product has an id greater than 0 and therefore is not new -->
+		<c:if test="${product.id > 0}" >
+			<button class="btn btn-primary" onClick="deleteProduct()" type="submit"/>Delete</button>
+		</c:if>
 	</form:form>
 
-	<!-- only show the delete button if product has an id greater than 0 and therefore is not new -->
-	<c:if test="${product.id > 0}" >
-		<input onClick="deleteProduct()" type="submit" Value="Delete">
-	</c:if>
+
 
 	<a href=${pageContext.request.contextPath}/employee/product/list>Back to List</a>
 </main>
