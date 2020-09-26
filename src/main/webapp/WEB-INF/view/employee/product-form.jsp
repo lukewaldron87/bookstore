@@ -10,17 +10,26 @@
 	
 	<!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-	
+
+	<script type="text/javascript">
+		function deleteProduct(){
+			var deleteConfirmation = confirm('Are you sure you want to delete this product?');
+			if( deleteConfirmation == true){
+				window.location.href="${pageContext.request.contextPath}/employee/product/delete?productId=<c:out value='${product.id}'/>";
+			}
+		}
+	</script>
 	
 </head>
 
 <body>
+<jsp:include page="employee-navbar.jsp"/>
 
-	<h2>Add Product</h2>
+<main role="main" class="container">
+
+	<h2>Product Form</h2>
 	
-	<h3>Save Production</h3>
-	
-	<form:form action="saveProduct" modelAttribute="product" methoe="POST">
+	<form:form action="saveProduct" modelAttribute="product" method="POST">
 	
 		<!-- associate data with product id -->
 		<form:hidden path="id"/>
@@ -36,14 +45,24 @@
 					<td><form:input path="unitPrice" /></td>
 				</tr>
 				<tr>
+					<td><label>Description:</label></td>
+					<td><form:input path="description" /></td>
+				</tr>
+				<tr>
 					<td><input type="submit" value="Save" class="save" /></td>
 				</tr>
 			</tbody>
 		</table>
 	
 	</form:form>
-	
+
+	<!-- only show the delete button if product has an id greater than 0 and therefore is not new -->
+	<c:if test="${product.id > 0}" >
+		<input onClick="deleteProduct()" type="submit" Value="Delete">
+	</c:if>
+
 	<a href=${pageContext.request.contextPath}/employee/product/list>Back to List</a>
+</main>
 
 </body>
 </html>

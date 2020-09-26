@@ -10,21 +10,28 @@
 	
 	<!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-	
+
+	<!-- Custom styles for this template -->
+	<link href="${pageContext.request.contextPath}/resources/css/starter-template.css" rel="stylesheet">
 	
 </head>
 
 <body>
+<jsp:include page="employee-navbar.jsp"/>
 
+<main role="main" class="container">
 	<h2>Products</h2>
 	
-	<table>
-	
-	<tr>
-		<th>Product Name</th>
-		<th>Unit Price</th>
-	</tr>
-	
+	<table class="table table-hover">
+
+		<thead>
+			<tr>
+				<th scope="col">Product Name</th>
+				<th scope="col">Unit Price</th>
+				<th scope="col"></th>
+			</tr>
+		</thead>
+		<tbody>
 		<!-- loop and print the products -->
 		<c:forEach var="tempProduct" items="${products}">
 			
@@ -32,27 +39,14 @@
 				<c:param name="productId" value="${tempProduct.id}" />
 			</c:url>
 			
-			<c:url var="deleteLink" value="/employee/product/delete">
-				<c:param name="productId" value="${tempProduct.id}" />
-			</c:url>
-			
-			<tr>
+			<tr onclick="window.location='${updateLink}';">
 				<td>${tempProduct.productName}</td>
 				<td>${tempProduct.unitPrice}</td>
-				
-				<!-- cange to link in name for edit -->
-				<td>
-					<a href="${updateLink}">Update</a>
-
-					<a href="${deleteLink}"
-					   onclick="return confirm('Are you sure you want to delete this product?');">
-						Delete
-					</a>
-				</td>
 
 			</tr>
 			
 		</c:forEach>
+		</tbody>
 	</table>
 	
 	<input type="button" value="Add New Product"
@@ -63,6 +57,7 @@
 	<br>
 	
 	<a href=${pageContext.request.contextPath}/employee/showEmployeeMenu>Back to Menu</a>
+</main>
 	
 		<!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
