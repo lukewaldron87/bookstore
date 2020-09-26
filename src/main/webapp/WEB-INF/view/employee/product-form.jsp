@@ -52,7 +52,7 @@
 		</button>
 		<!-- only show the delete button if product has an id greater than 0 and therefore is not new -->
 		<c:if test="${product.id > 0}" >
-			<button class="btn btn-primary" type="button" onClick="deleteProduct()" >Delete</button>
+			<button class="btn btn-primary" type="button" onClick="deleteProduct()">Delete</button>
 		</c:if>
 	</form:form>
 </main>

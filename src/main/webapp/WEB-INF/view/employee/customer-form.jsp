@@ -6,15 +6,26 @@
 	
 	<title>Edit Customer</title>
 	<meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
 	<!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-	
-	
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+	<script type="text/javascript">
+		function deleteCustomer(){
+			var deleteConfirmation = confirm('Are you sure you want to delete this customer?');
+			if( deleteConfirmation == true){
+				window.location.href = "${pageContext.request.contextPath}/employee/customer/delete?userId=<c:out value='${customer.id}'/>";
+			}
+		}
+	</script>
+
 </head>
 
 <body>
+<jsp:include page="employee-navbar.jsp"/>
+
+<main role="main" class="container">
 
 	<h2>Edit Production</h2>
 	
@@ -27,47 +38,45 @@
 		<form:hidden path="matchingPassword"/>
 		<form:hidden path="email"/>
 		<form:hidden path="phoneNumber"/>
-		
-		
-		<table>
-			<tbody>
-				<tr>
-					<td><label>First Name:</label></td>
-					<td><form:input path="firstName" /></td>
-				</tr>
-				<tr>
-					<td><label>Last Name:</label></td>
-					<td><form:input path="lastName" /></td>
-				</tr>
-				<tr>
-					<td><label>Address Line 1:</label></td>
-					<td><form:input path="addressLine1" /></td>
-				</tr>
-				<tr>
-					<td><label>Address Line 2:</label></td>
-					<td><form:input path="addressLine2" /></td>
-				</tr>
-				<tr>
-					<td><label>City:</label></td>
-					<td><form:input path="city" /></td>
-				</tr>
-				<tr>
-					<td><label>Country:</label></td>
-					<td><form:input path="country" /></td>
-				</tr>
-				<tr>
-					<td><label>Post Code:</label></td>
-					<td><form:input path="postCode" /></td>
-				</tr>
-				<tr>
-					<td><input type="submit" value="Save" class="save" /></td>
-				</tr>
-			</tbody>
-		</table>
+
+		<div class="form-group">
+			<label for="firstName">First Name:</label>
+			<form:input path="firstName" class="form-control" id="firstName"/>
+		</div>
+		<div class="form-group">
+			<label for="firstName">Last Name:</label>
+			<form:input path="lastName" class="form-control" id="firstName"/>
+		</div>
+		<div class="form-group">
+			<label for="firstName">Address Line 1:</label>
+			<form:input path="addressLine1" class="form-control" id="firstName"/>
+		</div>
+		<div class="form-group">
+			<label for="firstName">Address Line 2:</label>
+			<form:input path="addressLine2" class="form-control" id="firstName"/>
+		</div>
+		<div class="form-group">
+			<label for="firstName">City:</label>
+			<form:input path="city" class="form-control" id="firstName"/>
+		</div>
+		<div class="form-group">
+			<label for="firstName">Country:</label>
+			<form:input path="country" class="form-control" id="firstName"/>
+		</div>
+		<div class="form-group">
+			<label for="firstName">Post Code:</label>
+			<form:input path="postCode" class="form-control" id="firstName"/>
+		</div>
+		<button class="btn btn-primary" type="submit">Save</button>
+		<button class="btn btn-primary" type="button"
+				onClick="window.location.href='${pageContext.request.contextPath}/employee/customer/list'">
+			Cancel
+		</button>
+		<button class="btn btn-primary" type="button" onClick="deleteCustomer()">Delete</button>
+
 	
 	</form:form>
-	
-	<a href=${pageContext.request.contextPath}/employee/customer/list>Back to List</a>
+</main>
 	
 	
 	<!-- Optional JavaScript -->
