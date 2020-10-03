@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -35,7 +36,7 @@ public class CustomerController {
 		return "employee/customer-form";
 	}
 
-	@RequestMapping("/saveCustomer")
+	@PostMapping("/saveCustomer")
 	public String saveCustomer(@ModelAttribute("customer")CustomerDto customer) {
 		userService.saveUser(customer);
 		return "redirect:list";

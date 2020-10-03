@@ -20,7 +20,7 @@ public class UserDto{
 	private String username;
 	
 	@NotNull(message = "is required")
-	@Size(min = 1, message = "is required")
+	@Size(min = 8, message = "must be at least 8 characters long")
 	private String password;
 	
 	@NotNull(message = "is required")
