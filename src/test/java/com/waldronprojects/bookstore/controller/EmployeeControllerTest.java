@@ -60,14 +60,6 @@ public class EmployeeControllerTest {
     }
 
     @Test
-    public void testShowEmployeeMenu() throws Exception{
-        mockMvc.perform(get("/employee/showEmployeeMenu"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("employee/employee-menu"))
-                .andExpect(forwardedUrl("/WEB-INF/view/employee/employee-menu.jsp"));
-    }
-
-    @Test
     public void testListEmployee() throws Exception{
         UserType userType = UserType.EMPLOYEE;
         List<User> employeeList = createEmployeeList();

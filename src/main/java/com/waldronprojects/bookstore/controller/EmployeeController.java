@@ -20,11 +20,6 @@ public class EmployeeController {
 	@Autowired
 	private UserService userService;
 	
-	@RequestMapping("showEmployeeMenu")
-	public String showEmployeeMenu(Model employeeModel) {
-		return "employee/employee-menu";
-	}
-	
 	@RequestMapping("/list")
 	public String listEmployee(Model employeeModel) {
 		List<User> employeeList = userService.getUsersOfType(UserType.EMPLOYEE);

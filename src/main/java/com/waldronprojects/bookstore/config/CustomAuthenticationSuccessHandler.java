@@ -44,7 +44,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 		String userRoles = authentication.getAuthorities().toString();
 		String requestPath = "";
 		if(userRoles.contains("EMPLOYEE")) {
-			requestPath = "/employee/showEmployeeMenu";
+			requestPath = "/employee/product/list";
 		}
 		return requestPath;
 	}
