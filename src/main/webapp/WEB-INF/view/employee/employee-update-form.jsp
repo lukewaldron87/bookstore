@@ -12,11 +12,22 @@
 	
 	<!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-	
+
+	<script type="text/javascript">
+		function deleteEmployee(){
+			var deleteConfirmation = confirm('Are you sure you want to delete this employee?');
+			if( deleteConfirmation == true){
+				window.location.href = "${pageContext.request.contextPath}/employee/deleteEmployee?userId=<c:out value='${employee.id}'/>";
+			}
+		}
+	</script>
 	
 </head>
 
 <body>
+<jsp:include page="employee-navbar.jsp"/>
+
+<main role="main" class="container">
 
 	<h2>Edit Production</h2>
 	
@@ -26,47 +37,43 @@
 		<form:hidden path="id"/>
 		<form:hidden path="password"/>
 		<form:hidden path="matchingPassword"/>
-		
-		
-		<table>
-			<tbody>
-				<tr>
-					<td><label>Username:</label></td>
-					<td><form:input path="username" /></td>
-				</tr>
-				<tr>
-					<td><label>First Name:</label></td>
-					<td><form:input path="firstName" /></td>
-				</tr>
-				<tr>
-					<td><label>Last Name:</label></td>
-					<td><form:input path="lastName" /></td>
-				</tr>
-				<tr>
-					<td><label>Email:</label></td>
-					<td><form:input path="email" /></td>
-				</tr>
-				<tr>
-					<td><label>Department:</label></td>
-					<td><form:input path="department" /></td>
-				</tr>
-				<tr>
-					<td><label>Title:</label></td>
-					<td><form:input path="title" /></td>
-				</tr>
-				<tr>
-					<td><label>Admin:</label></td>
-					<td><form:checkbox path="isAdmin"/></td>
-				</tr>
-				<tr>
-					<td><input type="submit" value="Save" class="save" /></td>
-				</tr>
-			</tbody>
-		</table>
+
+		<div class="form-group">
+			<label for="username">Username:</label>
+			<form:input path="username" class="form-control" id="username"/>
+		</div>
+		<div class="form-firstName">
+			<label for="firstName">First Name:</label>
+			<form:input path="firstName" class="form-control" id="firstName"/>
+		</div>
+		<div class="form-group">
+			<label for="lastName">Last Name:</label>
+			<form:input path="lastName" class="form-control" id="lastName"/>
+		</div>
+		<div class="form-group">
+			<label for="email">Email:</label>
+			<form:input path="email" class="form-control" id="email"/>
+		</div>
+		<div class="form-group">
+			<label for="department">Department:</label>
+			<form:input path="department" class="form-control" id="department"/>
+		</div>
+		<div class="form-group">
+			<label for="title">Title:</label>
+			<form:input path="title" class="form-control" id="title"/>
+		</div>
+		<div class="form-check">
+			<form:checkbox path="isAdmin" class="form-check-input" id="isAdmin"/>
+			<label for="isAdmin">Admin</label>
+		</div>
+		<button class="btn btn-primary" type="submit">Save</button>
+		<button class="btn btn-primary" type="button"
+				onClick="window.location.href='${pageContext.request.contextPath}/employee/list'">
+			Cancel
+		</button>
+		<button class="btn btn-primary" type="button" onClick="deleteEmployee()">Delete</button>
 	
 	</form:form>
-	
-	<a href=${pageContext.request.contextPath}/employee/list>Back to List</a>
 	
 	
 	<!-- Optional JavaScript -->
