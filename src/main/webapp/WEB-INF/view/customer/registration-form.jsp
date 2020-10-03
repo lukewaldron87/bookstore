@@ -67,7 +67,7 @@
 				class="glyphicon glyphicon-lock"></i></span>
 			<form:errors path="password" cssClass="error" />
 			<form:password path="password" placeholder="password (*)"
-				class="form-control" />
+						   class="form-control" autocomplete="new-password"/>
 		</div>
 
 		<!-- Confirm Password -->
