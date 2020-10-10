@@ -10,8 +10,8 @@ import org.junit.Test;
 
 import java.util.Collection;
 
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 public class UnitTestUserEntityFactoryTest {
 
@@ -43,17 +43,17 @@ public class UnitTestUserEntityFactoryTest {
     @Test
     public void testCreateUserStaticValuesForCustomer(){
         Customer customer = (Customer) userEntityFactory.createUser(RoleType.ROLE_CUSTOMER);
-        assertEquals(customer.getUsername(), "username0");
-        assertEquals(customer.getPassword(), "password0");
-        assertEquals(customer.getFirstName(), "firstName0");
-        assertEquals(customer.getLastName(), "lastName0");
-        assertEquals(customer.getEmail(), "0@email.com");
-        assertEquals(customer.getAddressLine1(), "addressLine10");
-        assertEquals(customer.getAddressLine2(), "addressLine20");
-        assertEquals(customer.getCity(), "city0");
-        assertEquals(customer.getCountry(), "country0");
-        assertEquals(customer.getPostCode(), "postCode0");
-        assertEquals(customer.getPhoneNumber(), 12340);
+        assertEquals("username0", customer.getUsername());
+        assertEquals("password0", customer.getPassword());
+        assertEquals("firstName0", customer.getFirstName());
+        assertEquals("lastName0", customer.getLastName());
+        assertEquals("0@email.com", customer.getEmail());
+        assertEquals("addressLine10", customer.getAddressLine1());
+        assertEquals("addressLine20", customer.getAddressLine2());
+        assertEquals("city0", customer.getCity());
+        assertEquals("country0", customer.getCountry());
+        assertEquals("postCode0", customer.getPostCode());
+        assertEquals(12340, customer.getPhoneNumber());
 
         Collection<Role> roleCollection = customer.getRoles();
         boolean contains = isRoleInCollection(roleCollection, "ROLE_CUSTOMER");
@@ -81,13 +81,13 @@ public class UnitTestUserEntityFactoryTest {
     }
 
     private void testEmployeeStaticValues(Employee employee){
-        assertEquals(employee.getUsername(), "username0");
-        assertEquals(employee.getPassword(), "password0");
-        assertEquals(employee.getFirstName(), "firstName0");
-        assertEquals(employee.getLastName(), "lastName0");
-        assertEquals(employee.getEmail(), "0@email.com");
-        assertEquals(employee.getDepartment(), "department0");
-        assertEquals(employee.getTitle(), "title0");
+        assertEquals("username0", employee.getUsername());
+        assertEquals("password0", employee.getPassword());
+        assertEquals("firstName0", employee.getFirstName());
+        assertEquals("lastName0", employee.getLastName());
+        assertEquals("0@email.com", employee.getEmail());
+        assertEquals("department0", employee.getDepartment());
+        assertEquals("title0", employee.getTitle());
     }
 
     private boolean isRoleInCollection(Collection<Role> roleCollection, String roleName){
@@ -99,5 +99,34 @@ public class UnitTestUserEntityFactoryTest {
             }
         }
         return containsRole;
+    }
+
+    @Test
+    public void testCreatePartialCustomerUser_hasNullFields(){
+        Customer customer = (Customer) userEntityFactory.createPartialUser(RoleType.ROLE_CUSTOMER);
+        assertNull(customer.getUsername());
+        assertNull(customer.getPassword());
+        assertNull(customer.getEmail());
+        assertNull(customer.getAddressLine1());
+        assertEquals(0, customer.getPhoneNumber());
+    }
+
+    @Test
+    public void testCreatePartialEmployeeUser_hasNullFields(){
+        Employee employee = (Employee) userEntityFactory.createPartialUser(RoleType.ROLE_EMPLOYEE);
+        assertNull(employee.getUsername());
+        assertNull(employee.getPassword());
+        assertNull(employee.getEmail());
+        assertNull(employee.getDepartment());
+    }
+
+    @Test
+    public void testCreatePartialAdminUser_hasNullFields(){
+        Employee employee = (Employee) userEntityFactory.createPartialUser(RoleType.ROLE_ADMIN);
+        assertNull(employee.getUsername());
+        assertNull(employee.getPassword());
+        assertNull(employee.getEmail());
+        assertNull(employee.getEmail());
+        assertNull(employee.getDepartment());
     }
 }

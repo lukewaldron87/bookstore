@@ -16,22 +16,30 @@ import java.util.Map;
 public class UnitTestUserEntityFactory extends UserEntityFactory {
 
 	private RoleEntityCollectionFactory roleEntityCollectionFactory;
-	private final Map<RoleType, User> FACTORY_MAP;
+	private final Map<RoleType, User> CREATE_USER_FACTORY_MAP;
+	private final Map<RoleType, User> CREATE_PARTIAL_USER_FACTORY_MAP;
 
 	public UnitTestUserEntityFactory() {
 		roleEntityCollectionFactory = new UnitTestRoleEntityCollectionFactory();
-		final HashMap<RoleType, User> factoryMap = new HashMap<>();
-		factoryMap.put(RoleType.ROLE_CUSTOMER, createCustomerUser());
-		factoryMap.put(RoleType.ROLE_EMPLOYEE, createRegularEmployeeUser());
-		factoryMap.put(RoleType.ROLE_ADMIN, createAdminEmployeeUser());
-		FACTORY_MAP = Collections.unmodifiableMap(factoryMap);
+
+		final HashMap<RoleType, User> userRoleFactoryMap = new HashMap<>();
+		userRoleFactoryMap.put(RoleType.ROLE_CUSTOMER, createCustomerUser());
+		userRoleFactoryMap.put(RoleType.ROLE_EMPLOYEE, createRegularEmployeeUser());
+		userRoleFactoryMap.put(RoleType.ROLE_ADMIN, createAdminEmployeeUser());
+		CREATE_USER_FACTORY_MAP = Collections.unmodifiableMap(userRoleFactoryMap);
+
+		final HashMap<RoleType, User> partialUserRoleFactoryMap = new HashMap<>();
+		partialUserRoleFactoryMap.put(RoleType.ROLE_CUSTOMER, createPartialCustomerUser());
+		partialUserRoleFactoryMap.put(RoleType.ROLE_EMPLOYEE, createPartialRegularEmployeeUser());
+		partialUserRoleFactoryMap.put(RoleType.ROLE_ADMIN, createPartialAdminEmployeeUser());
+		CREATE_PARTIAL_USER_FACTORY_MAP = Collections.unmodifiableMap(partialUserRoleFactoryMap);
 	}
 
 	@Override
-	public User createUser(RoleType RoleType) {
-		return FACTORY_MAP.get(RoleType);
+	public User createUser(RoleType roleType) {
+		return CREATE_USER_FACTORY_MAP.get(roleType);
 	}
-	
+
 	private Customer createCustomerUser() {
 		Customer customer = new Customer();
 		customer.setUsername("username0");
@@ -77,6 +85,49 @@ public class UnitTestUserEntityFactory extends UserEntityFactory {
 		employee.setDepartment("department0");
 		employee.setTitle("title0");
 		return employee;
+	}
+
+	@Override
+	public User createPartialUser(RoleType roleType) {
+		return CREATE_PARTIAL_USER_FACTORY_MAP.get(roleType);
+	}
+
+	private User createPartialCustomerUser() {
+		Customer partialCustomer = createCustomerUser();
+		partialCustomer = (Customer) setSomeUserFieldsToNull(partialCustomer);
+		partialCustomer = setSomeCustomerFieldsToNull(partialCustomer);
+		return partialCustomer;
+	}
+
+	private Customer setSomeCustomerFieldsToNull(Customer partialCustomer) {
+		partialCustomer.setAddressLine1(null);
+		partialCustomer.setPhoneNumber(0);
+		return partialCustomer;
+	}
+	private User createPartialRegularEmployeeUser() {
+		Employee partialEmployee = createRegularEmployeeUser();
+		partialEmployee = (Employee) setSomeUserFieldsToNull(partialEmployee);
+		partialEmployee = setSomeEmployeeFieldsToNull(partialEmployee);
+		return partialEmployee;
+	}
+
+	private User createPartialAdminEmployeeUser() {
+		Employee partialAdmin = createAdminEmployeeUser();
+		partialAdmin = (Employee) setSomeUserFieldsToNull(partialAdmin);
+		partialAdmin = setSomeEmployeeFieldsToNull(partialAdmin);
+		return partialAdmin;
+	}
+
+	private Employee setSomeEmployeeFieldsToNull(Employee partialEmployee) {
+		partialEmployee.setDepartment(null);
+		return partialEmployee;
+	}
+
+	private User setSomeUserFieldsToNull(User partialUser){
+		partialUser.setUsername(null);
+		partialUser.setPassword(null);
+		partialUser.setEmail(null);
+		return partialUser;
 	}
 
 }
