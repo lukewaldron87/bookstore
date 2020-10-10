@@ -111,7 +111,7 @@ public class UserDaoImplTest {
 	}
 
 	private User addAndFindUser(User user){
-		userDao.addUser(user);
+		userDao.createOrUpdateUser(user);
 		return userDao.findByUsername(user.getUsername());
 	}
 
