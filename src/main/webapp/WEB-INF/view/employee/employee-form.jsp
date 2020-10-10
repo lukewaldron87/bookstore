@@ -23,7 +23,7 @@
 
 	<h2>Add Employee</h2>
 	
-	<form:form action="saveEmployee" modelAttribute="employee" methoe="POST">
+	<form:form action="saveEmployee" modelAttribute="employee" method="POST">
 	
 		<!-- associate data with employee id -->
 		<form:hidden path="id"/>

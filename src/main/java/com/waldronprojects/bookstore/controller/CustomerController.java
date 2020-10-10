@@ -36,7 +36,7 @@ public class CustomerController {
 		return "employee/customer-form";
 	}
 
-	@PostMapping("/saveCustomer")
+	@RequestMapping("/saveCustomer")
 	public String saveCustomer(@ModelAttribute("customer")CustomerDto customer) {
 		userService.saveUser(customer);
 		return "redirect:list";

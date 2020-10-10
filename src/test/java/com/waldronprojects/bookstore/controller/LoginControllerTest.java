@@ -45,8 +45,8 @@ public class LoginControllerTest {
     public void testShowLoginPage() throws Exception{
         mockMvc.perform(get("/showLoginPage/"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("login"))
-                .andExpect(forwardedUrl("/WEB-INF/view/login.jsp"));
+                .andExpect(view().name("home"))
+                .andExpect(forwardedUrl("/WEB-INF/view/home.jsp"));
     }
 
     @Test
