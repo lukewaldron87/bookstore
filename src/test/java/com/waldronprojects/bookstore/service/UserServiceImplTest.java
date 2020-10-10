@@ -82,7 +82,7 @@ public class UserServiceImplTest {
 		// mock call to roleDao.findRoleByName
 		Mockito.when(roleDao.findRoleByName("ROLE_CUSTOMER"))
 				.thenReturn(new Role("ROLE_CUSTOMER"));
-		// return unencoded password to allow assert comparision
+		// return unencoded password to allow assert comparison
 		String password = userDto.getPassword();
 		Mockito.when(passwordEncoder.encode(password))
 				.thenReturn(password);
@@ -91,7 +91,7 @@ public class UserServiceImplTest {
 		userServiceImpl.saveUser(userDto);
 		ArgumentCaptor<User> captor = ArgumentCaptor.forClass(User.class);
 		Mockito.verify(userDao, Mockito.times(1))
-				.addUser(captor.capture());
+				.createOrUpdateUser(captor.capture());
 		User user = captor.getValue();
 		testUserVariables(user, userDto);
 		testCustomerVariables((Customer)user, (CustomerDto)userDto);
@@ -108,7 +108,7 @@ public class UserServiceImplTest {
 		userServiceImpl.saveUser(userDto);
 		ArgumentCaptor<User> captor = ArgumentCaptor.forClass(User.class);
 		Mockito.verify(userDao, Mockito.times(1))
-				.addUser(captor.capture());
+				.createOrUpdateUser(captor.capture());
 		User user = captor.getValue();
 		testUserVariables(user, userDto);
 		testEmployeeVariables((Employee)user, (EmployeeDto)userDto);
@@ -130,11 +130,75 @@ public class UserServiceImplTest {
 		userServiceImpl.saveUser(userDto);
 		ArgumentCaptor<User> captor = ArgumentCaptor.forClass(User.class);
 		Mockito.verify(userDao, Mockito.times(1))
-				.addUser(captor.capture());
+				.createOrUpdateUser(captor.capture());
 		User user = captor.getValue();
 		testUserVariables(user, userDto);
 		testEmployeeVariables((Employee)user, (EmployeeDto)userDto);
 
+	}
+
+	@Test
+	public void testUpdateCustomerUser(){
+		CustomerDto userDto = (CustomerDto)dtoFactory
+				.createPartialUserDto(RoleType.ROLE_CUSTOMER);
+		String newFirstName = "newFirstName";
+		String newCity = "newCity";
+		userDto.setFirstName(newFirstName);
+		userDto.setCity(newCity);
+
+		User userEntity = userEntityFactory.createUser(RoleType.ROLE_CUSTOMER);
+		Mockito.when(userDao.findUserById(userDto.getId()))
+				.thenReturn(userEntity);
+
+		userServiceImpl.updateUser(userDto);
+
+		ArgumentCaptor<User> captor = ArgumentCaptor.forClass(User.class);
+		Mockito.verify(userDao, Mockito.times(1))
+				.createOrUpdateUser(captor.capture());
+		User capturedUser = captor.getValue();
+		testUpdateUserVariables(userDto, capturedUser);
+		testUpdateCustomerUserVariables(userDto, (Customer) capturedUser);
+	}
+
+	private void testUpdateCustomerUserVariables(CustomerDto userDto, Customer capturedUser) {
+		assertNotEquals(userDto.getAddressLine1(), capturedUser.getAddressLine1());
+		assertNotEquals(userDto.getPhoneNumber(), capturedUser.getPhoneNumber());
+		assertEquals(userDto.getCity(), capturedUser.getCity());
+	}
+
+	@Test
+	public void testUpdateEmployeeUser(){
+		EmployeeDto userDto = (EmployeeDto)dtoFactory
+				.createPartialUserDto(RoleType.ROLE_EMPLOYEE);
+		String newFirstName = "newFirstName";
+		String newTitle = "newTitle";
+		userDto.setFirstName(newFirstName);
+		userDto.setTitle(newTitle);
+
+		User userEntity = userEntityFactory.createUser(RoleType.ROLE_EMPLOYEE);
+		Mockito.when(userDao.findUserById(userDto.getId()))
+				.thenReturn(userEntity);
+
+		userServiceImpl.updateUser(userDto);
+
+		ArgumentCaptor<User> captor = ArgumentCaptor.forClass(User.class);
+		Mockito.verify(userDao, Mockito.times(1))
+				.createOrUpdateUser(captor.capture());
+		User capturedUser = captor.getValue();
+		testUpdateUserVariables(userDto, capturedUser);
+		testUpdateEmployeeUserVariables(userDto, (Employee) capturedUser);
+	}
+
+	private void testUpdateEmployeeUserVariables(EmployeeDto userDto, Employee userEntity) {
+		assertNotEquals(userDto.getDepartment(), userEntity.getDepartment());
+		assertEquals(userDto.getTitle(), userEntity.getTitle());
+	}
+
+	private void testUpdateUserVariables(UserDto userDto, User userEntity) {
+		assertNotEquals(userDto.getUsername(), userEntity.getUsername());
+		assertNotEquals(userDto.getPassword(), userEntity.getPassword());
+		assertNotEquals(userDto.getEmail(), userEntity.getEmail());
+		assertEquals(userDto.getFirstName(), userEntity.getFirstName());
 	}
 
 	@Test

@@ -10,6 +10,7 @@ import com.waldronprojects.bookstore.entity.Employee;
 import com.waldronprojects.bookstore.entity.Role;
 import com.waldronprojects.bookstore.entity.User;
 import com.waldronprojects.bookstore.entity.factory.UserType;
+import org.modelmapper.Conditions;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -61,9 +62,9 @@ public class UserServiceImpl implements UserService {
 
 		/****** CHANGE TO BE TRANSLATED AUTOMATICALLY IN THE CONTROLLER ******/
 		User user = mapDtoToEntity(userDto);
-		userDao.addUser(user);
+		userDao.createOrUpdateUser(user);
 	}
-	
+
 	private User mapDtoToEntity(UserDto userDto){
 		User user = new User();
 		Collection<Role> roleCollection = new ArrayList<>();
@@ -90,6 +91,18 @@ public class UserServiceImpl implements UserService {
 			roleCollection.add(roleDao.findRoleByName("ROLE_ADMIN"));
 		}
 		return roleCollection;
+	}
+
+	@Override
+	@Transactional
+	public void updateUser(UserDto userDto) {
+		// get user for current id
+		User existingUser = userDao.findUserById(userDto.getId());
+		// update user with values from dto
+		ModelMapper modelMapper = new ModelMapper();
+		modelMapper.getConfiguration().setPropertyCondition(Conditions.isNotNull());
+		modelMapper.map(userDto, existingUser);
+		userDao.createOrUpdateUser(existingUser);
 	}
 
 	@Override
