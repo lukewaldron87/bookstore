@@ -25,18 +25,18 @@ public class CustomerDto extends UserDto{
 	@NotNull(message = "is required")
 	@Size(min = 1, message = "is required")
 	private String postCode;
-	
+
 	@NotNull(message = "is required")
-	private int phoneNumber;
+	private String phoneNumber;
 
 	public CustomerDto() {
 		super();
 	}
 
-	public CustomerDto(String username, String password, String firstName, 
-					String lastName, String email, String addressLine1, 
-					String addressLine2, String city, String country, 
-					String postCode, int phoneNumber) {
+	public CustomerDto(String username, String password, String firstName,
+					   String lastName, String email, String addressLine1,
+					   String addressLine2, String city, String country,
+					   String postCode, String phoneNumber) {
 		
 		super(username, password, firstName, lastName, email);
 		this.addressLine1 = addressLine1;
@@ -47,10 +47,10 @@ public class CustomerDto extends UserDto{
 		this.phoneNumber = phoneNumber;
 	}
 
-	public CustomerDto(String username, String password, String firstName, 
-					String lastName, String email, Collection<Role> roles, 
-					String addressLine1, String addressLine2, String city, 
-					String country, String postCode, int phoneNumber) {
+	public CustomerDto(String username, String password, String firstName,
+					   String lastName, String email, Collection<Role> roles,
+					   String addressLine1, String addressLine2, String city,
+					   String country, String postCode, String phoneNumber) {
 		
 		super(username, password, firstName, lastName, email, roles);
 		this.addressLine1 = addressLine1;
@@ -101,11 +101,11 @@ public class CustomerDto extends UserDto{
 		this.postCode = postCode;
 	}
 
-	public int getPhoneNumber() {
+	public String getPhoneNumber() {
 		return phoneNumber;
 	}
 
-	public void setPhoneNumber(int phoneNumber) {
+	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
 

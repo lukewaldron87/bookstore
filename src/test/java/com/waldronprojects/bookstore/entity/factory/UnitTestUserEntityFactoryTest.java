@@ -53,7 +53,7 @@ public class UnitTestUserEntityFactoryTest {
         assertEquals("city0", customer.getCity());
         assertEquals("country0", customer.getCountry());
         assertEquals("postCode0", customer.getPostCode());
-        assertEquals(12340, customer.getPhoneNumber());
+        assertEquals("12340", customer.getPhoneNumber());
 
         Collection<Role> roleCollection = customer.getRoles();
         boolean contains = isRoleInCollection(roleCollection, "ROLE_CUSTOMER");
@@ -108,7 +108,7 @@ public class UnitTestUserEntityFactoryTest {
         assertNull(customer.getPassword());
         assertNull(customer.getEmail());
         assertNull(customer.getAddressLine1());
-        assertEquals(0, customer.getPhoneNumber());
+        assertNull(customer.getPhoneNumber());
     }
 
     @Test

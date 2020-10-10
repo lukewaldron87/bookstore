@@ -54,7 +54,7 @@ public class UnitTestUserDtoFactory extends UserDtoFactory {
 		customerDto.setCity("city0");
 		customerDto.setCountry("country0");
 		customerDto.setPostCode("postCode0");
-		customerDto.setPhoneNumber(12340);
+		customerDto.setPhoneNumber("12340");
 		Collection<Role> roleCollection = roleEntityCollectionFactory
 				.createRole(RoleType.ROLE_CUSTOMER);
 		customerDto.setRoles(roleCollection);
@@ -94,7 +94,7 @@ public class UnitTestUserDtoFactory extends UserDtoFactory {
 	}
 
 	@Override
-	public UserDto createPartialUser(RoleType roleType) {
+	public UserDto createPartialUserDto(RoleType roleType) {
 		return CREATE_PARTIAL_USER_FACTORY_MAP.get(roleType);
 	}
 
@@ -107,7 +107,7 @@ public class UnitTestUserDtoFactory extends UserDtoFactory {
 
 	private CustomerDto setSomeCustomerFieldsToNull(CustomerDto partialCustomer) {
 		partialCustomer.setAddressLine1(null);
-		partialCustomer.setPhoneNumber(0);
+		partialCustomer.setPhoneNumber(null);
 		return partialCustomer;
 	}
 	private UserDto createPartialRegularEmployeeUser() {

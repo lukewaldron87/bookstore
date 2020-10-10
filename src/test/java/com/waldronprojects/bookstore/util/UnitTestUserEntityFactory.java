@@ -52,7 +52,7 @@ public class UnitTestUserEntityFactory extends UserEntityFactory {
 		customer.setCity("city0");
 		customer.setCountry("country0");
 		customer.setPostCode("postCode0");
-		customer.setPhoneNumber(12340);
+		customer.setPhoneNumber("12340");
 		Collection<Role> roleCollection = roleEntityCollectionFactory
 				.createRole(RoleType.ROLE_CUSTOMER);
 		customer.setRoles(roleCollection);
@@ -101,7 +101,7 @@ public class UnitTestUserEntityFactory extends UserEntityFactory {
 
 	private Customer setSomeCustomerFieldsToNull(Customer partialCustomer) {
 		partialCustomer.setAddressLine1(null);
-		partialCustomer.setPhoneNumber(0);
+		partialCustomer.setPhoneNumber(null);
 		return partialCustomer;
 	}
 	private User createPartialRegularEmployeeUser() {

@@ -3,8 +3,6 @@ package com.waldronprojects.bookstore.dto.factory;
 import com.waldronprojects.bookstore.dto.CustomerDto;
 import com.waldronprojects.bookstore.dto.EmployeeDto;
 import com.waldronprojects.bookstore.dto.UserDto;
-import com.waldronprojects.bookstore.entity.Customer;
-import com.waldronprojects.bookstore.entity.Employee;
 import com.waldronprojects.bookstore.entity.Role;
 import com.waldronprojects.bookstore.entity.factory.RoleType;
 import com.waldronprojects.bookstore.util.UnitTestUserDtoFactory;
@@ -58,7 +56,7 @@ public class UnitTestUserDtoFactoryTest {
         assertEquals("city0", customer.getCity());
         assertEquals("country0", customer.getCountry());
         assertEquals("postCode0", customer.getPostCode());
-        assertEquals(12340, customer.getPhoneNumber());
+        assertEquals("12340", customer.getPhoneNumber());
 
         Collection<Role> roleCollection = customer.getRoles();
         boolean contains = isRoleInCollection(roleCollection, "ROLE_CUSTOMER");
@@ -110,18 +108,18 @@ public class UnitTestUserDtoFactoryTest {
 
     @Test
     public void testCreatePartialCustomerUser_hasNullFields(){
-        CustomerDto customerDto = (CustomerDto) userDtoFactory.createPartialUser(RoleType.ROLE_CUSTOMER);
+        CustomerDto customerDto = (CustomerDto) userDtoFactory.createPartialUserDto(RoleType.ROLE_CUSTOMER);
         assertNull(customerDto.getUsername());
         assertNull(customerDto.getPassword());
         assertNull(customerDto.getMatchingPassword());
         assertNull(customerDto.getEmail());
         assertNull(customerDto.getAddressLine1());
-        assertEquals(0, customerDto.getPhoneNumber());
+        assertNull(customerDto.getPhoneNumber());
     }
 
     @Test
     public void testCreatePartialEmployeeUser_hasNullFields(){
-        EmployeeDto employeeDto = (EmployeeDto) userDtoFactory.createPartialUser(RoleType.ROLE_EMPLOYEE);
+        EmployeeDto employeeDto = (EmployeeDto) userDtoFactory.createPartialUserDto(RoleType.ROLE_EMPLOYEE);
         assertNull(employeeDto.getUsername());
         assertNull(employeeDto.getPassword());
         assertNull(employeeDto.getMatchingPassword());
@@ -131,7 +129,7 @@ public class UnitTestUserDtoFactoryTest {
 
     @Test
     public void testCreatePartialAdminUser_hasNullFields(){
-        EmployeeDto employeeDto = (EmployeeDto) userDtoFactory.createPartialUser(RoleType.ROLE_ADMIN);
+        EmployeeDto employeeDto = (EmployeeDto) userDtoFactory.createPartialUserDto(RoleType.ROLE_ADMIN);
         assertNull(employeeDto.getUsername());
         assertNull(employeeDto.getPassword());
         assertNull(employeeDto.getMatchingPassword());

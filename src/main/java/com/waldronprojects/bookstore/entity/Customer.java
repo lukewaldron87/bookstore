@@ -27,16 +27,16 @@ public class Customer extends User{
 	private String postCode;
 	
 	@Column(name="phone_number")
-	private int phoneNumber;
+	private String phoneNumber;
 
 	public Customer() {
 		super();
 	}
 
-	public Customer(String username, String password, String firstName, 
-					String lastName, String email, String addressLine1, 
-					String addressLine2, String city, String country, 
-					String postCode, int phoneNumber) {
+	public Customer(String username, String password, String firstName,
+					String lastName, String email, String addressLine1,
+					String addressLine2, String city, String country,
+					String postCode, String phoneNumber) {
 		
 		super(username, password, firstName, lastName, email);
 		this.addressLine1 = addressLine1;
@@ -47,10 +47,10 @@ public class Customer extends User{
 		this.phoneNumber = phoneNumber;
 	}
 
-	public Customer(String username, String password, String firstName, 
-					String lastName, String email, Collection<Role> roles, 
-					String addressLine1, String addressLine2, String city, 
-					String country, String postCode, int phoneNumber) {
+	public Customer(String username, String password, String firstName,
+					String lastName, String email, Collection<Role> roles,
+					String addressLine1, String addressLine2, String city,
+					String country, String postCode, String phoneNumber) {
 		
 		super(username, password, firstName, lastName, email, roles);
 		this.addressLine1 = addressLine1;
@@ -101,11 +101,11 @@ public class Customer extends User{
 		this.postCode = postCode;
 	}
 
-	public int getPhoneNumber() {
+	public String getPhoneNumber() {
 		return phoneNumber;
 	}
 
-	public void setPhoneNumber(int phoneNumber) {
+	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
 

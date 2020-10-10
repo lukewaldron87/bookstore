@@ -35,7 +35,7 @@ public class CustomerTest {
         String city = "city";
         String country = "country";
         String postCode = "postCode";
-        int phoneNumber = 1234;
+        String phoneNumber = "1234";
 
         customer = new Customer(username,
                                 password,
@@ -71,7 +71,7 @@ public class CustomerTest {
         String city = "city";
         String country = "country";
         String postCode = "postCode";
-        int phoneNumber = 1234;
+        String phoneNumber = "1234";
         RoleEntityCollectionFactory roleEntityCollectionFactory =
                 new UnitTestRoleEntityCollectionFactory();
         Collection<Role> roleCollection = roleEntityCollectionFactory
@@ -191,16 +191,16 @@ public class CustomerTest {
 
     @Test
     public void testGetPhoneNumber_getsValue() throws NoSuchFieldException, IllegalAccessException {
-        int fieldValue = 1234;
+        String fieldValue = "1234";
         String fieldName = "phoneNumber";
         fieldModifier.setField(fieldName, fieldValue);
-        int returnedFieldValue = customer.getPhoneNumber();
+        String returnedFieldValue = customer.getPhoneNumber();
         assertEquals(fieldValue, returnedFieldValue);
     }
 
     @Test
     public void testSetPhoneNumber_setsProperly() throws NoSuchFieldException, IllegalAccessException {
-        int fieldValue = 1234;
+        String fieldValue = "1234";
         String fieldName = "phoneNumber";
         customer.setPhoneNumber(fieldValue);
         Object returnedFieldValue = fieldModifier.getFieldValue(fieldName);
@@ -218,7 +218,7 @@ public class CustomerTest {
         String city = "city";
         String country = "country";
         String postCode = "postCode";
-        int phoneNumber = 1234;
+        String phoneNumber = "1234";
         RoleEntityCollectionFactory roleEntityCollectionFactory =
                 new UnitTestRoleEntityCollectionFactory();
         Collection<Role> roleCollection = roleEntityCollectionFactory
