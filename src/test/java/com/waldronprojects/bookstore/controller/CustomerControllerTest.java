@@ -119,6 +119,18 @@ public class CustomerControllerTest {
 	}
 
 	@Test
+	public void testUpdateCustomer() throws Exception {
+		UserDto userDto = userDtoFactory.createUserDto(RoleType.ROLE_CUSTOMER);
+		mockMvc.perform(get("/employee/customer/updateCustomer")
+					.flashAttr("customer",userDto))
+				.andExpect(status().isFound())
+				.andExpect(view().name("redirect:list"))
+				.andExpect(redirectedUrl("list"));
+		Mockito.verify(userService, Mockito.times(1)).updateUser(userDto);
+		Mockito.verifyNoMoreInteractions(userService);
+	}
+
+	@Test
 	public void testDelete() throws Exception{
 		Long id = 1L;
 		mockMvc.perform(get("/employee/customer/delete")

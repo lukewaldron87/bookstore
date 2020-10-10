@@ -41,6 +41,12 @@ public class CustomerController {
 		userService.saveUser(customer);
 		return "redirect:list";
 	}
+
+	@RequestMapping("updateCustomer")
+	public String updateCustomer(@ModelAttribute("customer")CustomerDto customer){
+		userService.updateUser(customer);
+		return "redirect:list";
+	}
 	
 	@RequestMapping("/delete")
 	public String delete(@ModelAttribute("userId")Long id){

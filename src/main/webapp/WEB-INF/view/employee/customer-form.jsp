@@ -31,15 +31,10 @@
 
 	<h2>Edit Customer</h2>
 	
-	<form:form action="saveCustomer" modelAttribute="customer" methoe="POST">
+	<form:form action="updateCustomer" modelAttribute="customer" method="POST">
 
 		<!-- associate data with customer id -->
 		<form:hidden path="id"/>
-		<form:hidden path="username"/>
-		<form:hidden path="password"/>
-		<form:hidden path="matchingPassword"/>
-		<form:hidden path="email"/>
-		<form:hidden path="phoneNumber"/>
 
 		<div class="form-group">
 			<label for="firstName">First Name:</label>
