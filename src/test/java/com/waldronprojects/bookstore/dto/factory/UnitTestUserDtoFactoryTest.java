@@ -3,6 +3,8 @@ package com.waldronprojects.bookstore.dto.factory;
 import com.waldronprojects.bookstore.dto.CustomerDto;
 import com.waldronprojects.bookstore.dto.EmployeeDto;
 import com.waldronprojects.bookstore.dto.UserDto;
+import com.waldronprojects.bookstore.entity.Customer;
+import com.waldronprojects.bookstore.entity.Employee;
 import com.waldronprojects.bookstore.entity.Role;
 import com.waldronprojects.bookstore.entity.factory.RoleType;
 import com.waldronprojects.bookstore.util.UnitTestUserDtoFactory;
@@ -11,8 +13,8 @@ import org.junit.Test;
 
 import java.util.Collection;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
+import static org.junit.Assert.assertNull;
 
 public class UnitTestUserDtoFactoryTest {
 
@@ -106,5 +108,35 @@ public class UnitTestUserDtoFactoryTest {
         return containsRole;
     }
 
+    @Test
+    public void testCreatePartialCustomerUser_hasNullFields(){
+        CustomerDto customerDto = (CustomerDto) userDtoFactory.createPartialUser(RoleType.ROLE_CUSTOMER);
+        assertNull(customerDto.getUsername());
+        assertNull(customerDto.getPassword());
+        assertNull(customerDto.getMatchingPassword());
+        assertNull(customerDto.getEmail());
+        assertNull(customerDto.getAddressLine1());
+        assertEquals(0, customerDto.getPhoneNumber());
+    }
 
+    @Test
+    public void testCreatePartialEmployeeUser_hasNullFields(){
+        EmployeeDto employeeDto = (EmployeeDto) userDtoFactory.createPartialUser(RoleType.ROLE_EMPLOYEE);
+        assertNull(employeeDto.getUsername());
+        assertNull(employeeDto.getPassword());
+        assertNull(employeeDto.getMatchingPassword());
+        assertNull(employeeDto.getEmail());
+        assertNull(employeeDto.getDepartment());
+    }
+
+    @Test
+    public void testCreatePartialAdminUser_hasNullFields(){
+        EmployeeDto employeeDto = (EmployeeDto) userDtoFactory.createPartialUser(RoleType.ROLE_ADMIN);
+        assertNull(employeeDto.getUsername());
+        assertNull(employeeDto.getPassword());
+        assertNull(employeeDto.getMatchingPassword());
+        assertNull(employeeDto.getEmail());
+        assertNull(employeeDto.getEmail());
+        assertNull(employeeDto.getDepartment());
+    }
 }

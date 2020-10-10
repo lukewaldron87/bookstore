@@ -16,20 +16,28 @@ import java.util.Map;
 public class UnitTestUserDtoFactory extends UserDtoFactory {
 
 	private	RoleEntityCollectionFactory roleEntityCollectionFactory;
-	private final Map<RoleType, UserDto> FACTORY_MAP;
+	private final Map<RoleType, UserDto> CREATE_USER_FACTORY_MAP;
+	private final Map<RoleType, UserDto> CREATE_PARTIAL_USER_FACTORY_MAP;
 
 	public UnitTestUserDtoFactory(){
 		roleEntityCollectionFactory = new UnitTestRoleEntityCollectionFactory();
+
 		final HashMap<RoleType, UserDto> factoryMap = new HashMap<>();
 		factoryMap.put(RoleType.ROLE_CUSTOMER, createCustomerUser());
 		factoryMap.put(RoleType.ROLE_EMPLOYEE, createRegularEmployeeUser());
 		factoryMap.put(RoleType.ROLE_ADMIN, createAdminEmployeeUser());
-		FACTORY_MAP = Collections.unmodifiableMap(factoryMap);
+		CREATE_USER_FACTORY_MAP = Collections.unmodifiableMap(factoryMap);
+
+		final HashMap<RoleType, UserDto> partialUserRoleFactoryMap = new HashMap<>();
+		partialUserRoleFactoryMap.put(RoleType.ROLE_CUSTOMER, createPartialCustomerUser());
+		partialUserRoleFactoryMap.put(RoleType.ROLE_EMPLOYEE, createPartialRegularEmployeeUser());
+		partialUserRoleFactoryMap.put(RoleType.ROLE_ADMIN, createPartialAdminEmployeeUser());
+		CREATE_PARTIAL_USER_FACTORY_MAP = Collections.unmodifiableMap(partialUserRoleFactoryMap);
 	}
 
 	@Override
 	public UserDto createUserDto(RoleType roleType) {
-		return FACTORY_MAP.get(roleType);
+		return CREATE_USER_FACTORY_MAP.get(roleType);
 	}
 
 	private UserDto createCustomerUser() {
@@ -83,6 +91,50 @@ public class UnitTestUserDtoFactory extends UserDtoFactory {
 		employeeDto.setDepartment("department0");
 		employeeDto.setTitle("title0");
 		return employeeDto;
+	}
+
+	@Override
+	public UserDto createPartialUser(RoleType roleType) {
+		return CREATE_PARTIAL_USER_FACTORY_MAP.get(roleType);
+	}
+
+	private UserDto createPartialCustomerUser() {
+		CustomerDto partialCustomer = (CustomerDto) createCustomerUser();
+		partialCustomer = (CustomerDto) setSomeUserFieldsToNull(partialCustomer);
+		partialCustomer = setSomeCustomerFieldsToNull(partialCustomer);
+		return partialCustomer;
+	}
+
+	private CustomerDto setSomeCustomerFieldsToNull(CustomerDto partialCustomer) {
+		partialCustomer.setAddressLine1(null);
+		partialCustomer.setPhoneNumber(0);
+		return partialCustomer;
+	}
+	private UserDto createPartialRegularEmployeeUser() {
+		EmployeeDto partialEmployee = (EmployeeDto) createRegularEmployeeUser();
+		partialEmployee = (EmployeeDto) setSomeUserFieldsToNull(partialEmployee);
+		partialEmployee = setSomeEmployeeFieldsToNull(partialEmployee);
+		return partialEmployee;
+	}
+
+	private UserDto createPartialAdminEmployeeUser() {
+		EmployeeDto partialAdmin = (EmployeeDto) createAdminEmployeeUser();
+		partialAdmin = (EmployeeDto) setSomeUserFieldsToNull(partialAdmin);
+		partialAdmin = setSomeEmployeeFieldsToNull(partialAdmin);
+		return partialAdmin;
+	}
+
+	private EmployeeDto setSomeEmployeeFieldsToNull(EmployeeDto partialEmployee) {
+		partialEmployee.setDepartment(null);
+		return partialEmployee;
+	}
+
+	private UserDto setSomeUserFieldsToNull(UserDto partialUser){
+		partialUser.setUsername(null);
+		partialUser.setPassword(null);
+		partialUser.setMatchingPassword(null);
+		partialUser.setEmail(null);
+		return partialUser;
 	}
 
 }
