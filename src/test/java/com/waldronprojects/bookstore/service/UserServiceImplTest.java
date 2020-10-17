@@ -189,6 +189,73 @@ public class UserServiceImplTest {
 		testUpdateEmployeeUserVariables(userDto, (Employee) capturedUser);
 	}
 
+	@Test
+	public void testUpdateAdminEmployeeUser_addAdminRole(){
+		// add admin role to regular employee
+		EmployeeDto userDto = (EmployeeDto)dtoFactory
+				.createPartialUserDto(RoleType.ROLE_ADMIN);
+		String newFirstName = "newFirstName";
+		String newTitle = "newTitle";
+		userDto.setFirstName(newFirstName);
+		userDto.setTitle(newTitle);
+		// remove roles as they are not assigned by the UI
+		userDto.setRoles(null);
+
+		User userEntity = userEntityFactory.createUser(RoleType.ROLE_EMPLOYEE);
+		Mockito.when(userDao.findUserById(userDto.getId()))
+				.thenReturn(userEntity);
+		Mockito.when(roleDao.findRoleByName("ROLE_ADMIN"))
+				.thenReturn(new Role("ROLE_ADMIN"));
+
+		userServiceImpl.updateUser(userDto);
+
+		ArgumentCaptor<User> captor = ArgumentCaptor.forClass(User.class);
+		Mockito.verify(userDao, Mockito.times(1))
+				.createOrUpdateUser(captor.capture());
+		User capturedUser = captor.getValue();
+		testUpdateUserVariables(userDto, capturedUser);
+		testUpdateEmployeeUserVariables(userDto, (Employee) capturedUser);
+		// check if admin rose was added
+		boolean isAdmin = false;
+		for(Role role: capturedUser.getRoles()){
+			if(role.getName().equals(RoleType.ROLE_ADMIN.toString())){
+				isAdmin = true;
+				break;
+			}
+		}
+		assertTrue(isAdmin);
+	}
+
+	@Test
+	public void testUpdateAdminEmployeeUser_removeAdminRole(){
+		EmployeeDto userDto = (EmployeeDto)dtoFactory
+				.createPartialUserDto(RoleType.ROLE_ADMIN);
+		String newFirstName = "newFirstName";
+		String newTitle = "newTitle";
+		userDto.setFirstName(newFirstName);
+		userDto.setTitle(newTitle);
+		// set as not admin
+		userDto.setIsAdmin(false);
+		// remove roles as they are not assigned by the UI
+		userDto.setRoles(null);
+
+		User userEntity = userEntityFactory.createUser(RoleType.ROLE_ADMIN);
+		Mockito.when(userDao.findUserById(userDto.getId()))
+				.thenReturn(userEntity);
+
+		userServiceImpl.updateUser(userDto);
+
+		ArgumentCaptor<User> captor = ArgumentCaptor.forClass(User.class);
+		Mockito.verify(userDao, Mockito.times(1))
+				.createOrUpdateUser(captor.capture());
+		User capturedUser = captor.getValue();
+		testUpdateUserVariables(userDto, capturedUser);
+		testUpdateEmployeeUserVariables(userDto, (Employee) capturedUser);
+		for(Role role: capturedUser.getRoles()){
+			assertNotEquals(RoleType.ROLE_ADMIN.toString(), role.getName());
+		}
+	}
+
 	private void testUpdateEmployeeUserVariables(EmployeeDto userDto, Employee userEntity) {
 		assertNotEquals(userDto.getDepartment(), userEntity.getDepartment());
 		assertEquals(userDto.getTitle(), userEntity.getTitle());
@@ -313,7 +380,7 @@ public class UserServiceImplTest {
 
 		Collection<? extends GrantedAuthority> grantedAuthorities = userDetails.getAuthorities();
 		for (GrantedAuthority authority: grantedAuthorities){
-			assertNotNull(roleNameList.contains(authority.getAuthority()));
+			assertTrue(roleNameList.contains(authority.getAuthority()));
 		}
 
 	}

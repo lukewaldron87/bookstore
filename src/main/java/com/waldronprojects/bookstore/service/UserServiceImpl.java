@@ -9,6 +9,7 @@ import com.waldronprojects.bookstore.entity.Customer;
 import com.waldronprojects.bookstore.entity.Employee;
 import com.waldronprojects.bookstore.entity.Role;
 import com.waldronprojects.bookstore.entity.User;
+import com.waldronprojects.bookstore.entity.factory.RoleType;
 import com.waldronprojects.bookstore.entity.factory.UserType;
 import org.modelmapper.Conditions;
 import org.modelmapper.ModelMapper;
@@ -23,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -96,13 +98,59 @@ public class UserServiceImpl implements UserService {
 	@Override
 	@Transactional
 	public void updateUser(UserDto userDto) {
-		// get user for current id
-		User existingUser = userDao.findUserById(userDto.getId());
+		User updatedUserEntity = updateExistingUserEntity(userDto);
+		userDao.createOrUpdateUser(updatedUserEntity);
+	}
+
+	private User updateExistingUserEntity(UserDto sourceUserDto) {
+		// get existing user for current id
+		User targetUserEntity = userDao.findUserById(sourceUserDto.getId());
 		// update user with values from dto
 		ModelMapper modelMapper = new ModelMapper();
 		modelMapper.getConfiguration().setPropertyCondition(Conditions.isNotNull());
-		modelMapper.map(userDto, existingUser);
-		userDao.createOrUpdateUser(existingUser);
+		modelMapper.map(sourceUserDto, targetUserEntity);
+
+		if(sourceUserDto instanceof EmployeeDto) {
+			targetUserEntity = mapAdminRole((EmployeeDto) sourceUserDto, targetUserEntity);
+		}
+
+		return targetUserEntity;
+	}
+
+	private User mapAdminRole(EmployeeDto sourceUserDto, User targetUserEntity) {
+		if(sourceUserDto.getIsAdmin()){
+			return addAdminRoleFromUserEntity(targetUserEntity);
+		}else{
+			return removeAdminRoleFromUserEntity(targetUserEntity);
+		}
+	}
+
+	private User removeAdminRoleFromUserEntity(User targetUserEntity) {
+		//remove admin role
+		if(checkEmployeeIsAdmin((Employee) targetUserEntity)){
+			Collection<Role> roleCollection = targetUserEntity.getRoles();
+			Iterator<Role> roleIterator = roleCollection.iterator();
+			while(roleIterator.hasNext()){
+				Role role = roleIterator.next();
+				if(role.getName().equals(RoleType.ROLE_ADMIN.toString())){
+					roleIterator.remove();
+					break;
+				}
+			}
+			targetUserEntity.setRoles(roleCollection);
+		}
+		return targetUserEntity;
+	}
+
+	private User addAdminRoleFromUserEntity(User userEntity) {
+		// if not admin add admin role
+		if(!checkEmployeeIsAdmin((Employee) userEntity)){
+			Collection<Role> roleCollection = userEntity.getRoles();
+			Role adminRole = roleDao.findRoleByName("ROLE_ADMIN");
+			roleCollection.add(adminRole);
+			userEntity.setRoles(roleCollection);
+		}
+		return userEntity;
 	}
 
 	@Override
