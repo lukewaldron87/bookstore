@@ -63,11 +63,11 @@ public class UserServiceImpl implements UserService {
 	public void saveUser(UserDto userDto) {
 
 		/****** CHANGE TO BE TRANSLATED AUTOMATICALLY IN THE CONTROLLER ******/
-		User user = mapDtoToEntity(userDto);
+		User user = mapDtoToNewEntity(userDto);
 		userDao.createOrUpdateUser(user);
 	}
 
-	private User mapDtoToEntity(UserDto userDto){
+	private User mapDtoToNewEntity(UserDto userDto){
 		User user = new User();
 		Collection<Role> roleCollection = new ArrayList<>();
 		Role role;
@@ -105,15 +105,17 @@ public class UserServiceImpl implements UserService {
 	private User updateExistingUserEntity(UserDto sourceUserDto) {
 		// get existing user for current id
 		User targetUserEntity = userDao.findUserById(sourceUserDto.getId());
+		return mapDtoToExistingEntity(sourceUserDto, targetUserEntity);
+	}
+
+	private User mapDtoToExistingEntity(UserDto sourceUserDto, User targetUserEntity) {
 		// update user with values from dto
 		ModelMapper modelMapper = new ModelMapper();
 		modelMapper.getConfiguration().setPropertyCondition(Conditions.isNotNull());
 		modelMapper.map(sourceUserDto, targetUserEntity);
-
 		if(sourceUserDto instanceof EmployeeDto) {
 			targetUserEntity = mapAdminRole((EmployeeDto) sourceUserDto, targetUserEntity);
 		}
-
 		return targetUserEntity;
 	}
 
@@ -123,6 +125,17 @@ public class UserServiceImpl implements UserService {
 		}else{
 			return removeAdminRoleFromUserEntity(targetUserEntity);
 		}
+	}
+
+	private User addAdminRoleFromUserEntity(User userEntity) {
+		// if not admin add admin role
+		if(!checkEmployeeIsAdmin((Employee) userEntity)){
+			Collection<Role> roleCollection = userEntity.getRoles();
+			Role adminRole = roleDao.findRoleByName("ROLE_ADMIN");
+			roleCollection.add(adminRole);
+			userEntity.setRoles(roleCollection);
+		}
+		return userEntity;
 	}
 
 	private User removeAdminRoleFromUserEntity(User targetUserEntity) {
@@ -140,17 +153,6 @@ public class UserServiceImpl implements UserService {
 			targetUserEntity.setRoles(roleCollection);
 		}
 		return targetUserEntity;
-	}
-
-	private User addAdminRoleFromUserEntity(User userEntity) {
-		// if not admin add admin role
-		if(!checkEmployeeIsAdmin((Employee) userEntity)){
-			Collection<Role> roleCollection = userEntity.getRoles();
-			Role adminRole = roleDao.findRoleByName("ROLE_ADMIN");
-			roleCollection.add(adminRole);
-			userEntity.setRoles(roleCollection);
-		}
-		return userEntity;
 	}
 
 	@Override
@@ -172,10 +174,10 @@ public class UserServiceImpl implements UserService {
 	@Transactional
 	public  UserDto getUser(Long id) {
 		User user = userDao.findUserById(id);
-		return mapEntityToDto(user);
+		return mapEntityToNewDto(user);
 	}
 	
-	private UserDto mapEntityToDto(User user) {
+	private UserDto mapEntityToNewDto(User user) {
 		UserDto userDto = new UserDto();
 		ModelMapper modelMapper = new ModelMapper();
 		if(user instanceof Customer) {
