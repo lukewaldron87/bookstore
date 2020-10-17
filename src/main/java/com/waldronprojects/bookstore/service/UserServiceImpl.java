@@ -114,12 +114,12 @@ public class UserServiceImpl implements UserService {
 		modelMapper.getConfiguration().setPropertyCondition(Conditions.isNotNull());
 		modelMapper.map(sourceUserDto, targetUserEntity);
 		if(sourceUserDto instanceof EmployeeDto) {
-			targetUserEntity = mapAdminRole((EmployeeDto) sourceUserDto, targetUserEntity);
+			targetUserEntity = mapAdminRole((EmployeeDto) sourceUserDto, (Employee) targetUserEntity);
 		}
 		return targetUserEntity;
 	}
 
-	private User mapAdminRole(EmployeeDto sourceUserDto, User targetUserEntity) {
+	private User mapAdminRole(EmployeeDto sourceUserDto, Employee targetUserEntity) {
 		if(sourceUserDto.getIsAdmin()){
 			return addAdminRoleFromUserEntity(targetUserEntity);
 		}else{
@@ -127,9 +127,9 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 
-	private User addAdminRoleFromUserEntity(User userEntity) {
+	private User addAdminRoleFromUserEntity(Employee userEntity) {
 		// if not admin add admin role
-		if(!checkEmployeeIsAdmin((Employee) userEntity)){
+		if(!checkEmployeeIsAdmin(userEntity)){
 			Collection<Role> roleCollection = userEntity.getRoles();
 			Role adminRole = roleDao.findRoleByName("ROLE_ADMIN");
 			roleCollection.add(adminRole);
@@ -138,9 +138,9 @@ public class UserServiceImpl implements UserService {
 		return userEntity;
 	}
 
-	private User removeAdminRoleFromUserEntity(User targetUserEntity) {
+	private User removeAdminRoleFromUserEntity(Employee targetUserEntity) {
 		//remove admin role
-		if(checkEmployeeIsAdmin((Employee) targetUserEntity)){
+		if(checkEmployeeIsAdmin(targetUserEntity)){
 			Collection<Role> roleCollection = targetUserEntity.getRoles();
 			Iterator<Role> roleIterator = roleCollection.iterator();
 			while(roleIterator.hasNext()){
@@ -167,7 +167,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
-		return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
+		return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName()))
+												.collect(Collectors.toList());
 	}
 	
 	@Override
