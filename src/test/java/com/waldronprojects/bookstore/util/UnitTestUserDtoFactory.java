@@ -36,6 +36,50 @@ public class UnitTestUserDtoFactory extends UserDtoFactory {
 	}
 
 	@Override
+	public UserDto createPartialUserDto(RoleType roleType) {
+		return CREATE_PARTIAL_USER_FACTORY_MAP.get(roleType);
+	}
+
+	private UserDto createPartialCustomerUser() {
+		CustomerDto partialCustomer = (CustomerDto) createCustomerUser();
+		partialCustomer = (CustomerDto) setSomeUserFieldsToNull(partialCustomer);
+		partialCustomer = setSomeCustomerFieldsToNull(partialCustomer);
+		return partialCustomer;
+	}
+
+	private CustomerDto setSomeCustomerFieldsToNull(CustomerDto partialCustomer) {
+		partialCustomer.setAddressLine1(null);
+		partialCustomer.setPhoneNumber(null);
+		return partialCustomer;
+	}
+	private UserDto createPartialRegularEmployeeUser() {
+		EmployeeDto partialEmployee = (EmployeeDto) createRegularEmployeeUser();
+		partialEmployee = (EmployeeDto) setSomeUserFieldsToNull(partialEmployee);
+		partialEmployee = setSomeEmployeeFieldsToNull(partialEmployee);
+		return partialEmployee;
+	}
+
+	private UserDto createPartialAdminEmployeeUser() {
+		EmployeeDto partialAdmin = (EmployeeDto) createAdminEmployeeUser();
+		partialAdmin = (EmployeeDto) setSomeUserFieldsToNull(partialAdmin);
+		partialAdmin = setSomeEmployeeFieldsToNull(partialAdmin);
+		return partialAdmin;
+	}
+
+	private EmployeeDto setSomeEmployeeFieldsToNull(EmployeeDto partialEmployee) {
+		partialEmployee.setDepartment(null);
+		return partialEmployee;
+	}
+
+	private UserDto setSomeUserFieldsToNull(UserDto partialUser){
+		partialUser.setUsername(null);
+		partialUser.setPassword(null);
+		partialUser.setMatchingPassword(null);
+		partialUser.setEmail(null);
+		return partialUser;
+	}
+
+	@Override
 	public UserDto createUserDto(RoleType roleType) {
 		return CREATE_USER_FACTORY_MAP.get(roleType);
 	}
@@ -91,50 +135,6 @@ public class UnitTestUserDtoFactory extends UserDtoFactory {
 		employeeDto.setDepartment("department0");
 		employeeDto.setTitle("title0");
 		return employeeDto;
-	}
-
-	@Override
-	public UserDto createPartialUserDto(RoleType roleType) {
-		return CREATE_PARTIAL_USER_FACTORY_MAP.get(roleType);
-	}
-
-	private UserDto createPartialCustomerUser() {
-		CustomerDto partialCustomer = (CustomerDto) createCustomerUser();
-		partialCustomer = (CustomerDto) setSomeUserFieldsToNull(partialCustomer);
-		partialCustomer = setSomeCustomerFieldsToNull(partialCustomer);
-		return partialCustomer;
-	}
-
-	private CustomerDto setSomeCustomerFieldsToNull(CustomerDto partialCustomer) {
-		partialCustomer.setAddressLine1(null);
-		partialCustomer.setPhoneNumber(null);
-		return partialCustomer;
-	}
-	private UserDto createPartialRegularEmployeeUser() {
-		EmployeeDto partialEmployee = (EmployeeDto) createRegularEmployeeUser();
-		partialEmployee = (EmployeeDto) setSomeUserFieldsToNull(partialEmployee);
-		partialEmployee = setSomeEmployeeFieldsToNull(partialEmployee);
-		return partialEmployee;
-	}
-
-	private UserDto createPartialAdminEmployeeUser() {
-		EmployeeDto partialAdmin = (EmployeeDto) createAdminEmployeeUser();
-		partialAdmin = (EmployeeDto) setSomeUserFieldsToNull(partialAdmin);
-		partialAdmin = setSomeEmployeeFieldsToNull(partialAdmin);
-		return partialAdmin;
-	}
-
-	private EmployeeDto setSomeEmployeeFieldsToNull(EmployeeDto partialEmployee) {
-		partialEmployee.setDepartment(null);
-		return partialEmployee;
-	}
-
-	private UserDto setSomeUserFieldsToNull(UserDto partialUser){
-		partialUser.setUsername(null);
-		partialUser.setPassword(null);
-		partialUser.setMatchingPassword(null);
-		partialUser.setEmail(null);
-		return partialUser;
 	}
 
 }
