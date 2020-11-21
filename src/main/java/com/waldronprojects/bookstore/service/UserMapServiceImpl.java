@@ -1,4 +1,4 @@
-package com.waldronprojects.bookstore.util;
+package com.waldronprojects.bookstore.service;
 
 import com.waldronprojects.bookstore.dao.RoleDao;
 import com.waldronprojects.bookstore.dto.CustomerDto;
@@ -13,23 +13,26 @@ import org.modelmapper.Conditions;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
-public class UserMap {
+@Service
+public class UserMapServiceImpl implements UserMapService {
+
     @Autowired
     private RoleDao roleDao;
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
-    public UserMap() {
-    }
-
+    @Override
+    @Transactional
     public User mapDtoToNewEntity(UserDto userDto) {
         User user = new User();
-        Collection<Role> roleCollection = new ArrayList<Role>();
+        Collection<Role> roleCollection = new ArrayList<>();
         Role role;
         ModelMapper modelMapper = new ModelMapper();
         if (userDto instanceof CustomerDto) {
@@ -47,7 +50,7 @@ public class UserMap {
     }
 
     private Collection<Role> createEmployeeRoleCollection(EmployeeDto employeeDto) {
-        Collection<Role> roleCollection = new ArrayList<Role>();
+        Collection<Role> roleCollection = new ArrayList<>();
         roleCollection.add(roleDao.findRoleByName("ROLE_EMPLOYEE"));
         if (employeeDto.getIsAdmin()) {
             roleCollection.add(roleDao.findRoleByName("ROLE_ADMIN"));
@@ -55,6 +58,8 @@ public class UserMap {
         return roleCollection;
     }
 
+    @Override
+    @Transactional
     public User mapDtoToExistingEntity(UserDto sourceUserDto, User targetUserEntity) {
         // update user with values from dto
         ModelMapper modelMapper = new ModelMapper();
@@ -102,6 +107,8 @@ public class UserMap {
         return targetUserEntity;
     }
 
+    @Override
+    @Transactional
     public UserDto mapEntityToNewDto(User user) {
         UserDto userDto = new UserDto();
         ModelMapper modelMapper = new ModelMapper();

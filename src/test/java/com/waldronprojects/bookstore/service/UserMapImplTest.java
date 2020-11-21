@@ -1,4 +1,4 @@
-package com.waldronprojects.bookstore.util;
+package com.waldronprojects.bookstore.service;
 
 import com.waldronprojects.bookstore.dao.RoleDao;
 import com.waldronprojects.bookstore.dto.CustomerDto;
@@ -11,6 +11,8 @@ import com.waldronprojects.bookstore.entity.Role;
 import com.waldronprojects.bookstore.entity.User;
 import com.waldronprojects.bookstore.entity.factory.RoleType;
 import com.waldronprojects.bookstore.entity.factory.UserEntityFactory;
+import com.waldronprojects.bookstore.util.UnitTestUserDtoFactory;
+import com.waldronprojects.bookstore.util.UnitTestUserEntityFactory;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,14 +26,14 @@ import java.util.Iterator;
 import static org.junit.jupiter.api.Assertions.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class UserMapTest {
+public class UserMapImplTest {
 
     @Mock
     private RoleDao roleDao;
     @Mock
     private BCryptPasswordEncoder passwordEncoder;
     @InjectMocks
-    private UserMap userMap;
+    private UserMapServiceImpl userMap;
 
     private UserEntityFactory userEntityFactory;
     private UserDtoFactory userDtoFactory;

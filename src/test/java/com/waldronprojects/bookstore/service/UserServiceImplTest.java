@@ -1,13 +1,8 @@
 package com.waldronprojects.bookstore.service;
 
-import com.waldronprojects.bookstore.dao.RoleDao;
 import com.waldronprojects.bookstore.dao.UserDao;
-import com.waldronprojects.bookstore.dto.CustomerDto;
-import com.waldronprojects.bookstore.dto.EmployeeDto;
 import com.waldronprojects.bookstore.dto.UserDto;
 import com.waldronprojects.bookstore.dto.factory.UserDtoFactory;
-import com.waldronprojects.bookstore.entity.Customer;
-import com.waldronprojects.bookstore.entity.Employee;
 import com.waldronprojects.bookstore.entity.Role;
 import com.waldronprojects.bookstore.entity.User;
 import com.waldronprojects.bookstore.entity.factory.RoleType;
@@ -23,11 +18,9 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -37,23 +30,20 @@ public class UserServiceImplTest {
 	
 	@Mock
 	private UserDao userDao;
-	
+
 	@Mock
-	private RoleDao roleDao;
-	
-	@Mock
-	private BCryptPasswordEncoder passwordEncoder;
+	private UserMapService userMap;
 	
 	@InjectMocks
 	private UserServiceImpl userServiceImpl;
 
 	private UserEntityFactory userEntityFactory;
-	private UserDtoFactory dtoFactory;
+	private UserDtoFactory userDtoFactory;
 
 	@Before
 	public void setUp(){
 		userEntityFactory = new UnitTestUserEntityFactory();
-		dtoFactory = new UnitTestUserDtoFactory();
+		userDtoFactory = new UnitTestUserDtoFactory();
 	}
 
 	@Test
@@ -69,279 +59,84 @@ public class UserServiceImplTest {
 	@Test
 	public void testDeleteUser() {
 		long id = 1;
-		//Mockito.when(userDao.deleteUser(id))
 		userServiceImpl.deleteUser(id);
 		Mockito.verify(userDao, Mockito.times(1)).deleteUser(id);
 	}
 	
 	@Test
-	public void testSaveCustomerUser() {
-		
-		// call saveUser and pass a created userDto to it
-		UserDto userDto = dtoFactory.createUserDto(RoleType.ROLE_CUSTOMER);
-		// mock call to roleDao.findRoleByName
-		Mockito.when(roleDao.findRoleByName("ROLE_CUSTOMER"))
-				.thenReturn(new Role("ROLE_CUSTOMER"));
-		// return unencoded password to allow assert comparison
-		String password = userDto.getPassword();
-		Mockito.when(passwordEncoder.encode(password))
-				.thenReturn(password);
+	public void testSaveUser() {
 
-
-		userServiceImpl.saveUser(userDto);
-		ArgumentCaptor<User> captor = ArgumentCaptor.forClass(User.class);
-		Mockito.verify(userDao, Mockito.times(1))
-				.createOrUpdateUser(captor.capture());
-		User user = captor.getValue();
-		testUserVariables(user, userDto);
-		testCustomerVariables((Customer)user, (CustomerDto)userDto);
-	}
-
-	@Test
-	public void testSaveEmployeeUser() {
-		UserDto userDto = dtoFactory.createUserDto(RoleType.ROLE_EMPLOYEE);
-		Mockito.when(roleDao.findRoleByName("ROLE_EMPLOYEE"))
-				.thenReturn(new Role("ROLE_EMPLOYEE"));
-		String password = userDto.getPassword();
-		Mockito.when(passwordEncoder.encode(password))
-				.thenReturn(password);
-		userServiceImpl.saveUser(userDto);
-		ArgumentCaptor<User> captor = ArgumentCaptor.forClass(User.class);
-		Mockito.verify(userDao, Mockito.times(1))
-				.createOrUpdateUser(captor.capture());
-		User user = captor.getValue();
-		testUserVariables(user, userDto);
-		testEmployeeVariables((Employee)user, (EmployeeDto)userDto);
-
-	}
-
-	@Test
-	public void testSaveAdminEmployeeUser() {
-		UserDto userDto = dtoFactory.createUserDto(RoleType.ROLE_ADMIN);
-		// return unencoded password to allow assert comparison
-		String password = userDto.getPassword();
-		Mockito.when(passwordEncoder.encode(password))
-				.thenReturn(password);
-		Mockito.when(roleDao.findRoleByName("ROLE_EMPLOYEE"))
-				.thenReturn(new Role("ROLE_EMPLOYEE"));
-		Mockito.when(roleDao.findRoleByName("ROLE_ADMIN"))
-				.thenReturn(new Role("ROLE_ADMIN"));
-
-		userServiceImpl.saveUser(userDto);
-		ArgumentCaptor<User> captor = ArgumentCaptor.forClass(User.class);
-		Mockito.verify(userDao, Mockito.times(1))
-				.createOrUpdateUser(captor.capture());
-		User user = captor.getValue();
-		testUserVariables(user, userDto);
-		testEmployeeVariables((Employee)user, (EmployeeDto)userDto);
-
-	}
-
-	@Test
-	public void testUpdateCustomerUser(){
-		CustomerDto userDto = (CustomerDto)dtoFactory
-				.createPartialUserDto(RoleType.ROLE_CUSTOMER);
-		String newFirstName = "newFirstName";
-		String newCity = "newCity";
-		userDto.setFirstName(newFirstName);
-		userDto.setCity(newCity);
-
+		UserDto userDto = userDtoFactory.createUserDto(RoleType.ROLE_CUSTOMER);
 		User userEntity = userEntityFactory.createUser(RoleType.ROLE_CUSTOMER);
-		Mockito.when(userDao.findUserById(userDto.getId()))
-				.thenReturn(userEntity);
+		Mockito.when(userMap.mapDtoToNewEntity(userDto)).thenReturn(userEntity);
+		userServiceImpl.saveUser(userDto);
 
-		userServiceImpl.updateUser(userDto);
+		// test userDto is passed to userMap.mapDtoToNewEntity
+		ArgumentCaptor<UserDto> userDtoCaptor = ArgumentCaptor.forClass(UserDto.class);
+		Mockito.verify(userMap, Mockito.times(1))
+				.mapDtoToNewEntity(userDtoCaptor.capture());
+		UserDto capturedUserDto = userDtoCaptor.getValue();
+		assertEquals(userDto, capturedUserDto);
 
-		ArgumentCaptor<User> captor = ArgumentCaptor.forClass(User.class);
+		// test userEntity is passed to userDao.createOrUpdateUser
+		ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
 		Mockito.verify(userDao, Mockito.times(1))
-				.createOrUpdateUser(captor.capture());
-		User capturedUser = captor.getValue();
-		testUpdateUserVariables(userDto, capturedUser);
-		testUpdateCustomerUserVariables(userDto, (Customer) capturedUser);
-	}
-
-	private void testUpdateCustomerUserVariables(CustomerDto userDto, Customer capturedUser) {
-		assertNotEquals(userDto.getAddressLine1(), capturedUser.getAddressLine1());
-		assertNotEquals(userDto.getPhoneNumber(), capturedUser.getPhoneNumber());
-		assertEquals(userDto.getCity(), capturedUser.getCity());
+				.createOrUpdateUser(userCaptor.capture());
+		User capturedUser = userCaptor.getValue();
+		assertEquals(userEntity, capturedUser);
 	}
 
 	@Test
-	public void testUpdateEmployeeUser(){
-		EmployeeDto userDto = (EmployeeDto)dtoFactory
-				.createPartialUserDto(RoleType.ROLE_EMPLOYEE);
-		String newFirstName = "newFirstName";
-		String newTitle = "newTitle";
-		userDto.setFirstName(newFirstName);
-		userDto.setTitle(newTitle);
-
-		User userEntity = userEntityFactory.createUser(RoleType.ROLE_EMPLOYEE);
+	public void testUpdateUser(){
+		UserDto userDto = userDtoFactory.createPartialUserDto(RoleType.ROLE_CUSTOMER);
+		// return Entity from userDao.findUserById for update
+		User targetUserEntity = userEntityFactory.createUser(RoleType.ROLE_CUSTOMER);
 		Mockito.when(userDao.findUserById(userDto.getId()))
-				.thenReturn(userEntity);
+				.thenReturn(targetUserEntity);
+		// return entity from userMap.mapDtoToExistingEntity
+		User updatedUserEntity = userEntityFactory.createUser(RoleType.ROLE_CUSTOMER);
+		Mockito.when(userMap.mapDtoToExistingEntity(userDto, targetUserEntity))
+				.thenReturn(updatedUserEntity);
 
 		userServiceImpl.updateUser(userDto);
 
-		ArgumentCaptor<User> captor = ArgumentCaptor.forClass(User.class);
+		// test sourceUserDto and  targetUserEntity is passed to userMap.mapDtoToExistingEntity
+		ArgumentCaptor<UserDto> userDtoCaptor = ArgumentCaptor.forClass(UserDto.class);
+		ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
+		Mockito.verify(userMap, Mockito.times(1))
+				.mapDtoToExistingEntity(userDtoCaptor.capture(), userCaptor.capture());
+		UserDto capturedUserDto = userDtoCaptor.getValue();
+		assertEquals(userDto, capturedUserDto);
+		User capturedUser = userCaptor.getValue();
+		assertEquals(targetUserEntity, capturedUser);
+
+		// test capturedUser is passed to userDao.createOrUpdateUser
 		Mockito.verify(userDao, Mockito.times(1))
-				.createOrUpdateUser(captor.capture());
-		User capturedUser = captor.getValue();
-		testUpdateUserVariables(userDto, capturedUser);
-		testUpdateEmployeeUserVariables(userDto, (Employee) capturedUser);
+				.createOrUpdateUser(userCaptor.capture());
+		capturedUser = userCaptor.getValue();
+		assertEquals(updatedUserEntity, capturedUser);
 	}
 
 	@Test
-	public void testUpdateAdminEmployeeUser_addAdminRole(){
-		// add admin role to regular employee
-		EmployeeDto userDto = (EmployeeDto)dtoFactory
-				.createPartialUserDto(RoleType.ROLE_ADMIN);
-		String newFirstName = "newFirstName";
-		String newTitle = "newTitle";
-		userDto.setFirstName(newFirstName);
-		userDto.setTitle(newTitle);
-		// remove roles as they are not assigned by the UI
-		userDto.setRoles(null);
-
-		User userEntity = userEntityFactory.createUser(RoleType.ROLE_EMPLOYEE);
-		Mockito.when(userDao.findUserById(userDto.getId()))
-				.thenReturn(userEntity);
-		Mockito.when(roleDao.findRoleByName("ROLE_ADMIN"))
-				.thenReturn(new Role("ROLE_ADMIN"));
-
-		userServiceImpl.updateUser(userDto);
-
-		ArgumentCaptor<User> captor = ArgumentCaptor.forClass(User.class);
-		Mockito.verify(userDao, Mockito.times(1))
-				.createOrUpdateUser(captor.capture());
-		User capturedUser = captor.getValue();
-		testUpdateUserVariables(userDto, capturedUser);
-		testUpdateEmployeeUserVariables(userDto, (Employee) capturedUser);
-		// check if admin rose was added
-		boolean isAdmin = false;
-		for(Role role: capturedUser.getRoles()){
-			if(role.getName().equals(RoleType.ROLE_ADMIN.toString())){
-				isAdmin = true;
-				break;
-			}
-		}
-		assertTrue(isAdmin);
-	}
-
-	@Test
-	public void testUpdateAdminEmployeeUser_removeAdminRole(){
-		EmployeeDto userDto = (EmployeeDto)dtoFactory
-				.createPartialUserDto(RoleType.ROLE_ADMIN);
-		String newFirstName = "newFirstName";
-		String newTitle = "newTitle";
-		userDto.setFirstName(newFirstName);
-		userDto.setTitle(newTitle);
-		// set as not admin
-		userDto.setIsAdmin(false);
-		// remove roles as they are not assigned by the UI
-		userDto.setRoles(null);
-
-		User userEntity = userEntityFactory.createUser(RoleType.ROLE_ADMIN);
-		Mockito.when(userDao.findUserById(userDto.getId()))
-				.thenReturn(userEntity);
-
-		userServiceImpl.updateUser(userDto);
-
-		ArgumentCaptor<User> captor = ArgumentCaptor.forClass(User.class);
-		Mockito.verify(userDao, Mockito.times(1))
-				.createOrUpdateUser(captor.capture());
-		User capturedUser = captor.getValue();
-		testUpdateUserVariables(userDto, capturedUser);
-		testUpdateEmployeeUserVariables(userDto, (Employee) capturedUser);
-		for(Role role: capturedUser.getRoles()){
-			assertNotEquals(RoleType.ROLE_ADMIN.toString(), role.getName());
-		}
-	}
-
-	private void testUpdateEmployeeUserVariables(EmployeeDto userDto, Employee userEntity) {
-		assertNotEquals(userDto.getDepartment(), userEntity.getDepartment());
-		assertEquals(userDto.getTitle(), userEntity.getTitle());
-	}
-
-	private void testUpdateUserVariables(UserDto userDto, User userEntity) {
-		assertNotEquals(userDto.getUsername(), userEntity.getUsername());
-		assertNotEquals(userDto.getPassword(), userEntity.getPassword());
-		assertNotEquals(userDto.getEmail(), userEntity.getEmail());
-		assertEquals(userDto.getFirstName(), userEntity.getFirstName());
-	}
-
-	@Test
-	public void testGetCustomerUser(){
+	public void testGetUser(){
 		User user = userEntityFactory.createUser(RoleType.ROLE_CUSTOMER);
 		Mockito.when(userDao.findUserById(user.getId()))
 				.thenReturn(user);
-		UserDto userDto = userServiceImpl.getUser(user.getId());
-		testUserVariables(user, userDto);
-		testCustomerVariables((Customer)user, (CustomerDto)userDto);
-	}
+		UserDto userDto = userDtoFactory.createUserDto(RoleType.ROLE_CUSTOMER);
+		Mockito.when(userMap.mapEntityToNewDto(user))
+				.thenReturn(userDto);
 
-	@Test
-	public void testGetEmployeeUser(){
-		User user = userEntityFactory.createUser(RoleType.ROLE_EMPLOYEE);
-		Mockito.when(userDao.findUserById(user.getId()))
-				.thenReturn(user);
-		UserDto userDto = userServiceImpl.getUser(user.getId());
-		testUserVariables(user, userDto);
-		testEmployeeVariables((Employee)user, (EmployeeDto)userDto);
-	}
+		UserDto returnedUserDto = userServiceImpl.getUser(user.getId());
 
-	@Test
-	public void testGetAdminEmployeeUser(){
-		User user = userEntityFactory.createUser(RoleType.ROLE_ADMIN);
-		Mockito.when(userDao.findUserById(user.getId()))
-				.thenReturn(user);
-		UserDto userDto = userServiceImpl.getUser(user.getId());
-		testUserVariables(user, userDto);
-		testEmployeeVariables((Employee)user, (EmployeeDto)userDto);
-	}
+		// test user is passed to userMap.mapEntityToNewDto
+		ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
+		Mockito.verify(userMap, Mockito.times(1))
+				.mapEntityToNewDto(userCaptor.capture());
+		User capturedUser = userCaptor.getValue();
+		assertEquals(user, capturedUser);
 
-	private void testUserVariables(User userEntity, UserDto userDto){
-		assertEquals(userDto.getId(), userEntity.getId());
-		assertEquals(userDto.getUsername(), userEntity.getUsername());
-		assertEquals(userDto.getPassword(), userEntity.getPassword());
-		assertEquals(userDto.getFirstName(), userEntity.getFirstName());
-		assertEquals(userDto.getLastName(), userEntity.getLastName());
-		assertEquals(userDto.getEmail(), userEntity.getEmail());
-		testAssignedRoles(userEntity, userDto);
-	}
-
-	private void testAssignedRoles(User userEntity, UserDto userDto) {
-		Collection<Role> roleCollection = userEntity.getRoles();
-		if(userEntity instanceof Customer){
-			assertEquals(roleCollection.size(), 1);
-			assertEquals(roleCollection.iterator().next().getName(), "ROLE_CUSTOMER");
-		}if(userEntity instanceof Employee){
-			testRolesAssignedToEmployeeEntity(roleCollection, (EmployeeDto) userDto);
-		}
-	}
-
-	private void testRolesAssignedToEmployeeEntity(Collection<Role> roleCollection,
-												   EmployeeDto employeeDto) {
-		Iterator<Role> roleIterator = roleCollection.iterator();
-		assertEquals(roleIterator.next().getName(), "ROLE_EMPLOYEE");
-		if (employeeDto.getIsAdmin()){
-			assertEquals(roleCollection.size(), 2);
-			assertEquals(roleIterator.next().getName(), "ROLE_ADMIN");
-		}else{
-			assertEquals(roleCollection.size(), 1);
-		}
-	}
-
-	private void testCustomerVariables(Customer customerEntity, CustomerDto customerDto) {
-		assertEquals(customerDto.getAddressLine1(), customerEntity.getAddressLine1());
-		assertEquals(customerDto.getAddressLine2(), customerEntity.getAddressLine2());
-		assertEquals(customerDto.getCity(), customerEntity.getCity());
-		assertEquals(customerDto.getCountry(), customerEntity.getCountry());
-		assertEquals(customerDto.getPostCode(), customerEntity.getPostCode());
-		assertEquals(customerDto.getPhoneNumber(), customerEntity.getPhoneNumber());
-	}
-
-	private void testEmployeeVariables(Employee employee, EmployeeDto employeeDto) {
-		assertEquals(employee.getDepartment(), employeeDto.getDepartment());
-		assertEquals(employee.getTitle(), employeeDto.getTitle());
+		// assert userDto is returned by getUser
+		assertEquals(userDto, returnedUserDto);
 	}
 
 	@Test
