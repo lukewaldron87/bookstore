@@ -8,6 +8,7 @@ public class BookstoreController {
 
 	@GetMapping("/")
 	public String showHome() {
+		// test
 		return "home";
 	}
 
