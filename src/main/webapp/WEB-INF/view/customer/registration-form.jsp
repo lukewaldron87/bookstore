@@ -21,7 +21,8 @@
 
 <nav class="navbar navbar-expand-md navbar-dark bg-dark static-top">
 	<a class="navbar-brand" href="#">Luke's Books</a>
-	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+			aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
 		<span class="navbar-toggler-icon"></span>
 	</button>
 </nav>
@@ -50,54 +51,54 @@
 
 		</div>
 
-		<!-- User name -->
-		<div class="form-group">
-			<label for="username">Username</label>
-			<span class="input-group-addon"><i
-				class="glyphicon glyphicon-user"></i></span>
-			<form:errors path="username" cssClass="error" />
-			<form:input path="username" placeholder="username (*)"
-				class="form-control" />
+		<div class="form-row">
+			<!-- User name -->
+			<div class="form-group col-md-4">
+				<label for="username">Username</label>
+				<span class="input-group-addon"><i
+					class="glyphicon glyphicon-user"></i></span>
+				<form:errors path="username" class="error" />
+				<form:input path="username" class="form-control" />
+			</div>
+
+			<!-- Password -->
+			<div class="form-group col-md-4">
+				<label for="password">Password</label>
+				<span class="input-group-addon"><i
+					class="glyphicon glyphicon-lock"></i></span>
+				<form:errors path="password" cssClass="error" />
+				<form:password path="password" class="form-control"
+							   autocomplete="new-password"/>
+			</div>
+
+			<!-- Confirm Password -->
+			<div class="form-group col-md-4">
+				<label for="matchingPassword">Confirm Password</label>
+				<span class="input-group-addon"><i
+					class="glyphicon glyphicon-lock"></i></span>
+				<form:errors path="matchingPassword" cssClass="error" />
+				<form:password path="matchingPassword" class="form-control" />
+			</div>
 		</div>
 
-		<!-- Password -->
-		<div class="form-group">
-			<label for="password">Password</label>
-			<span class="input-group-addon"><i
-				class="glyphicon glyphicon-lock"></i></span>
-			<form:errors path="password" cssClass="error" />
-			<form:password path="password" placeholder="password (*)"
-						   class="form-control" autocomplete="new-password"/>
-		</div>
+		<div class="form-row">
+			<!-- First name -->
+			<div class="form-group col-md-6">
+				<label for="firstName">First Name</label>
+				<span class="input-group-addon"><i
+					class="glyphicon glyphicon-user"></i></span>
+				<form:errors path="firstName" cssClass="error" />
+				<form:input path="firstName" class="form-control" />
+			</div>
 
-		<!-- Confirm Password -->
-		<div class="form-group">
-			<label for="matchingPassword">Confirm Password</label>
-			<span class="input-group-addon"><i
-				class="glyphicon glyphicon-lock"></i></span>
-			<form:errors path="matchingPassword" cssClass="error" />
-			<form:password path="matchingPassword"
-				placeholder="confirm password (*)" class="form-control" />
-		</div>
-
-		<!-- First name -->
-		<div class="form-group">
-			<label for="firstName">First Name</label>
-			<span class="input-group-addon"><i
-				class="glyphicon glyphicon-user"></i></span>
-			<form:errors path="firstName" cssClass="error" />
-			<form:input path="firstName" placeholder="first name (*)"
-				class="form-control" />
-		</div>
-
-		<!-- Last name -->
-		<div class="form-group">
-			<label for="lastName">Last Name</label>
-			<span class="input-group-addon"><i
-				class="glyphicon glyphicon-user"></i></span>
-			<form:errors path="lastName" cssClass="error" />
-			<form:input path="lastName" placeholder="last name (*)"
-				class="form-control" />
+			<!-- Last name -->
+			<div class="form-group col-md-6">
+				<label for="lastName">Last Name</label>
+				<span class="input-group-addon"><i
+					class="glyphicon glyphicon-user"></i></span>
+				<form:errors path="lastName" cssClass="error" />
+				<form:input path="lastName" class="form-control" />
+			</div>
 		</div>
 
 		<!-- Email -->
@@ -106,7 +107,7 @@
 			<span class="input-group-addon"><i
 				class="glyphicon glyphicon-user"></i></span>
 			<form:errors path="email" cssClass="error" />
-			<form:input path="email" placeholder="email (*)" class="form-control" />
+			<form:input path="email" class="form-control" />
 		</div>
 
 		<!-- Address Line 1 -->
@@ -115,7 +116,7 @@
 			<span class="input-group-addon"><i
 				class="glyphicon glyphicon-user"></i></span>
 			<form:errors path="addressLine1" cssClass="error" />
-			<form:input path="addressLine1" placeholder="address Line 1 (*)" class="form-control" />
+			<form:input path="addressLine1" class="form-control" />
 		</div>
 
 		<!-- Address Line 2 -->
@@ -124,7 +125,7 @@
 			<span class="input-group-addon"><i
 				class="glyphicon glyphicon-user"></i></span>
 			<form:errors path="addressLine2" cssClass="error" />
-			<form:input path="addressLine2" placeholder="address Line 2 (*)" class="form-control" />
+			<form:input path="addressLine2" class="form-control" />
 		</div>
 
 		<!-- City -->
@@ -133,16 +134,16 @@
 			<span class="input-group-addon"><i
 				class="glyphicon glyphicon-user"></i></span>
 			<form:errors path="city" cssClass="error" />
-			<form:input path="city" placeholder="city (*)" class="form-control" />
+			<form:input path="city" class="form-control" />
 		</div>
 
 		<!-- Country -->
 		<div class="form-group">
-			<label for="country">Country</label>
+			<label for="country">Country/State</label>
 			<span class="input-group-addon"><i
 				class="glyphicon glyphicon-user"></i></span>
 			<form:errors path="country" cssClass="error" />
-			<form:input path="country" placeholder="country (*)" class="form-control" />
+			<form:input path="country" class="form-control" />
 		</div>
 
 		<!-- Post Code -->
@@ -151,7 +152,7 @@
 			<span class="input-group-addon"><i
 				class="glyphicon glyphicon-user"></i></span>
 			<form:errors path="postCode" cssClass="error" />
-			<form:input path="postCode" placeholder="postCode (*)" class="form-control" />
+			<form:input path="postCode" class="form-control" />
 		</div>
 
 		<!-- Phone Number -->
@@ -160,7 +161,7 @@
 			<span class="input-group-addon"><i
 				class="glyphicon glyphicon-user"></i></span>
 			<form:errors path="phoneNumber" cssClass="error" />
-			<form:input path="phoneNumber" placeholder="phoneNumber (*)" class="form-control" />
+			<form:input path="phoneNumber" class="form-control" />
 		</div>
 
 		<!-- Register Button -->
@@ -178,7 +179,9 @@
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+		crossorigin="anonymous"></script>
 <script>window.jQuery || document.write('<script src="https://getbootstrap.com/docs/4.0/assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
 <script src="https://getbootstrap.com/docs/4.0/dist/js/bootstrap.min.js"></script>
