@@ -111,7 +111,15 @@ public class CustomerDto extends UserDto{
 
 	@Override
 	public String toString() {
-		return "CustomerDto ["+super.toString()+" addressLine1=" + addressLine1 + ", addressLine2=" + addressLine2 + ", city=" + city
-				+ ", country=" + country + ", postCode=" + postCode + ", phoneNumber=" + phoneNumber + "]";
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append("CustomerDto [").append(super.toString())
+				.append(" addressLine1=").append(addressLine1)
+				.append(", addressLine2=").append(addressLine2)
+				.append(", city=").append(city)
+				.append(", country=").append(country)
+				.append(", postCode=").append(postCode)
+				.append(", phoneNumber=").append(phoneNumber)
+				.append("]");
+		return stringBuilder.toString();
 	}
 }

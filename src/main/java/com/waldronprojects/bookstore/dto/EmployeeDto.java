@@ -71,6 +71,11 @@ public class EmployeeDto extends UserDto{
 
 	@Override
 	public String toString() {
-		return "EmployeeDto [" + super.toString() + " department=" + department + ", title=" + title + " isAdmin=" + isAdmin + "]";
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append("EmployeeDto [").append(super.toString())
+				.append(" department=").append(department)
+				.append(", title=").append(title)
+				.append(" isAdmin=").append(isAdmin).append("]");
+		return stringBuilder.toString();
 	}
 }

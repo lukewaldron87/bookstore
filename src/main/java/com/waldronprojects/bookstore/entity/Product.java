@@ -73,5 +73,14 @@ public class Product {
 	public void setDescription(String description) {
 		this .description = description;
 	}
-	
+
+	@Override
+	public String toString(){
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append("Product [id=null, productName=").append(productName)
+					 .append(", unitPrice=").append(unitPrice)
+					 .append(", description=").append(description)
+					 .append("]");
+		return stringBuilder.toString();
+	}
 }

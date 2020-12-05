@@ -118,4 +118,19 @@ public class ProductTest {
         Object returnedFieldValue = fieldModifier.getFieldValue(fieldName);
         assertEquals(fieldValue, returnedFieldValue);
     }
+
+    @Test
+    public void testToString(){
+        String productName = "productName";
+        double unitPrice = 2.2;
+        String description = "description";
+        Product product = new Product(productName, unitPrice, description);
+        String productString = product.toString();
+        StringBuilder expectedProductStringBuilder = new StringBuilder();
+        expectedProductStringBuilder.append("Product [id=null, productName=").append(productName)
+                                    .append(", unitPrice=").append(unitPrice)
+                                    .append(", description=").append(description)
+                                    .append("]");
+        assertEquals(expectedProductStringBuilder.toString(), productString);
+    }
 }

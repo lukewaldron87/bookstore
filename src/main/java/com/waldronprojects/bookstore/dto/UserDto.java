@@ -129,9 +129,16 @@ public class UserDto{
 
 	@Override
 	public String toString() {
-		return "UserDto{" + "id=" + id + ", username='" + username + '\'' + ", password='" + "*********" + '\''
-				+ ", firstName='" + firstName + '\'' + ", lastName='" + lastName + '\'' + ", email='" + email + '\''
-				+ ", roles=" + roles + '}';
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append("UserDto{")
+				.append("id=").append(id)
+				.append(", username='").append(username).append("'")
+				.append(", password='").append("*********").append("'")
+				.append(", firstName='").append(firstName).append("'")
+				.append(", lastName='").append(lastName).append("'")
+				.append(", email='").append(email).append("'")
+				.append(", roles=").append(roles).append('}');
+		return stringBuilder.toString();
 	}
 
 }

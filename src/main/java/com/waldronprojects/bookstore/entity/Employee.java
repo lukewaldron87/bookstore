@@ -69,6 +69,11 @@ public class Employee extends User{
 
 	@Override
 	public String toString() {
-		return "Employee [" + super.toString() + "department=" + department + ", title=" + title + "]";
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append("Employee [").append(super.toString())
+					 .append("department=").append(department)
+					 .append(", title=").append(title)
+					 .append("]");
+		return stringBuilder.toString();
 	}
 }
