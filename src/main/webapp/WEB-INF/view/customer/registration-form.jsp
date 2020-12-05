@@ -14,7 +14,7 @@
 	<link href="https://getbootstrap.com/docs/4.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
 	<!-- Custom styles for this template -->
-	<link href="https://getbootstrap.com/docs/4.0/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link href="${root}/resources/css/form.css" rel="stylesheet">
 
 </head>
 <body>
@@ -57,7 +57,7 @@
 				<label for="username">Username</label>
 				<span class="input-group-addon"><i
 					class="glyphicon glyphicon-user"></i></span>
-				<form:errors path="username" class="error" />
+				<form:errors path="username" cssClass="isa_error" />
 				<form:input path="username" class="form-control" />
 			</div>
 
@@ -66,7 +66,7 @@
 				<label for="password">Password</label>
 				<span class="input-group-addon"><i
 					class="glyphicon glyphicon-lock"></i></span>
-				<form:errors path="password" cssClass="error" />
+				<form:errors path="password" cssClass="isa_error" />
 				<form:password path="password" class="form-control"
 							   autocomplete="new-password"/>
 			</div>
@@ -76,7 +76,7 @@
 				<label for="matchingPassword">Confirm Password</label>
 				<span class="input-group-addon"><i
 					class="glyphicon glyphicon-lock"></i></span>
-				<form:errors path="matchingPassword" cssClass="error" />
+				<form:errors path="matchingPassword" cssClass="isa_error" />
 				<form:password path="matchingPassword" class="form-control" />
 			</div>
 		</div>
@@ -87,7 +87,7 @@
 				<label for="firstName">First Name</label>
 				<span class="input-group-addon"><i
 					class="glyphicon glyphicon-user"></i></span>
-				<form:errors path="firstName" cssClass="error" />
+				<form:errors path="firstName" cssClass="isa_error" />
 				<form:input path="firstName" class="form-control" />
 			</div>
 
@@ -96,7 +96,7 @@
 				<label for="lastName">Last Name</label>
 				<span class="input-group-addon"><i
 					class="glyphicon glyphicon-user"></i></span>
-				<form:errors path="lastName" cssClass="error" />
+				<form:errors path="lastName" cssClass="isa_error" />
 				<form:input path="lastName" class="form-control" />
 			</div>
 		</div>
@@ -106,7 +106,7 @@
 			<label for="email">Email</label>
 			<span class="input-group-addon"><i
 				class="glyphicon glyphicon-user"></i></span>
-			<form:errors path="email" cssClass="error" />
+			<form:errors path="email" cssClass="isa_error" />
 			<form:input path="email" class="form-control" />
 		</div>
 
@@ -115,7 +115,7 @@
 			<label for="addressLine1">Address Line 1</label>
 			<span class="input-group-addon"><i
 				class="glyphicon glyphicon-user"></i></span>
-			<form:errors path="addressLine1" cssClass="error" />
+			<form:errors path="addressLine1" cssClass="isa_error" />
 			<form:input path="addressLine1" class="form-control" />
 		</div>
 
@@ -124,7 +124,7 @@
 			<label for="addressLine2">Address Line 2</label>
 			<span class="input-group-addon"><i
 				class="glyphicon glyphicon-user"></i></span>
-			<form:errors path="addressLine2" cssClass="error" />
+			<form:errors path="addressLine2" cssClass="isa_error" />
 			<form:input path="addressLine2" class="form-control" />
 		</div>
 
@@ -133,7 +133,7 @@
 			<label for="city">City</label>
 			<span class="input-group-addon"><i
 				class="glyphicon glyphicon-user"></i></span>
-			<form:errors path="city" cssClass="error" />
+			<form:errors path="city" cssClass="isa_error" />
 			<form:input path="city" class="form-control" />
 		</div>
 
@@ -142,7 +142,7 @@
 			<label for="country">Country/State</label>
 			<span class="input-group-addon"><i
 				class="glyphicon glyphicon-user"></i></span>
-			<form:errors path="country" cssClass="error" />
+			<form:errors path="country" cssClass="isa_error" />
 			<form:input path="country" class="form-control" />
 		</div>
 
@@ -151,7 +151,7 @@
 			<label for="postCode">Post Code</label>
 			<span class="input-group-addon"><i
 				class="glyphicon glyphicon-user"></i></span>
-			<form:errors path="postCode" cssClass="error" />
+			<form:errors path="postCode" cssClass="isa_error" />
 			<form:input path="postCode" class="form-control" />
 		</div>
 
@@ -160,7 +160,7 @@
 			<label for="phoneNumber">Phone Number</label>
 			<span class="input-group-addon"><i
 				class="glyphicon glyphicon-user"></i></span>
-			<form:errors path="phoneNumber" cssClass="error" />
+			<form:errors path="phoneNumber" cssClass="isa_error" />
 			<form:input path="phoneNumber" class="form-control" />
 		</div>
 
