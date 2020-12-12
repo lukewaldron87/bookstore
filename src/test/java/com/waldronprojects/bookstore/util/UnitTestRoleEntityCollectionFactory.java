@@ -11,8 +11,7 @@ public class UnitTestRoleEntityCollectionFactory extends RoleEntityCollectionFac
     private final Map<RoleType, Collection<Role>> FACTORY_MAP;
 
     public UnitTestRoleEntityCollectionFactory() {
-        //final Map<RoleType, Collection<Role>> factoryMap = new EnumMap<>(RoleType.class);
-        final HashMap<RoleType, Collection<Role>> factoryMap = new HashMap<>();
+        final Map<RoleType, Collection<Role>> factoryMap = new EnumMap<>(RoleType.class);
         factoryMap.put(RoleType.ROLE_CUSTOMER, createCustomerRole());
         factoryMap.put(RoleType.ROLE_EMPLOYEE, createEmployeeRole());
         factoryMap.put(RoleType.ROLE_ADMIN, createAdminRole());

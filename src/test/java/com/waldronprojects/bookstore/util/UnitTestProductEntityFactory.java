@@ -1,19 +1,19 @@
 package com.waldronprojects.bookstore.util;
 
 import com.waldronprojects.bookstore.entity.Product;
+import com.waldronprojects.bookstore.entity.Role;
 import com.waldronprojects.bookstore.entity.factory.ProductEntityFactory;
 import com.waldronprojects.bookstore.entity.factory.ProductType;
+import com.waldronprojects.bookstore.entity.factory.RoleType;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class UnitTestProductEntityFactory extends ProductEntityFactory {
 
     private final Map<ProductType, Product> FACTORY_MAP;
 
     public UnitTestProductEntityFactory() {
-        final HashMap<ProductType, Product> factoryMap = new HashMap<>();
+        final Map<ProductType, Product> factoryMap = new EnumMap<>(ProductType.class);
         factoryMap.put(ProductType.GENERIC, createGenericProduct());
         FACTORY_MAP = Collections.unmodifiableMap(factoryMap);
     }

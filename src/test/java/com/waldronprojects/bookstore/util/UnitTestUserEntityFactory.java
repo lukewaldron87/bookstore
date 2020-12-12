@@ -1,17 +1,12 @@
 package com.waldronprojects.bookstore.util;
 
-import com.waldronprojects.bookstore.entity.Customer;
-import com.waldronprojects.bookstore.entity.Employee;
-import com.waldronprojects.bookstore.entity.Role;
-import com.waldronprojects.bookstore.entity.User;
+import com.waldronprojects.bookstore.entity.*;
+import com.waldronprojects.bookstore.entity.factory.ProductType;
 import com.waldronprojects.bookstore.entity.factory.RoleEntityCollectionFactory;
 import com.waldronprojects.bookstore.entity.factory.RoleType;
 import com.waldronprojects.bookstore.entity.factory.UserEntityFactory;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class UnitTestUserEntityFactory extends UserEntityFactory {
 
@@ -22,13 +17,13 @@ public class UnitTestUserEntityFactory extends UserEntityFactory {
 	public UnitTestUserEntityFactory() {
 		roleEntityCollectionFactory = new UnitTestRoleEntityCollectionFactory();
 
-		final HashMap<RoleType, User> userRoleFactoryMap = new HashMap<>();
+		final Map<RoleType, User> userRoleFactoryMap = new EnumMap<>(RoleType.class);
 		userRoleFactoryMap.put(RoleType.ROLE_CUSTOMER, createCustomerUser());
 		userRoleFactoryMap.put(RoleType.ROLE_EMPLOYEE, createRegularEmployeeUser());
 		userRoleFactoryMap.put(RoleType.ROLE_ADMIN, createAdminEmployeeUser());
 		CREATE_USER_FACTORY_MAP = Collections.unmodifiableMap(userRoleFactoryMap);
 
-		final HashMap<RoleType, User> partialUserRoleFactoryMap = new HashMap<>();
+		final Map<RoleType, User> partialUserRoleFactoryMap = new EnumMap<>(RoleType.class);
 		partialUserRoleFactoryMap.put(RoleType.ROLE_CUSTOMER, createPartialCustomerUser());
 		partialUserRoleFactoryMap.put(RoleType.ROLE_EMPLOYEE, createPartialRegularEmployeeUser());
 		partialUserRoleFactoryMap.put(RoleType.ROLE_ADMIN, createPartialAdminEmployeeUser());
