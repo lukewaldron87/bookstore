@@ -17,6 +17,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 
@@ -114,7 +115,7 @@ public class ProductControllerTest {
     private Product createProductWithId(int id) {
         return new Product(id,
                 "productName"+id,
-                id,
+                new BigDecimal(id),
                 "productDescription"+id,
                 id);
     }

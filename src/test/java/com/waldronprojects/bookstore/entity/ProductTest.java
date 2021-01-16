@@ -4,6 +4,8 @@ import com.waldronprojects.bookstore.util.FieldModifier;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.math.BigDecimal;
+
 import static org.junit.Assert.assertEquals;
 
 public class ProductTest {
@@ -21,7 +23,7 @@ public class ProductTest {
     public void testConstructorWithoutId_setsAllFields() throws NoSuchFieldException,
                                                                 IllegalAccessException {
         String productName = "productName";
-        double unitPrice = 1.1;
+        BigDecimal unitPrice = new BigDecimal("1.10");
         String description = "description";
         int unitsInStock = 1;
         Product product = new Product(productName, unitPrice, description, unitsInStock);
@@ -38,7 +40,7 @@ public class ProductTest {
                                                              IllegalAccessException {
         int id = 1;
         String productName = "productName";
-        double unitPrice = 1.1;
+        BigDecimal unitPrice = new BigDecimal("1.10");
         String description = "description";
         int unitsInStock = 1;
         Product product = new Product(id, productName, unitPrice, description, unitsInStock);
@@ -89,16 +91,16 @@ public class ProductTest {
 
     @Test
     public void testGetUnitPrice() throws NoSuchFieldException, IllegalAccessException {
-        double fieldValue = 1.1;
+        BigDecimal fieldValue = new BigDecimal("1.10");
         String fieldName = "unitPrice";
         fieldModifier.setField(fieldName, fieldValue);
-        double returnedFieldValue = product.getUnitPrice();
-        assertEquals(fieldValue, returnedFieldValue, 0);
+        BigDecimal returnedFieldValue = product.getUnitPrice();
+        assertEquals(fieldValue, returnedFieldValue);
     }
 
     @Test
     public void testSetUnitPrice() throws NoSuchFieldException, IllegalAccessException {
-        double fieldValue = 1.1;
+        BigDecimal fieldValue = new BigDecimal("1.10");
         String fieldName = "unitPrice";
         product.setUnitPrice(fieldValue);
         Object returnedFieldValue = fieldModifier.getFieldValue(fieldName);
@@ -144,7 +146,7 @@ public class ProductTest {
     @Test
     public void testToString(){
         String productName = "productName";
-        double unitPrice = 2.2;
+        BigDecimal unitPrice = new BigDecimal("2.20");
         String description = "description";
         int unitsInStock = 1;
         Product product = new Product(productName, unitPrice, description, unitsInStock);

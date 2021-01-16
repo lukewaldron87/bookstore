@@ -11,6 +11,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -50,7 +51,7 @@ public class ProductDaoImplTest {
     public void saveProduct() {
         int id = 99;
         String productName = "Unit Test Product";
-        double unitPrice = 9.9;
+        BigDecimal unitPrice = new BigDecimal(9.90);
         String description = "Unit Test Product Description";
         int stock = 99;
         Product product = new Product(id,

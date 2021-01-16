@@ -1,6 +1,7 @@
 package com.waldronprojects.bookstore.entity;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name="product")
@@ -15,7 +16,7 @@ public class Product {
 	private String productName;
 	
 	@Column(name="unit_price")
-	private double unitPrice;
+	private BigDecimal unitPrice;
 	
 	@Column(name="description")
 	private String description;
@@ -32,14 +33,14 @@ public class Product {
 	public Product() {
 	}
 
-	public Product(String productName, double unitPrice, String description, int unitsInStock) {
+	public Product(String productName, BigDecimal unitPrice, String description, int unitsInStock) {
 		this.productName = productName;
 		this.unitPrice = unitPrice;
 		this.description = description;
 		this.unitsInStock = unitsInStock;
 	}
 
-	public Product(int id, String productName, double unitPrice, String description, int unitsInStock) {
+	public Product(int id, String productName, BigDecimal unitPrice, String description, int unitsInStock) {
 		this.id = id;
 		this.productName = productName;
 		this.unitPrice = unitPrice;
@@ -63,11 +64,11 @@ public class Product {
 		this.productName = productName;
 	}
 
-	public double getUnitPrice() {
+	public BigDecimal getUnitPrice() {
 		return unitPrice;
 	}
 
-	public void setUnitPrice(double unitPrice) {
+	public void setUnitPrice(BigDecimal unitPrice) {
 		this.unitPrice = unitPrice;
 	}
 	

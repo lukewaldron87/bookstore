@@ -5,6 +5,8 @@ import com.waldronprojects.bookstore.util.UnitTestProductEntityFactory;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.math.BigDecimal;
+
 import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 
@@ -20,7 +22,7 @@ public class UnitTestProductEntityFactoryTest {
 
     @Test
     public void testCreateProductReturnsCorrectType(){
-        Object product = factory.createProduct(ProductType.GENERIC);
+        Product product = factory.createProduct(ProductType.GENERIC);
         assertTrue(product instanceof Product);
     }
 
@@ -29,7 +31,7 @@ public class UnitTestProductEntityFactoryTest {
         Product product = factory.createProduct(ProductType.GENERIC);
         assertEquals(product.getId(), 1);
         assertEquals(product.getProductName(), "genericProduct");
-        assertEquals(product.getUnitPrice(), 1.1, 0.001);
+        assertEquals(product.getUnitPrice(), new BigDecimal("1.10"));
         assertEquals(product.getDescription(), "productDescription");
         assertEquals(product.getUnitsInStock(), 1);
     }

@@ -4,6 +4,7 @@ import com.waldronprojects.bookstore.entity.Product;
 import com.waldronprojects.bookstore.entity.factory.ProductEntityFactory;
 import com.waldronprojects.bookstore.entity.factory.ProductType;
 
+import java.math.BigDecimal;
 import java.util.*;
 
 public class UnitTestProductEntityFactory extends ProductEntityFactory {
@@ -25,7 +26,7 @@ public class UnitTestProductEntityFactory extends ProductEntityFactory {
         Product product = new Product();
         product.setId(1);
         product.setProductName("genericProduct");
-        product.setUnitPrice(1.1);
+        product.setUnitPrice(new BigDecimal("1.10"));
         product.setDescription("productDescription");
         product.setUnitsInStock(1);
         return product;
