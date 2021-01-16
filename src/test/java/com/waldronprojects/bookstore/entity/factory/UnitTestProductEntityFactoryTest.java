@@ -20,7 +20,7 @@ public class UnitTestProductEntityFactoryTest {
 
     @Test
     public void testCreateProductReturnsCorrectType(){
-        Product product = factory.createProduct(ProductType.GENERIC);
+        Object product = factory.createProduct(ProductType.GENERIC);
         assertTrue(product instanceof Product);
     }
 
@@ -31,6 +31,7 @@ public class UnitTestProductEntityFactoryTest {
         assertEquals(product.getProductName(), "genericProduct");
         assertEquals(product.getUnitPrice(), 1.1, 0.001);
         assertEquals(product.getDescription(), "productDescription");
+        assertEquals(product.getUnitsInStock(), 1);
     }
 
     @Test(expected = IllegalArgumentException.class)

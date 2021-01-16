@@ -13,7 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -25,7 +26,7 @@ public class ProductDaoImplTest {
 
     @Test
     @Transactional
-    @Rollback(true)
+    @Rollback
     public void getProduct() {
         int id = 3;
         String productName = "book1";
@@ -36,7 +37,7 @@ public class ProductDaoImplTest {
 
     @Test
     @Transactional
-    @Rollback(true)
+    @Rollback
     public void getProducts() {
         int numberOfProducts = 4;
         List<Product> productList = productDao.getProducts();
@@ -45,16 +46,18 @@ public class ProductDaoImplTest {
 
     @Test
     @Transactional
-    @Rollback(true)
+    @Rollback
     public void saveProduct() {
         int id = 99;
         String productName = "Unit Test Product";
         double unitPrice = 9.9;
         String description = "Unit Test Product Description";
+        int stock = 99;
         Product product = new Product(id,
                                       productName,
                                       unitPrice,
-                                      description);
+                                      description,
+                                      stock);
         productDao.saveProduct(product);
         Product returnedProduct = productDao.getProduct(id);
         assertEquals(id, returnedProduct.getId());
@@ -62,7 +65,7 @@ public class ProductDaoImplTest {
 
     @Test
     @Transactional
-    @Rollback(true)
+    @Rollback
     public void deleteProduct() {
         int id = 3;
         productDao.deleteProduct(id);

@@ -47,6 +47,10 @@
 			<label for="description">Description</label>
 			<form:input path="description" class="form-control" id="description"/>
 		</div>
+		<div class="form-group">
+			<label for="unitsInStock">Units in Stock</label>
+			<form:input path="unitsInStock" class="form-control" id="unitsInStock"/>
+		</div>
 		<button class="btn btn-primary" type="submit">Save</button>
 		<button class="btn btn-primary" type="button"
 				onClick="window.location.href='${pageContext.request.contextPath}/employee/product/list'">

@@ -1,10 +1,8 @@
 package com.waldronprojects.bookstore.util;
 
 import com.waldronprojects.bookstore.entity.Product;
-import com.waldronprojects.bookstore.entity.Role;
 import com.waldronprojects.bookstore.entity.factory.ProductEntityFactory;
 import com.waldronprojects.bookstore.entity.factory.ProductType;
-import com.waldronprojects.bookstore.entity.factory.RoleType;
 
 import java.util.*;
 
@@ -29,6 +27,7 @@ public class UnitTestProductEntityFactory extends ProductEntityFactory {
         product.setProductName("genericProduct");
         product.setUnitPrice(1.1);
         product.setDescription("productDescription");
+        product.setUnitsInStock(1);
         return product;
     }
 }

@@ -30,7 +30,7 @@
 			<tr>
 				<th scope="col">Product Name</th>
 				<th scope="col">Unit Price</th>
-				<th scope="col"></th>
+				<th scope="col">Units in Stock</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -44,6 +44,7 @@
 			<tr onclick="window.location='${updateLink}';">
 				<td>${tempProduct.productName}</td>
 				<td>${tempProduct.unitPrice}</td>
+				<td>${tempProduct.unitsInStock}</td>
 
 			</tr>
 			

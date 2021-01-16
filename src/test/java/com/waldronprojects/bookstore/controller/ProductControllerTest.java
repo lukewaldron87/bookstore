@@ -115,7 +115,8 @@ public class ProductControllerTest {
         return new Product(id,
                 "productName"+id,
                 id,
-                "productDescription"+id);
+                "productDescription"+id,
+                id);
     }
 
     @Test

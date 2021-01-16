@@ -4,7 +4,7 @@ import com.waldronprojects.bookstore.util.FieldModifier;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class ProductTest {
 
@@ -23,11 +23,13 @@ public class ProductTest {
         String productName = "productName";
         double unitPrice = 1.1;
         String description = "description";
-        Product product = new Product(productName, unitPrice, description);
+        int unitsInStock = 1;
+        Product product = new Product(productName, unitPrice, description, unitsInStock);
         fieldModifier = new FieldModifier(product);
         assertEquals(productName, fieldModifier.getFieldValue("productName"));
         assertEquals(unitPrice, fieldModifier.getFieldValue("unitPrice"));
         assertEquals(description, fieldModifier.getFieldValue("description"));
+        assertEquals(unitsInStock, fieldModifier.getFieldValue("unitsInStock"));
 
     }
 
@@ -38,12 +40,14 @@ public class ProductTest {
         String productName = "productName";
         double unitPrice = 1.1;
         String description = "description";
-        Product product = new Product(id, productName, unitPrice, description);
+        int unitsInStock = 1;
+        Product product = new Product(id, productName, unitPrice, description, unitsInStock);
         fieldModifier = new FieldModifier(product);
         assertEquals(id, fieldModifier.getFieldValue("id"));
         assertEquals(productName, fieldModifier.getFieldValue("productName"));
         assertEquals(unitPrice, fieldModifier.getFieldValue("unitPrice"));
         assertEquals(description, fieldModifier.getFieldValue("description"));
+        assertEquals(unitsInStock, fieldModifier.getFieldValue("unitsInStock"));
 
     }
 
@@ -120,16 +124,36 @@ public class ProductTest {
     }
 
     @Test
+    public void testGetUnitsInUnitsInStock() throws NoSuchFieldException, IllegalAccessException{
+        int filedValue = 1;
+        String fieldName = "unitsInStock";
+        fieldModifier.setField(fieldName, filedValue);
+        int returnedFieldValue = product.getUnitsInStock();
+        assertEquals(filedValue, returnedFieldValue);
+    }
+
+    @Test
+    public void testSetUnitsInStock() throws NoSuchFieldException, IllegalAccessException{
+        int filedValue = 1;
+        String fieldName = "unitsInStock";
+        product.setUnitsInStock(filedValue);
+        Object returnedFieldValue = fieldModifier.getFieldValue(fieldName);
+        assertEquals(filedValue, returnedFieldValue);
+    }
+
+    @Test
     public void testToString(){
         String productName = "productName";
         double unitPrice = 2.2;
         String description = "description";
-        Product product = new Product(productName, unitPrice, description);
+        int unitsInStock = 1;
+        Product product = new Product(productName, unitPrice, description, unitsInStock);
         String productString = product.toString();
         StringBuilder expectedProductStringBuilder = new StringBuilder();
         expectedProductStringBuilder.append("Product [id=null, productName=").append(productName)
                                     .append(", unitPrice=").append(unitPrice)
                                     .append(", description=").append(description)
+                                    .append(", unitsInStock=").append(unitsInStock)
                                     .append("]");
         assertEquals(expectedProductStringBuilder.toString(), productString);
     }

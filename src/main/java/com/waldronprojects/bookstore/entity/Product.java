@@ -19,6 +19,9 @@ public class Product {
 	
 	@Column(name="description")
 	private String description;
+
+	@Column(name="units_in_stock")
+	private int unitsInStock;
 	
 	// Products will have many OrderDetails so create a list to store those OrderDetails
 	/*@OneToMany(mappedBy="product",
@@ -29,17 +32,19 @@ public class Product {
 	public Product() {
 	}
 
-	public Product(String productName, double unitPrice, String description) {
+	public Product(String productName, double unitPrice, String description, int unitsInStock) {
 		this.productName = productName;
 		this.unitPrice = unitPrice;
 		this.description = description;
+		this.unitsInStock = unitsInStock;
 	}
 
-	public Product(int id, String productName, double unitPrice, String description) {
+	public Product(int id, String productName, double unitPrice, String description, int unitsInStock) {
 		this.id = id;
 		this.productName = productName;
 		this.unitPrice = unitPrice;
 		this.description = description;
+		this.unitsInStock = unitsInStock;
 	}
 
 	public int getId() {
@@ -74,12 +79,21 @@ public class Product {
 		this .description = description;
 	}
 
+	public int getUnitsInStock() {
+		return unitsInStock;
+	}
+
+	public void setUnitsInStock(int unitsInStock) {
+		this.unitsInStock = unitsInStock;
+	}
+
 	@Override
 	public String toString(){
 		StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append("Product [id=null, productName=").append(productName)
 					 .append(", unitPrice=").append(unitPrice)
 					 .append(", description=").append(description)
+					 .append(", unitsInStock=").append(unitsInStock)
 					 .append("]");
 		return stringBuilder.toString();
 	}
