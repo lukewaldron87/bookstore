@@ -1,7 +1,6 @@
 package com.waldronprojects.bookstore.util;
 
 import com.waldronprojects.bookstore.entity.*;
-import com.waldronprojects.bookstore.entity.factory.ProductType;
 import com.waldronprojects.bookstore.entity.factory.RoleEntityCollectionFactory;
 import com.waldronprojects.bookstore.entity.factory.RoleType;
 import com.waldronprojects.bookstore.entity.factory.UserEntityFactory;

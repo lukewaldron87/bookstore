@@ -2,24 +2,24 @@ package com.waldronprojects.bookstore.util;
 
 import com.waldronprojects.bookstore.entity.Product;
 import com.waldronprojects.bookstore.entity.factory.ProductEntityFactory;
-import com.waldronprojects.bookstore.entity.factory.ProductType;
+import com.waldronprojects.bookstore.entity.factory.ProductTypeEnum;
 
 import java.math.BigDecimal;
 import java.util.*;
 
 public class UnitTestProductEntityFactory extends ProductEntityFactory {
 
-    private final Map<ProductType, Product> FACTORY_MAP;
+    private final Map<ProductTypeEnum, Product> FACTORY_MAP;
 
     public UnitTestProductEntityFactory() {
-        final Map<ProductType, Product> factoryMap = new EnumMap<>(ProductType.class);
-        factoryMap.put(ProductType.GENERIC, createGenericProduct());
+        final Map<ProductTypeEnum, Product> factoryMap = new EnumMap<>(ProductTypeEnum.class);
+        factoryMap.put(ProductTypeEnum.GENERIC, createGenericProduct());
         FACTORY_MAP = Collections.unmodifiableMap(factoryMap);
     }
 
     @Override
-    public Product createProduct(ProductType productType) {
-        return FACTORY_MAP.get(productType);
+    public Product createProduct(ProductTypeEnum productTypeEnum) {
+        return FACTORY_MAP.get(productTypeEnum);
     }
 
     private Product createGenericProduct() {

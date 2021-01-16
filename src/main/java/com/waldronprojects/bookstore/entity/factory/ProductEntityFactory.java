@@ -4,5 +4,5 @@ import com.waldronprojects.bookstore.entity.Product;
 
 public abstract class ProductEntityFactory {
 
-    public abstract Product createProduct(ProductType productType);
+    public abstract Product createProduct(ProductTypeEnum productTypeEnum);
 }

@@ -22,13 +22,13 @@ public class UnitTestProductEntityFactoryTest {
 
     @Test
     public void testCreateProductReturnsCorrectType(){
-        Product product = factory.createProduct(ProductType.GENERIC);
+        Product product = factory.createProduct(ProductTypeEnum.GENERIC);
         assertTrue(product instanceof Product);
     }
 
     @Test
     public void testCreateProductStaticValues(){
-        Product product = factory.createProduct(ProductType.GENERIC);
+        Product product = factory.createProduct(ProductTypeEnum.GENERIC);
         assertEquals(product.getId(), 1);
         assertEquals(product.getProductName(), "genericProduct");
         assertEquals(product.getUnitPrice(), new BigDecimal("1.10"));
@@ -38,6 +38,6 @@ public class UnitTestProductEntityFactoryTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testCreateProductIllegalArgument(){
-        Product product = factory.createProduct(ProductType.valueOf(BAD_PRODUCT_TYPE));
+        Product product = factory.createProduct(ProductTypeEnum.valueOf(BAD_PRODUCT_TYPE));
     }
 }
