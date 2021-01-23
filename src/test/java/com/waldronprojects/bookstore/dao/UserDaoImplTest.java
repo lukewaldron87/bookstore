@@ -3,6 +3,7 @@ package com.waldronprojects.bookstore.dao;
 import com.waldronprojects.bookstore.config.MvcConfig;
 import com.waldronprojects.bookstore.entity.Customer;
 import com.waldronprojects.bookstore.entity.Employee;
+import com.waldronprojects.bookstore.entity.Role;
 import com.waldronprojects.bookstore.entity.User;
 import com.waldronprojects.bookstore.entity.factory.RoleType;
 import com.waldronprojects.bookstore.entity.factory.UserEntityFactory;
@@ -19,6 +20,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collection;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -51,6 +53,31 @@ public class UserDaoImplTest {
 		assertEquals(customerName, user.getUsername());
 	}
 
+	/**
+	 * Test that the correct role is retrieved from Role table
+	 * This is to test the Join between User and Role table in the User entity class
+	 */
+	@Test
+	@Transactional
+	@Rollback
+	public void testFindByUsername_getsRole(){
+		String customerName = "customer1";
+		User user = userDao.findByUsername(customerName);
+		boolean hasCorrectRole = RoleTestUtils.checkUserHasRoleType(user, RoleType.ROLE_CUSTOMER);
+		assertTrue(hasCorrectRole);
+	}
+
+	private boolean checkHasCorrectRole(Collection<Role> userRoles) {
+		boolean hasCorrectRole = false;
+		for (Role role: userRoles){
+			if(role.getName().equals(RoleType.ROLE_CUSTOMER.toString())){
+				hasCorrectRole = true;
+				break;
+			}
+		}
+		return hasCorrectRole;
+	}
+
 	@Test
 	@Transactional
 	@Rollback
@@ -68,7 +95,7 @@ public class UserDaoImplTest {
 		Long id = 1L;
 		String expectedUsername = "customer1";
 		User user = userDao.findUserById(id);
-		boolean containsRole = RoleTestUtils.testAssignedRoles(user, RoleType.ROLE_CUSTOMER);
+		boolean containsRole = RoleTestUtils.checkUserHasRoleType(user, RoleType.ROLE_CUSTOMER);
 		assertEquals(id, user.getId());
 		assertEquals(expectedUsername, user.getUsername());
 		assertTrue(containsRole);
@@ -80,7 +107,7 @@ public class UserDaoImplTest {
 	public void testAddCustomerUser(){
 		User createdCustomerUser =  userEntityFactory.createUser(RoleType.ROLE_CUSTOMER);
 		User returnedCustomerUser = addAndFindUser(createdCustomerUser);
-		boolean containsRole = RoleTestUtils.testAssignedRoles(returnedCustomerUser, RoleType.ROLE_CUSTOMER);
+		boolean containsRole = RoleTestUtils.checkUserHasRoleType(returnedCustomerUser, RoleType.ROLE_CUSTOMER);
 		assertEquals(createdCustomerUser, returnedCustomerUser);
 		assertTrue(returnedCustomerUser instanceof Customer);
 		assertTrue(containsRole);
@@ -92,7 +119,7 @@ public class UserDaoImplTest {
 	public void testAddEmployeeUser() {
 		User createdEmployeeUser =  userEntityFactory.createUser(RoleType.ROLE_EMPLOYEE);
 		User returnedEmployeeUser = addAndFindUser(createdEmployeeUser);
-		boolean containsRole = RoleTestUtils.testAssignedRoles(returnedEmployeeUser, RoleType.ROLE_EMPLOYEE);
+		boolean containsRole = RoleTestUtils.checkUserHasRoleType(returnedEmployeeUser, RoleType.ROLE_EMPLOYEE);
 		assertEquals(createdEmployeeUser, returnedEmployeeUser);
 		assertTrue(returnedEmployeeUser instanceof Employee);
 		assertTrue(containsRole);
@@ -104,7 +131,7 @@ public class UserDaoImplTest {
 	public void testAddAdminUser(){
 		User createdAdminUser =  userEntityFactory.createUser(RoleType.ROLE_ADMIN);
 		User returnedAdminUser = addAndFindUser(createdAdminUser);
-		boolean containsRole = RoleTestUtils.testAssignedRoles(returnedAdminUser, RoleType.ROLE_ADMIN);
+		boolean containsRole = RoleTestUtils.checkUserHasRoleType(returnedAdminUser, RoleType.ROLE_ADMIN);
 		assertEquals(createdAdminUser, returnedAdminUser);
 		assertTrue(returnedAdminUser instanceof Employee);
 		assertTrue(containsRole);
@@ -157,7 +184,7 @@ public class UserDaoImplTest {
 		Customer customer = (Customer) customerList.get(0);
 		assertEquals(expectedUsername, customer.getUsername());
 		assertEquals(expectedAddressLine1, customer.getAddressLine1());
-		RoleTestUtils.testAssignedRoles(customer, RoleType.ROLE_CUSTOMER);
+		RoleTestUtils.checkUserHasRoleType(customer, RoleType.ROLE_CUSTOMER);
 	}
 
 	@Test
