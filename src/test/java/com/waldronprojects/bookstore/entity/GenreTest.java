@@ -1,42 +1,44 @@
 package com.waldronprojects.bookstore.entity;
 
-import com.waldronprojects.bookstore.entity.factory.ProductTypeEnum;
 import com.waldronprojects.bookstore.util.FieldModifier;
 import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class ProductTypeTest {
+public class GenreTest {
 
-    private ProductType productType;
+    //create global variables
+    private Genre genre;
     private FieldModifier fieldModifier;
 
+    //setup class
     @Before
-    public void setUp() {
-        productType = new ProductType();
-        fieldModifier = new FieldModifier(productType);
+    public void setUp(){
+        genre = new Genre();
+        fieldModifier = new FieldModifier(genre);
     }
 
+    //test constructors
     @Test
     public void testConstructorWithoutId_setsAllFields() throws NoSuchFieldException,
                                                                 IllegalAccessException{
         String name = "name";
         String description = "description";
-        ProductType productType = new ProductType(name, description);
-        fieldModifier = new FieldModifier(productType);
+        Genre genre = new Genre(name, description);
+        fieldModifier = new FieldModifier(genre);
         assertEquals(name, fieldModifier.getFieldValue("name"));
         assertEquals(description, fieldModifier.getFieldValue("description"));
     }
 
     @Test
     public void testConstructorWithId_setsAllFields() throws NoSuchFieldException,
-                                                             IllegalAccessException{
+            IllegalAccessException{
         int id = 1;
         String name = "name";
         String description = "description";
-        ProductType productType = new ProductType(id, name, description);
-        fieldModifier = new FieldModifier(productType);
+        Genre genre = new Genre(id, name, description);
+        fieldModifier = new FieldModifier(genre);
         assertEquals(id, fieldModifier.getFieldValue("id"));
         assertEquals(name, fieldModifier.getFieldValue("name"));
         assertEquals(description, fieldModifier.getFieldValue("description"));
@@ -47,7 +49,7 @@ public class ProductTypeTest {
         int fieldValue = 1;
         String fieldName = "id";
         fieldModifier.setField(fieldName, fieldValue);
-        int returnedFieldValue = productType.getId();
+        int returnedFieldValue = genre.getId();
         assertEquals(fieldValue, returnedFieldValue);
     }
 
@@ -55,7 +57,7 @@ public class ProductTypeTest {
     public void testSetId() throws NoSuchFieldException, IllegalAccessException {
         int fieldValue = 1;
         String fieldName = "id";
-        productType.setId(fieldValue);
+        genre.setId(fieldValue);
         Object returnedFieldValue = fieldModifier.getFieldValue(fieldName);
         assertEquals(fieldValue, returnedFieldValue);
     }
@@ -65,7 +67,7 @@ public class ProductTypeTest {
         String fieldValue = "name";
         String fieldName = "name";
         fieldModifier.setField(fieldName, fieldValue);
-        String returnedFieldValue = productType.getName();
+        String returnedFieldValue = genre.getName();
         assertEquals(fieldValue, returnedFieldValue);
     }
 
@@ -73,7 +75,7 @@ public class ProductTypeTest {
     public void testSetName() throws NoSuchFieldException, IllegalAccessException {
         String fieldValue = "name";
         String fieldName = "name";
-        productType.setName(fieldValue);
+        genre.setName(fieldValue);
         Object returnedFieldValue = fieldModifier.getFieldValue(fieldName);
         assertEquals(fieldValue, returnedFieldValue);
     }
@@ -83,7 +85,7 @@ public class ProductTypeTest {
         String fieldValue = "description";
         String fieldName = "description";
         fieldModifier.setField(fieldName, fieldValue);
-        String returnedFieldValue = productType.getDescription();
+        String returnedFieldValue = genre.getDescription();
         assertEquals(fieldValue, returnedFieldValue);
     }
 
@@ -91,7 +93,7 @@ public class ProductTypeTest {
     public void testSetDescription() throws NoSuchFieldException, IllegalAccessException {
         String fieldValue = "description";
         String fieldName = "description";
-        productType.setDescription(fieldValue);
+        genre.setDescription(fieldValue);
         Object returnedFieldValue = fieldModifier.getFieldValue(fieldName);
         assertEquals(fieldValue, returnedFieldValue);
     }
@@ -101,14 +103,13 @@ public class ProductTypeTest {
         int id = 1;
         String name = "name";
         String description = "description";
-        ProductType productType = new ProductType(id, name, description);
-        StringBuilder expectedProductTypeString = new StringBuilder();
-        expectedProductTypeString.append("ProductType{id=").append(id)
+        Genre genre = new Genre(id, name, description);
+        StringBuilder expectedGenreString = new StringBuilder();
+        expectedGenreString.append("Genre{ id=").append(id)
                 .append(", name='").append(name).append("'")
                 .append(", description='").append(description).append("'")
                 .append('}');
-        String productTypeString = productType.toString();
-        assertEquals(expectedProductTypeString.toString(), productTypeString);
+        String genreString = genre.toString();
+        assertEquals(expectedGenreString.toString(), genreString);
     }
-
 }
