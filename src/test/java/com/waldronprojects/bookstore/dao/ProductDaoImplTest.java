@@ -2,6 +2,9 @@ package com.waldronprojects.bookstore.dao;
 
 import com.waldronprojects.bookstore.config.MvcConfig;
 import com.waldronprojects.bookstore.entity.Product;
+import com.waldronprojects.bookstore.entity.factory.ProductEntityFactory;
+import com.waldronprojects.bookstore.entity.factory.ProductTypeEnum;
+import com.waldronprojects.bookstore.util.UnitTestProductEntityFactory;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,19 +52,11 @@ public class ProductDaoImplTest {
     @Transactional
     @Rollback
     public void saveProduct() {
-        int id = 99;
-        String productName = "Unit Test Product";
-        BigDecimal unitPrice = new BigDecimal(9.90);
-        String description = "Unit Test Product Description";
-        int stock = 99;
-        Product product = new Product(id,
-                                      productName,
-                                      unitPrice,
-                                      description,
-                                      stock);
+        ProductEntityFactory productEntityFactory = new UnitTestProductEntityFactory();
+        Product product = productEntityFactory.createProduct(ProductTypeEnum.GENERIC);
         productDao.saveProduct(product);
-        Product returnedProduct = productDao.getProduct(id);
-        assertEquals(id, returnedProduct.getId());
+        Product returnedProduct = productDao.getProduct(product.getId());
+        assertEquals(product.getId(), returnedProduct.getId());
     }
 
     @Test

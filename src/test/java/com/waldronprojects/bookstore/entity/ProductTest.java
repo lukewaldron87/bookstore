@@ -5,6 +5,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import static org.junit.Assert.assertEquals;
 
@@ -26,12 +28,15 @@ public class ProductTest {
         BigDecimal unitPrice = new BigDecimal("1.10");
         String description = "description";
         int unitsInStock = 1;
-        Product product = new Product(productName, unitPrice, description, unitsInStock);
+        Collection<ProductType> productTypeCollection = createProductTypeCollection();
+        Product product = new Product(productName, unitPrice, description, unitsInStock,
+                                      productTypeCollection);
         fieldModifier = new FieldModifier(product);
         assertEquals(productName, fieldModifier.getFieldValue("productName"));
         assertEquals(unitPrice, fieldModifier.getFieldValue("unitPrice"));
         assertEquals(description, fieldModifier.getFieldValue("description"));
         assertEquals(unitsInStock, fieldModifier.getFieldValue("unitsInStock"));
+        assertEquals(productTypeCollection, fieldModifier.getFieldValue("productTypeCollection"));
 
     }
 
@@ -43,13 +48,16 @@ public class ProductTest {
         BigDecimal unitPrice = new BigDecimal("1.10");
         String description = "description";
         int unitsInStock = 1;
-        Product product = new Product(id, productName, unitPrice, description, unitsInStock);
+        Collection<ProductType> productTypeCollection = createProductTypeCollection();
+        Product product = new Product(id, productName, unitPrice, description, unitsInStock,
+                                      productTypeCollection);
         fieldModifier = new FieldModifier(product);
         assertEquals(id, fieldModifier.getFieldValue("id"));
         assertEquals(productName, fieldModifier.getFieldValue("productName"));
         assertEquals(unitPrice, fieldModifier.getFieldValue("unitPrice"));
         assertEquals(description, fieldModifier.getFieldValue("description"));
         assertEquals(unitsInStock, fieldModifier.getFieldValue("unitsInStock"));
+        assertEquals(productTypeCollection, fieldModifier.getFieldValue("productTypeCollection"));
 
     }
 
@@ -127,20 +135,38 @@ public class ProductTest {
 
     @Test
     public void testGetUnitsInUnitsInStock() throws NoSuchFieldException, IllegalAccessException{
-        int filedValue = 1;
+        int fieldValue = 1;
         String fieldName = "unitsInStock";
-        fieldModifier.setField(fieldName, filedValue);
+        fieldModifier.setField(fieldName, fieldValue);
         int returnedFieldValue = product.getUnitsInStock();
-        assertEquals(filedValue, returnedFieldValue);
+        assertEquals(fieldValue, returnedFieldValue);
     }
 
     @Test
     public void testSetUnitsInStock() throws NoSuchFieldException, IllegalAccessException{
-        int filedValue = 1;
+        int fieldValue = 1;
         String fieldName = "unitsInStock";
-        product.setUnitsInStock(filedValue);
+        product.setUnitsInStock(fieldValue);
         Object returnedFieldValue = fieldModifier.getFieldValue(fieldName);
-        assertEquals(filedValue, returnedFieldValue);
+        assertEquals(fieldValue, returnedFieldValue);
+    }
+
+    @Test
+    public void testGetProductTypeCollection() throws NoSuchFieldException, IllegalAccessException{
+        Collection<ProductType> fieldValue = createProductTypeCollection();
+        String fieldName = "productTypeCollection";
+        fieldModifier.setField(fieldName, fieldValue);
+        Collection<ProductType> returnedFieldValue = product.getProductTypeCollection();
+        assertEquals(fieldValue, returnedFieldValue);
+    }
+
+    @Test
+    public void testSetProductTypeCollection() throws NoSuchFieldException, IllegalAccessException{
+        Collection<ProductType> fieldValue = createProductTypeCollection();
+        String fieldName = "productTypeCollection";
+        product.setProductTypeCollection(fieldValue);
+        Object returnedFieldValue = fieldModifier.getFieldValue(fieldName);
+        assertEquals(fieldValue, returnedFieldValue);
     }
 
     @Test
@@ -149,14 +175,28 @@ public class ProductTest {
         BigDecimal unitPrice = new BigDecimal("2.20");
         String description = "description";
         int unitsInStock = 1;
-        Product product = new Product(productName, unitPrice, description, unitsInStock);
+        Collection<ProductType> productTypeCollection = createProductTypeCollection();
+        Product product = new Product(productName, unitPrice, description, unitsInStock,
+                                      productTypeCollection);
         String productString = product.toString();
         StringBuilder expectedProductStringBuilder = new StringBuilder();
         expectedProductStringBuilder.append("Product [id=null, productName=").append(productName)
                                     .append(", unitPrice=").append(unitPrice)
                                     .append(", description=").append(description)
                                     .append(", unitsInStock=").append(unitsInStock)
+                                    .append(", productTypeCollection=").append(productTypeCollection.toString())
                                     .append("]");
         assertEquals(expectedProductStringBuilder.toString(), productString);
+    }
+
+    private Collection<ProductType> createProductTypeCollection(){
+        ProductType bookProductType1 = new ProductType(1, "book",
+                "A book");
+        ProductType bookProductType2 = new ProductType(2, "hardback book",
+                "A book bound with rigid protective cover");
+        Collection<ProductType> productTypeCollection = new ArrayList<>();
+        productTypeCollection.add(bookProductType1);
+        productTypeCollection.add(bookProductType2);
+        return productTypeCollection;
     }
 }

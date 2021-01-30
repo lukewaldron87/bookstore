@@ -2,6 +2,8 @@ package com.waldronprojects.bookstore.entity;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name="product")
@@ -23,6 +25,12 @@ public class Product {
 
 	@Column(name="units_in_stock")
 	private int unitsInStock;
+
+	@ManyToMany
+	@JoinTable(name = "product_product_types",
+			   joinColumns = @JoinColumn(name = "product_id"),
+			   inverseJoinColumns = @JoinColumn(name = "product_type_id"))
+	private Collection<ProductType> productTypeCollection;
 	
 	// Products will have many OrderDetails so create a list to store those OrderDetails
 	/*@OneToMany(mappedBy="product",
@@ -33,19 +41,23 @@ public class Product {
 	public Product() {
 	}
 
-	public Product(String productName, BigDecimal unitPrice, String description, int unitsInStock) {
+	public Product(String productName, BigDecimal unitPrice, String description, int unitsInStock,
+				   Collection<ProductType> productTypeCollection) {
 		this.productName = productName;
 		this.unitPrice = unitPrice;
 		this.description = description;
 		this.unitsInStock = unitsInStock;
+		this.productTypeCollection = productTypeCollection;
 	}
 
-	public Product(int id, String productName, BigDecimal unitPrice, String description, int unitsInStock) {
+	public Product(int id, String productName, BigDecimal unitPrice, String description, int unitsInStock,
+				   Collection<ProductType> productTypeCollection) {
 		this.id = id;
 		this.productName = productName;
 		this.unitPrice = unitPrice;
 		this.description = description;
 		this.unitsInStock = unitsInStock;
+		this.productTypeCollection = productTypeCollection;
 	}
 
 	public int getId() {
@@ -88,6 +100,14 @@ public class Product {
 		this.unitsInStock = unitsInStock;
 	}
 
+	public Collection<ProductType> getProductTypeCollection() {
+		return productTypeCollection;
+	}
+
+	public void setProductTypeCollection(Collection<ProductType> productTypeCollection) {
+		this.productTypeCollection = productTypeCollection;
+	}
+
 	@Override
 	public String toString(){
 		StringBuilder stringBuilder = new StringBuilder();
@@ -95,6 +115,7 @@ public class Product {
 					 .append(", unitPrice=").append(unitPrice)
 					 .append(", description=").append(description)
 					 .append(", unitsInStock=").append(unitsInStock)
+					 .append(", productTypeCollection=").append(productTypeCollection.toString())
 					 .append("]");
 		return stringBuilder.toString();
 	}
