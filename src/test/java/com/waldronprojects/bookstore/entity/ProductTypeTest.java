@@ -1,6 +1,5 @@
 package com.waldronprojects.bookstore.entity;
 
-import com.waldronprojects.bookstore.entity.factory.ProductTypeEnum;
 import com.waldronprojects.bookstore.util.FieldModifier;
 import org.junit.Before;
 import org.junit.Test;
