@@ -190,9 +190,9 @@ public class ProductTest {
     }
 
     private Collection<ProductType> createProductTypeCollection(){
-        ProductType bookProductType1 = new ProductType(1, "book",
+        ProductType bookProductType1 = new ProductType(1L, "book",
                 "A book");
-        ProductType bookProductType2 = new ProductType(2, "hardback book",
+        ProductType bookProductType2 = new ProductType(2L, "hardback book",
                 "A book bound with rigid protective cover");
         Collection<ProductType> productTypeCollection = new ArrayList<>();
         productTypeCollection.add(bookProductType1);

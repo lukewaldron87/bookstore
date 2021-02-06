@@ -31,7 +31,7 @@ public class ProductTypeTest {
     @Test
     public void testConstructorWithId_setsAllFields() throws NoSuchFieldException,
                                                              IllegalAccessException{
-        int id = 1;
+        Long id = 1L;
         String name = "name";
         String description = "description";
         ProductType productType = new ProductType(id, name, description);
@@ -43,16 +43,16 @@ public class ProductTypeTest {
 
     @Test
     public void testGetId() throws NoSuchFieldException, IllegalAccessException{
-        int fieldValue = 1;
+        Long fieldValue = 1L;
         String fieldName = "id";
         fieldModifier.setField(fieldName, fieldValue);
-        int returnedFieldValue = productType.getId();
+        Long returnedFieldValue = productType.getId();
         assertEquals(fieldValue, returnedFieldValue);
     }
 
     @Test
     public void testSetId() throws NoSuchFieldException, IllegalAccessException {
-        int fieldValue = 1;
+        Long fieldValue = 1L;
         String fieldName = "id";
         productType.setId(fieldValue);
         Object returnedFieldValue = fieldModifier.getFieldValue(fieldName);
@@ -97,7 +97,7 @@ public class ProductTypeTest {
 
     @Test
     public void testToString(){
-        int id = 1;
+        Long id = 1L;
         String name = "name";
         String description = "description";
         ProductType productType = new ProductType(id, name, description);
