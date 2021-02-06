@@ -34,7 +34,7 @@ public class GenreTest {
     @Test
     public void testConstructorWithId_setsAllFields() throws NoSuchFieldException,
             IllegalAccessException{
-        int id = 1;
+        Long id = 1L;
         String name = "name";
         String description = "description";
         Genre genre = new Genre(id, name, description);
@@ -46,16 +46,16 @@ public class GenreTest {
 
     @Test
     public void testGetId() throws NoSuchFieldException, IllegalAccessException{
-        int fieldValue = 1;
+        Long fieldValue = 1L;
         String fieldName = "id";
         fieldModifier.setField(fieldName, fieldValue);
-        int returnedFieldValue = genre.getId();
+        Long returnedFieldValue = genre.getId();
         assertEquals(fieldValue, returnedFieldValue);
     }
 
     @Test
     public void testSetId() throws NoSuchFieldException, IllegalAccessException {
-        int fieldValue = 1;
+        Long fieldValue = 1L;
         String fieldName = "id";
         genre.setId(fieldValue);
         Object returnedFieldValue = fieldModifier.getFieldValue(fieldName);
@@ -100,7 +100,7 @@ public class GenreTest {
 
     @Test
     public void testToString(){
-        int id = 1;
+        Long id = 1L;
         String name = "name";
         String description = "description";
         Genre genre = new Genre(id, name, description);
