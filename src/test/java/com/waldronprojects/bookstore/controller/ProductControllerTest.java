@@ -120,7 +120,7 @@ public class ProductControllerTest {
 
     @Test
     public void testDelete() throws Exception {
-        int productId = 1;
+        Long productId = 1L;
         mockMvc.perform(get(URl_MAPPING_PREFIX + "delete")
                         .param("productId", String.valueOf(productId)))
                 .andExpect(status().isFound())

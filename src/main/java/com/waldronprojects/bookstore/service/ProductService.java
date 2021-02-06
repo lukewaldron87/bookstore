@@ -6,13 +6,13 @@ import com.waldronprojects.bookstore.entity.Product;
 
 public interface ProductService {
 
-	public Product getProduct(int id);
+	public Product getProduct(Long id);
 	
 	public List<Product> getProducts();
 
 	public void saveProduct(Product product);
 	
-	public void deleteProduct(int id);
+	public void deleteProduct(Long id);
 	
 
 }

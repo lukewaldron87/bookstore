@@ -43,7 +43,7 @@ public class ProductTest {
     @Test
     public void testConstructorWithId_setsAllFields() throws NoSuchFieldException,
                                                              IllegalAccessException {
-        int id = 1;
+        Long id = 1L;
         String productName = "productName";
         BigDecimal unitPrice = new BigDecimal("1.10");
         String description = "description";
@@ -63,16 +63,16 @@ public class ProductTest {
 
     @Test
     public void testGetId() throws NoSuchFieldException, IllegalAccessException {
-        int fieldValue = 1;
+        Long fieldValue = 1L;
         String fieldName = "id";
         fieldModifier.setField(fieldName, fieldValue);
-        int returnedFieldValue = product.getId();
+        Long returnedFieldValue = product.getId();
         assertEquals(fieldValue, returnedFieldValue);
     }
 
     @Test
     public void testSetId() throws NoSuchFieldException, IllegalAccessException {
-        int fieldValue = 1;
+        Long fieldValue = 1L;
         String fieldName = "id";
         product.setId(fieldValue);
         Object returnedFieldValue = fieldModifier.getFieldValue(fieldName);

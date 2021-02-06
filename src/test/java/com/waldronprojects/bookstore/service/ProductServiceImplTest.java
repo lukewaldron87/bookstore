@@ -67,13 +67,13 @@ public class ProductServiceImplTest {
 
     @Test
     public void testDeleteProduct() {
-        Integer id = 1;
+        Long id = 1L;
         productService.deleteProduct(id);
-        ArgumentCaptor<Integer> argumentCaptor = ArgumentCaptor.forClass(Integer.class);
+        ArgumentCaptor<Long> argumentCaptor = ArgumentCaptor.forClass(Long.class);
         Mockito.verify(productDao, Mockito.times(1))
                 .deleteProduct(argumentCaptor.capture());
-        Integer capturedInt = argumentCaptor.getValue();
-        assertEquals(id, capturedInt);
+        Long capturedLong = argumentCaptor.getValue();
+        assertEquals(id, capturedLong);
     }
 
     private Product createProductObject(ProductTypeEnum type){

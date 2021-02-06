@@ -29,7 +29,8 @@ public class UnitTestProductEntityFactoryTest {
     @Test
     public void testCreateProductStaticValues(){
         Product product = factory.createProduct(ProductTypeEnum.GENERIC);
-        assertEquals(product.getId(), 1);
+        Long id = 1L;
+        assertEquals(product.getId(), id);
         assertEquals(product.getProductName(), "genericProduct");
         assertEquals(product.getUnitPrice(), new BigDecimal("1.10"));
         assertEquals(product.getDescription(), "productDescription");

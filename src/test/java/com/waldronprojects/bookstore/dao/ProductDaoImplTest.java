@@ -32,7 +32,7 @@ public class ProductDaoImplTest {
     @Transactional
     @Rollback
     public void getProduct() {
-        int id = 3;
+        Long id = 3L;
         String productName = "book1";
         Product product = productDao.getProduct(id);
         assertEquals(id, product.getId());
@@ -63,7 +63,7 @@ public class ProductDaoImplTest {
     @Transactional
     @Rollback
     public void deleteProduct() {
-        int id = 3;
+        Long id = 3L;
         productDao.deleteProduct(id);
         Product product = productDao.getProduct(id);
         assertNull(product);

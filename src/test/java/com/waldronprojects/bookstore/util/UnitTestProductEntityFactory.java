@@ -24,7 +24,7 @@ public class UnitTestProductEntityFactory extends ProductEntityFactory {
 
     private Product createGenericProduct() {
         Product product = new Product();
-        product.setId(1);
+        product.setId(1L);
         product.setProductName("genericProduct");
         product.setUnitPrice(new BigDecimal("1.10"));
         product.setDescription("productDescription");

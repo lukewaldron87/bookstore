@@ -17,7 +17,7 @@ public class ProductDaoImpl implements ProductDao {
 	private SessionFactory sessionFactory;
 
 	@Override
-	public Product getProduct(int id) {
+	public Product getProduct(Long id) {
 		Session currentSession = sessionFactory.getCurrentSession();
 		return currentSession.get(Product.class, id);
 	}
@@ -48,9 +48,9 @@ public class ProductDaoImpl implements ProductDao {
 	}
 
 	@Override
-	public void deleteProduct(int id) {
+	public void deleteProduct(Long id) {
 		Session currentSession = sessionFactory.getCurrentSession();
-		Query query = currentSession.createQuery("delete from Product where id=:productId");
+		Query<?> query = currentSession.createQuery("delete from Product where id=:productId");
 		query.setParameter("productId", id);
 		query.executeUpdate();
 	}
