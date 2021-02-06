@@ -22,7 +22,7 @@ public class UnitTestProductEntityFactoryTest {
 
     @Test
     public void testCreateProductReturnsCorrectType(){
-        Product product = factory.createProduct(ProductTypeEnum.GENERIC);
+        Object product = factory.createProduct(ProductTypeEnum.GENERIC);
         assertTrue(product instanceof Product);
     }
 
