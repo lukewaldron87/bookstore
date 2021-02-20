@@ -10,10 +10,10 @@ public class Image {
     @Column(name = "id")
     private long id;
 
-    @Column(name = "productId")
+    @Column(name = "product_id")
     private long productId;
 
-    @Column(name = "fileUrl")
+    @Column(name = "file_url")
     private String fileUrl;
 
     public Image () {

@@ -29,6 +29,7 @@ public class ImageTest {
         assertEquals(productId, fieldModifier.getFieldValue("productId"));
         assertEquals(fileUrl, fieldModifier.getFieldValue("fileUrl"));
     }
+
     @Test
     public void testGetId() throws NoSuchFieldException, IllegalAccessException{
         long fieldValue = 1;
@@ -37,6 +38,7 @@ public class ImageTest {
         Object returnedFieldValue = image.getId();
         assertEquals(fieldValue, returnedFieldValue);
     }
+
     @Test
     public void testSetId() throws NoSuchFieldException, IllegalAccessException {
         long fieldValue = 1;
@@ -45,6 +47,7 @@ public class ImageTest {
         Object returnedFieldValue = fieldModifier.getFieldValue(fieldName);
         assertEquals(fieldValue, returnedFieldValue);
     }
+
     @Test
     public void testGetProductId() throws NoSuchFieldException, IllegalAccessException{
         long fieldValue = 1;
@@ -53,6 +56,7 @@ public class ImageTest {
         Object returnedFieldValue = image.getProductId();
         assertEquals(fieldValue, returnedFieldValue);
     }
+
     @Test
     public void testSetProductId() throws NoSuchFieldException, IllegalAccessException {
         long fieldValue = 1;
@@ -61,6 +65,7 @@ public class ImageTest {
         Object returnedFieldValue = fieldModifier.getFieldValue(fieldName);
         assertEquals(fieldValue, returnedFieldValue);
     }
+
     @Test
     public void testGetFileUrl() throws NoSuchFieldException, IllegalAccessException{
         String fieldValue = "fileUrl";
@@ -69,6 +74,7 @@ public class ImageTest {
         Object returnedFieldValue = image.getFileUrl();
         assertEquals(fieldValue, returnedFieldValue);
     }
+
     @Test
     public void testSetFileUrl() throws NoSuchFieldException, IllegalAccessException {
         String fieldValue = "fileUrl";
@@ -77,6 +83,7 @@ public class ImageTest {
         Object returnedFieldValue = fieldModifier.getFieldValue(fieldName);
         assertEquals(fieldValue, returnedFieldValue);
     }
+
     @Test
     public void testToString(){
         long id = 1;
@@ -93,3 +100,4 @@ public class ImageTest {
         assertEquals(stringBuilder.toString(), imageString);
     }
 }
+
