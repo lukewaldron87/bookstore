@@ -29,15 +29,18 @@ public class ProductTest {
         String description = "description";
         int unitsInStock = 1;
         Collection<ProductType> productTypeCollection = createProductTypeCollection();
+        Collection<Genre> genreCollection = createGenreCollection();
+        Collection<Image> imageCollection = createImageCollection();
         Product product = new Product(productName, unitPrice, description, unitsInStock,
-                                      productTypeCollection);
+                                      productTypeCollection, genreCollection, imageCollection);
         fieldModifier = new FieldModifier(product);
         assertEquals(productName, fieldModifier.getFieldValue("productName"));
         assertEquals(unitPrice, fieldModifier.getFieldValue("unitPrice"));
         assertEquals(description, fieldModifier.getFieldValue("description"));
         assertEquals(unitsInStock, fieldModifier.getFieldValue("unitsInStock"));
         assertEquals(productTypeCollection, fieldModifier.getFieldValue("productTypeCollection"));
-
+        assertEquals(genreCollection, fieldModifier.getFieldValue("genreCollection"));
+        assertEquals(imageCollection, fieldModifier.getFieldValue("imageCollection"));
     }
 
     @Test
@@ -49,8 +52,10 @@ public class ProductTest {
         String description = "description";
         int unitsInStock = 1;
         Collection<ProductType> productTypeCollection = createProductTypeCollection();
+        Collection<Genre> genreCollection = createGenreCollection();
+        Collection<Image> imageCollection = createImageCollection();
         Product product = new Product(id, productName, unitPrice, description, unitsInStock,
-                                      productTypeCollection);
+                                      productTypeCollection, genreCollection, imageCollection);
         fieldModifier = new FieldModifier(product);
         assertEquals(id, fieldModifier.getFieldValue("id"));
         assertEquals(productName, fieldModifier.getFieldValue("productName"));
@@ -58,7 +63,8 @@ public class ProductTest {
         assertEquals(description, fieldModifier.getFieldValue("description"));
         assertEquals(unitsInStock, fieldModifier.getFieldValue("unitsInStock"));
         assertEquals(productTypeCollection, fieldModifier.getFieldValue("productTypeCollection"));
-
+        assertEquals(genreCollection, fieldModifier.getFieldValue("genreCollection"));
+        assertEquals(imageCollection, fieldModifier.getFieldValue("imageCollection"));
     }
 
     @Test
@@ -170,14 +176,52 @@ public class ProductTest {
     }
 
     @Test
+    public void testGetGenreCollection() throws NoSuchFieldException, IllegalAccessException{
+        Collection<Genre> fieldValue = createGenreCollection();
+        String fieldName = "genreCollection";
+        fieldModifier.setField(fieldName, fieldValue);
+        Collection<Genre> returnedFieldValue = product.getGenreCollection();
+        assertEquals(fieldValue, returnedFieldValue);
+    }
+
+    @Test
+    public void testSetGenreCollection() throws NoSuchFieldException, IllegalAccessException{
+        Collection<Genre> fieldValue = createGenreCollection();
+        String fieldName = "genreCollection";
+        product.setGenreCollection(fieldValue);
+        Object returnedFieldValue = fieldModifier.getFieldValue(fieldName);
+        assertEquals(fieldValue, returnedFieldValue);
+    }
+
+    @Test
+    public void testGetImageCollection() throws NoSuchFieldException, IllegalAccessException{
+        Collection<Image> fieldValue = createImageCollection();
+        String fieldName = "imageCollection";
+        fieldModifier.setField(fieldName, fieldValue);
+        Collection<Image> returnedFieldValue = product.getImageCollection();
+        assertEquals(fieldValue, returnedFieldValue);
+    }
+
+    @Test
+    public void testSetImageCollection() throws NoSuchFieldException, IllegalAccessException{
+        Collection<Image> fieldValue = createImageCollection();
+        String fieldName = "imageCollection";
+        product.setImageCollection(fieldValue);
+        Object returnedFieldValue = fieldModifier.getFieldValue(fieldName);
+        assertEquals(fieldValue, returnedFieldValue);
+    }
+
+    @Test
     public void testToString(){
         String productName = "productName";
         BigDecimal unitPrice = new BigDecimal("2.20");
         String description = "description";
         int unitsInStock = 1;
         Collection<ProductType> productTypeCollection = createProductTypeCollection();
+        Collection<Genre> genreCollection = createGenreCollection();
+        Collection<Image> imageCollection = createImageCollection();
         Product product = new Product(productName, unitPrice, description, unitsInStock,
-                                      productTypeCollection);
+                productTypeCollection, genreCollection, imageCollection);
         String productString = product.toString();
         StringBuilder expectedProductStringBuilder = new StringBuilder();
         expectedProductStringBuilder.append("Product [id=null, productName=").append(productName)
@@ -185,6 +229,8 @@ public class ProductTest {
                                     .append(", description=").append(description)
                                     .append(", unitsInStock=").append(unitsInStock)
                                     .append(", productTypeCollection=").append(productTypeCollection.toString())
+                                    .append(", genreCollection=").append(genreCollection.toString())
+                                    .append(", imageCollection=").append(imageCollection.toString())
                                     .append("]");
         assertEquals(expectedProductStringBuilder.toString(), productString);
     }
@@ -198,5 +244,23 @@ public class ProductTest {
         productTypeCollection.add(bookProductType1);
         productTypeCollection.add(bookProductType2);
         return productTypeCollection;
+    }
+
+    private Collection<Genre> createGenreCollection() {
+        Genre crimeGenre = new Genre(1L, "Crime", "Cops and robbers craic");
+        Genre thrillerGenre = new Genre(2L, "Thriller", "Exciting stuff");
+        Collection<Genre> genreCollection = new ArrayList<>();
+        genreCollection.add(crimeGenre);
+        genreCollection.add(thrillerGenre);
+        return genreCollection;
+    }
+
+    private Collection<Image> createImageCollection() {
+        Image image1 = new Image(1L, "/here/here");
+        Image image2 = new Image(2L, "/there/there");
+        Collection imageCollection = new ArrayList();
+        imageCollection.add(image1);
+        imageCollection.add(image2);
+        return imageCollection;
     }
 }
