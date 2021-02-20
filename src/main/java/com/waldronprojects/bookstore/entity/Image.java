@@ -1,9 +1,8 @@
 package com.waldronprojects.bookstore.entity;
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
+@Entity
+@Table(name="image")
 public class Image {
 
     @Id
@@ -11,14 +10,18 @@ public class Image {
     @Column(name = "id")
     private long id;
 
+    @Column(name = "productId")
+    private long productId;
+
     @Column(name = "fileUrl")
     private String fileUrl;
 
     public Image () {
     }
 
-    public Image (long id, String fileUrl) {
+    public Image (long id, long productId, String fileUrl) {
         this.id = id;
+        this.productId = productId;
         this.fileUrl = fileUrl;
     }
 
@@ -28,6 +31,14 @@ public class Image {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public long getProductId() {
+        return productId;
+    }
+
+    public void setProductId(long productId) {
+        this.productId = productId;
     }
 
     public String getFileUrl() {
@@ -43,6 +54,7 @@ public class Image {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Image {")
                 .append(" id='").append(id).append("'")
+                .append(", productId='").append(productId).append("'")
                 .append(", fileUrl='").append(fileUrl).append("'")
                 .append("}");
         return stringBuilder.toString();

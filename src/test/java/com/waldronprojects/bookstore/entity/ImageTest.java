@@ -21,10 +21,12 @@ public class ImageTest {
     public void testConstructorWithId_setsAllFields() throws NoSuchFieldException,
                                                              IllegalAccessException{
         long id = 1;
+        long productId = 1;
         String fileUrl = "fileUrl";
-        Image image = new Image(id, fileUrl);
+        Image image = new Image(id, productId, fileUrl);
         fieldModifier = new FieldModifier(image);
         assertEquals(id, fieldModifier.getFieldValue("id"));
+        assertEquals(productId, fieldModifier.getFieldValue("productId"));
         assertEquals(fileUrl, fieldModifier.getFieldValue("fileUrl"));
     }
     @Test
@@ -40,6 +42,22 @@ public class ImageTest {
         long fieldValue = 1;
         String fieldName = "id";
         image.setId(fieldValue);
+        Object returnedFieldValue = fieldModifier.getFieldValue(fieldName);
+        assertEquals(fieldValue, returnedFieldValue);
+    }
+    @Test
+    public void testGetProductId() throws NoSuchFieldException, IllegalAccessException{
+        long fieldValue = 1;
+        String fieldName = "productId";
+        fieldModifier.setField(fieldName, fieldValue);
+        Object returnedFieldValue = image.getProductId();
+        assertEquals(fieldValue, returnedFieldValue);
+    }
+    @Test
+    public void testSetProductId() throws NoSuchFieldException, IllegalAccessException {
+        long fieldValue = 1;
+        String fieldName = "productId";
+        image.setProductId(fieldValue);
         Object returnedFieldValue = fieldModifier.getFieldValue(fieldName);
         assertEquals(fieldValue, returnedFieldValue);
     }
@@ -62,11 +80,13 @@ public class ImageTest {
     @Test
     public void testToString(){
         long id = 1;
+        long productId = 1;
         String fileUrl = "fileUrl";
-        Image image = new Image(id, fileUrl);
+        Image image = new Image(id, productId, fileUrl);
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Image {")
                 .append(" id='").append(id).append("'")
+                .append(", productId='").append(productId).append("'")
                 .append(", fileUrl='").append(fileUrl).append("'")
                 .append("}");
         String imageString = image.toString();
