@@ -41,6 +41,12 @@ public class Product {
 			cascade= {CascadeType.PERSIST, CascadeType.MERGE,
 					CascadeType.DETACH, CascadeType.REFRESH})
 	private Collection<Image> imageCollection;
+
+    @ManyToMany
+    @JoinTable(name = "product_associates",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "associate_id"))
+    private Collection<Associate> associateCollection;
 	
 	// Products will have many OrderDetails so create a list to store those OrderDetails
 	/*@OneToMany(mappedBy="product",
@@ -53,7 +59,7 @@ public class Product {
 
 	public Product(String productName, BigDecimal unitPrice, String description, int unitsInStock,
 				   Collection<ProductType> productTypeCollection, Collection<Genre> genreCollection,
-				   Collection<Image> imageCollection) {
+				   Collection<Image> imageCollection, Collection<Associate> associateCollection) {
 		this.productName = productName;
 		this.unitPrice = unitPrice;
 		this.description = description;
@@ -61,11 +67,12 @@ public class Product {
 		this.productTypeCollection = productTypeCollection;
 		this.genreCollection = genreCollection;
 		this.imageCollection = imageCollection;
+		this.associateCollection = associateCollection;
 	}
 
 	public Product(Long id, String productName, BigDecimal unitPrice, String description, int unitsInStock,
 				   Collection<ProductType> productTypeCollection, Collection<Genre> genreCollection,
-				   Collection<Image> imageCollection) {
+				   Collection<Image> imageCollection, Collection<Associate> associateCollection) {
 		this.id = id;
 		this.productName = productName;
 		this.unitPrice = unitPrice;
@@ -74,6 +81,7 @@ public class Product {
 		this.productTypeCollection = productTypeCollection;
 		this.genreCollection = genreCollection;
 		this.imageCollection = imageCollection;
+		this.associateCollection = associateCollection;
 	}
 
 	public Long getId() {
@@ -140,7 +148,15 @@ public class Product {
 		this.imageCollection = imageCollection;
 	}
 
-	@Override
+    public Collection<Associate> getAssociateCollection() {
+        return associateCollection;
+    }
+
+    public void setAssociateCollection(Collection<Associate> associateCollection) {
+        this.associateCollection = associateCollection;
+    }
+
+    @Override
 	public String toString(){
 		StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append("Product [id=null, productName=").append(productName)
@@ -150,6 +166,7 @@ public class Product {
 					 .append(", productTypeCollection=").append(productTypeCollection.toString())
 					 .append(", genreCollection=").append(genreCollection.toString())
 					 .append(", imageCollection=").append(imageCollection.toString())
+                     .append(", associateCollection=").append(associateCollection.toString())
 					 .append("]");
 		return stringBuilder.toString();
 	}

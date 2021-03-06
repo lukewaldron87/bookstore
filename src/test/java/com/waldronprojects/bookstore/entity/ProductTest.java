@@ -31,8 +31,10 @@ public class ProductTest {
         Collection<ProductType> productTypeCollection = createProductTypeCollection();
         Collection<Genre> genreCollection = createGenreCollection();
         Collection<Image> imageCollection = createImageCollection();
+        Collection<Associate> associateCollection = createAssociateCollection();
         Product product = new Product(productName, unitPrice, description, unitsInStock,
-                                      productTypeCollection, genreCollection, imageCollection);
+                                      productTypeCollection, genreCollection, imageCollection,
+                                      associateCollection);
         fieldModifier = new FieldModifier(product);
         assertEquals(productName, fieldModifier.getFieldValue("productName"));
         assertEquals(unitPrice, fieldModifier.getFieldValue("unitPrice"));
@@ -41,6 +43,7 @@ public class ProductTest {
         assertEquals(productTypeCollection, fieldModifier.getFieldValue("productTypeCollection"));
         assertEquals(genreCollection, fieldModifier.getFieldValue("genreCollection"));
         assertEquals(imageCollection, fieldModifier.getFieldValue("imageCollection"));
+        assertEquals(associateCollection, fieldModifier.getFieldValue("associateCollection"));
     }
 
     @Test
@@ -54,8 +57,10 @@ public class ProductTest {
         Collection<ProductType> productTypeCollection = createProductTypeCollection();
         Collection<Genre> genreCollection = createGenreCollection();
         Collection<Image> imageCollection = createImageCollection();
+        Collection<Associate> associateCollection = createAssociateCollection();
         Product product = new Product(id, productName, unitPrice, description, unitsInStock,
-                                      productTypeCollection, genreCollection, imageCollection);
+                                      productTypeCollection, genreCollection, imageCollection,
+                                      associateCollection);
         fieldModifier = new FieldModifier(product);
         assertEquals(id, fieldModifier.getFieldValue("id"));
         assertEquals(productName, fieldModifier.getFieldValue("productName"));
@@ -212,6 +217,24 @@ public class ProductTest {
     }
 
     @Test
+    public void testGetAssociateCollection() throws NoSuchFieldException, IllegalAccessException{
+        Collection<Associate> fieldValue = createAssociateCollection();
+        String fieldName = "associateCollection";
+        fieldModifier.setField(fieldName, fieldValue);
+        Collection<Associate> returnedFieldValue = product.getAssociateCollection();
+        assertEquals(fieldValue, returnedFieldValue);
+    }
+
+    @Test
+    public void testSetAssociateCollection() throws NoSuchFieldException, IllegalAccessException{
+        Collection<Associate> fieldValue = createAssociateCollection();
+        String fieldName = "associateCollection";
+        product.setAssociateCollection(fieldValue);
+        Object returnedFieldValue = fieldModifier.getFieldValue(fieldName);
+        assertEquals(fieldValue, returnedFieldValue);
+    }
+
+    @Test
     public void testToString(){
         String productName = "productName";
         BigDecimal unitPrice = new BigDecimal("2.20");
@@ -220,8 +243,10 @@ public class ProductTest {
         Collection<ProductType> productTypeCollection = createProductTypeCollection();
         Collection<Genre> genreCollection = createGenreCollection();
         Collection<Image> imageCollection = createImageCollection();
+        Collection<Associate> associateCollection = createAssociateCollection();
         Product product = new Product(productName, unitPrice, description, unitsInStock,
-                productTypeCollection, genreCollection, imageCollection);
+                                      productTypeCollection, genreCollection, imageCollection,
+                                      associateCollection);
         String productString = product.toString();
         StringBuilder expectedProductStringBuilder = new StringBuilder();
         expectedProductStringBuilder.append("Product [id=null, productName=").append(productName)
@@ -231,6 +256,7 @@ public class ProductTest {
                                     .append(", productTypeCollection=").append(productTypeCollection.toString())
                                     .append(", genreCollection=").append(genreCollection.toString())
                                     .append(", imageCollection=").append(imageCollection.toString())
+                                    .append(", associateCollection=").append(associateCollection.toString())
                                     .append("]");
         assertEquals(expectedProductStringBuilder.toString(), productString);
     }
@@ -262,5 +288,14 @@ public class ProductTest {
         imageCollection.add(image1);
         imageCollection.add(image2);
         return imageCollection;
+    }
+
+    private Collection<Associate> createAssociateCollection() {
+        Associate associate1 = new Associate(1L, "Author", "A person who writes a book");
+        Associate associate2 = new Associate(1L, "Illustrator", "A person who illustrates a book");
+        Collection associateCollection = new ArrayList();
+        associateCollection.add(associate1);
+        associateCollection.add(associate2);
+        return associateCollection;
     }
 }
