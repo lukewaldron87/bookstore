@@ -4,6 +4,9 @@ import com.waldronprojects.bookstore.util.FieldModifier;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import static org.junit.Assert.assertEquals;
 
 public class AssociateTest {
@@ -22,13 +25,26 @@ public class AssociateTest {
                                                              IllegalAccessException{
         long id = 1;
         String name = "name";
-        String description = "description";
-        Associate associate = new Associate(id, name, description);
+        String bio = "bio";
+        //Collection<AssociateType> associateTypeCollection = createAssociateCollection();
+        Associate associate = new Associate(id, name, bio);
         fieldModifier = new FieldModifier(associate);
         assertEquals(id, fieldModifier.getFieldValue("id"));
         assertEquals(name, fieldModifier.getFieldValue("name"));
-        assertEquals(description, fieldModifier.getFieldValue("description"));
+        assertEquals(bio, fieldModifier.getFieldValue("bio"));
     }
+
+    private Collection<AssociateType> createAssociateCollection() {
+        AssociateType associateType1 = new AssociateType(1L, "Author",
+                                                "A person who writes a book");
+        AssociateType associateType2 = new AssociateType(2L, "Illustrator",
+                                                "A person who draws pictures for books");
+        Collection<AssociateType> associateTypeCollection = new ArrayList<>();
+        associateTypeCollection.add(associateType1);
+        associateTypeCollection.add(associateType2);
+        return associateTypeCollection;
+    }
+
     @Test
     public void testGetId() throws NoSuchFieldException, IllegalAccessException{
         long fieldValue = 1;
@@ -62,18 +78,18 @@ public class AssociateTest {
         assertEquals(fieldValue, returnedFieldValue);
     }
     @Test
-    public void testGetDescription() throws NoSuchFieldException, IllegalAccessException{
-        String fieldValue = "description";
-        String fieldName = "description";
+    public void testGetBio() throws NoSuchFieldException, IllegalAccessException{
+        String fieldValue = "bio";
+        String fieldName = "bio";
         fieldModifier.setField(fieldName, fieldValue);
-        Object returnedFieldValue = associate.getDescription();
+        Object returnedFieldValue = associate.getBio();
         assertEquals(fieldValue, returnedFieldValue);
     }
     @Test
-    public void testSetDescription() throws NoSuchFieldException, IllegalAccessException {
-        String fieldValue = "description";
-        String fieldName = "description";
-        associate.setDescription(fieldValue);
+    public void testSetBio() throws NoSuchFieldException, IllegalAccessException {
+        String fieldValue = "bio";
+        String fieldName = "bio";
+        associate.setBio(fieldValue);
         Object returnedFieldValue = fieldModifier.getFieldValue(fieldName);
         assertEquals(fieldValue, returnedFieldValue);
     }
@@ -81,13 +97,13 @@ public class AssociateTest {
     public void testToString(){
         long id = 1;
         String name = "name";
-        String description = "description";
-        Associate associate = new Associate(id, name, description);
+        String bio = "bio";
+        Associate associate = new Associate(id, name, bio);
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Associate {")
                 .append(" id='").append(id).append("'")
                 .append(", name='").append(name).append("'")
-                .append(", description='").append(description).append("'")
+                .append(", bio='").append(bio).append("'")
                 .append("}");
         String associateString = associate.toString();
         assertEquals(stringBuilder.toString(), associateString);

@@ -22,11 +22,14 @@ public class AssociateTypeTest {
                                                              IllegalAccessException{
         long id = 1;
         String name = "name";
-        AssociateType associateType = new AssociateType(id, name);
+        String description = "description";
+        AssociateType associateType = new AssociateType(id, name, description);
         fieldModifier = new FieldModifier(associateType);
         assertEquals(id, fieldModifier.getFieldValue("id"));
         assertEquals(name, fieldModifier.getFieldValue("name"));
+        assertEquals(description, fieldModifier.getFieldValue("description"));
     }
+
     @Test
     public void testGetId() throws NoSuchFieldException, IllegalAccessException{
         long fieldValue = 1;
@@ -35,6 +38,7 @@ public class AssociateTypeTest {
         Object returnedFieldValue = associateType.getId();
         assertEquals(fieldValue, returnedFieldValue);
     }
+
     @Test
     public void testSetId() throws NoSuchFieldException, IllegalAccessException {
         long fieldValue = 1;
@@ -43,6 +47,7 @@ public class AssociateTypeTest {
         Object returnedFieldValue = fieldModifier.getFieldValue(fieldName);
         assertEquals(fieldValue, returnedFieldValue);
     }
+
     @Test
     public void testGetName() throws NoSuchFieldException, IllegalAccessException{
         String fieldValue = "name";
@@ -51,6 +56,7 @@ public class AssociateTypeTest {
         Object returnedFieldValue = associateType.getName();
         assertEquals(fieldValue, returnedFieldValue);
     }
+
     @Test
     public void testSetName() throws NoSuchFieldException, IllegalAccessException {
         String fieldValue = "name";
@@ -59,15 +65,36 @@ public class AssociateTypeTest {
         Object returnedFieldValue = fieldModifier.getFieldValue(fieldName);
         assertEquals(fieldValue, returnedFieldValue);
     }
+
+    @Test
+    public void testGetDescription() throws NoSuchFieldException, IllegalAccessException{
+        String fieldValue = "description";
+        String fieldDescription = "description";
+        fieldModifier.setField(fieldDescription, fieldValue);
+        Object returnedFieldValue = associateType.getDescription();
+        assertEquals(fieldValue, returnedFieldValue);
+    }
+
+    @Test
+    public void testSetDescription() throws NoSuchFieldException, IllegalAccessException {
+        String fieldValue = "description";
+        String fieldDescription = "description";
+        associateType.setDescription(fieldValue);
+        Object returnedFieldValue = fieldModifier.getFieldValue(fieldDescription);
+        assertEquals(fieldValue, returnedFieldValue);
+    }
+
     @Test
     public void testToString(){
         long id = 1;
         String name = "name";
-        AssociateType associateType = new AssociateType(id, name);
+        String description = "description";
+        AssociateType associateType = new AssociateType(id, name, description);
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("AssociateType {")
                 .append(" id='").append(id).append("'")
                 .append(", name='").append(name).append("'")
+                .append(", description='").append(description).append("'")
                 .append("}");
         String associateTypeString = associateType.toString();
         assertEquals(stringBuilder.toString(), associateTypeString);

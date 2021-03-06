@@ -7,6 +7,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * A person related to a product
+ * eg Oscar Wild is an associate to the book The Picture of Dorian Gray
+ */
 @Entity
 @Table(name = "associate")
 public class Associate {
@@ -19,18 +23,18 @@ public class Associate {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "description")
-    private String description;
+    @Column(name = "bio")
+    private String bio;
 
 
     public Associate () {
     }
 
 
-    public Associate (long id, String name, String description) {
+    public Associate (long id, String name, String bio) {
         this.id = id;
         this.name = name;
-        this.description = description;
+        this.bio = bio;
     }
 
     public long getId() {
@@ -49,12 +53,12 @@ public class Associate {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
+    public String getBio() {
+        return bio;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setBio(String description) {
+        this.bio = description;
     }
 
     @Override
@@ -63,7 +67,7 @@ public class Associate {
         stringBuilder.append("Associate {")
                 .append(" id='").append(id).append("'")
                 .append(", name='").append(name).append("'")
-                .append(", description='").append(description).append("'")
+                .append(", bio='").append(bio).append("'")
                 .append("}");
         return stringBuilder.toString();
     }

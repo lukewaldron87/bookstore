@@ -14,12 +14,16 @@ public class AssociateType {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "description")
+    private String description;
+
     public AssociateType () {
     }
 
-    public AssociateType (long id, String name) {
+    public AssociateType (long id, String name, String description) {
         this.id = id;
         this.name = name;
+        this.description = description;
     }
 
     public long getId() {
@@ -38,12 +42,21 @@ public class AssociateType {
         this.name = name;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("AssociateType {")
                 .append(" id='").append(id).append("'")
                 .append(", name='").append(name).append("'")
+                .append(", description='").append(description).append("'")
                 .append("}");
         return stringBuilder.toString();
     }
