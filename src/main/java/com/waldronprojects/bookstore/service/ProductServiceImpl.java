@@ -18,7 +18,7 @@ public class ProductServiceImpl implements ProductService {
 	
 	@Override
 	@Transactional
-	public Product getProduct(int id) {
+	public Product getProduct(Long id) {
 		return productDao.getProduct(id);
 	}
 
@@ -36,7 +36,7 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	@Transactional
-	public void deleteProduct(int id) {
+	public void deleteProduct(Long id) {
 		productDao.deleteProduct(id);
 	}
 

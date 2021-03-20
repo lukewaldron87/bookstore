@@ -6,12 +6,12 @@ import com.waldronprojects.bookstore.entity.Product;
 
 public interface ProductDao {
 
-	public Product getProduct(int id);
+	Product getProduct(Long id);
 	
-	public List<Product> getProducts();
+	List<Product> getProducts();
 
-	public void saveProduct(Product product);
+	void saveProduct(Product product);
 	
-	public void deleteProduct(int id);
+	void deleteProduct(Long id);
 
 }

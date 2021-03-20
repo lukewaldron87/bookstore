@@ -77,7 +77,7 @@ public class CustomerDtoTest {
         RoleEntityCollectionFactory roleEntityCollectionFactory =
                 new UnitTestRoleEntityCollectionFactory();
         Collection<Role> roleCollection = roleEntityCollectionFactory
-                .createRole(RoleType.ROLE_ADMIN);
+                .createRoleCollection(RoleType.ROLE_ADMIN);
 
         customerDto = new CustomerDto(username,
                                       password,
@@ -225,7 +225,7 @@ public class CustomerDtoTest {
         RoleEntityCollectionFactory roleEntityCollectionFactory =
                 new UnitTestRoleEntityCollectionFactory();
         Collection<Role> roleCollection = roleEntityCollectionFactory
-                .createRole(RoleType.ROLE_ADMIN);
+                .createRoleCollection(RoleType.ROLE_ADMIN);
         customerDto = new CustomerDto(username,
                 password,
                 firstName,

@@ -2,7 +2,10 @@ package com.waldronprojects.bookstore.controller;
 
 import com.waldronprojects.bookstore.config.WebAppContext;
 import com.waldronprojects.bookstore.entity.Product;
+import com.waldronprojects.bookstore.entity.factory.ProductEntityFactory;
+import com.waldronprojects.bookstore.entity.factory.ProductTypeEnum;
 import com.waldronprojects.bookstore.service.ProductService;
+import com.waldronprojects.bookstore.util.UnitTestProductEntityFactory;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,6 +20,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 
@@ -70,8 +74,9 @@ public class ProductControllerTest {
     }
 
     private List<Product> createProductList() {
-        Product product1 = createProductWithId(1);
-        Product product2 = createProductWithId(1);
+        ProductEntityFactory productEntityFactory = new UnitTestProductEntityFactory();
+        Product product1 = productEntityFactory.createProduct(ProductTypeEnum.GENERIC);
+        Product product2 = productEntityFactory.createProduct(ProductTypeEnum.GENERIC);
         return Arrays.asList(product1, product2);
     }
 
@@ -86,7 +91,8 @@ public class ProductControllerTest {
 
     @Test
     public void testSaveProduct() throws Exception {
-        Product product = createProductWithId(1);
+        ProductEntityFactory productEntityFactory = new UnitTestProductEntityFactory();
+        Product product = productEntityFactory.createProduct(ProductTypeEnum.GENERIC);
         mockMvc.perform(post(URl_MAPPING_PREFIX + "saveProduct")
                         .flashAttr("product", product))
                 .andExpect(status().isFound())
@@ -98,7 +104,8 @@ public class ProductControllerTest {
 
     @Test
     public void testShowFormForUpdate() throws Exception {
-        Product product = createProductWithId(1);
+        ProductEntityFactory productEntityFactory = new UnitTestProductEntityFactory();
+        Product product = productEntityFactory.createProduct(ProductTypeEnum.GENERIC);
         when(productService.getProduct(product.getId()))
                 .thenReturn(product);
         mockMvc.perform(get(URl_MAPPING_PREFIX + "showFormForUpdate")
@@ -111,16 +118,9 @@ public class ProductControllerTest {
         verifyNoMoreInteractions(productService);
     }
 
-    private Product createProductWithId(int id) {
-        return new Product(id,
-                "productName"+id,
-                id,
-                "productDescription"+id);
-    }
-
     @Test
     public void testDelete() throws Exception {
-        int productId = 1;
+        Long productId = 1L;
         mockMvc.perform(get(URl_MAPPING_PREFIX + "delete")
                         .param("productId", String.valueOf(productId)))
                 .andExpect(status().isFound())

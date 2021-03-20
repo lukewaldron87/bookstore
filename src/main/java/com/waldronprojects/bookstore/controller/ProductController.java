@@ -41,7 +41,7 @@ public class ProductController {
 	}
 	
 	@GetMapping("/showFormForUpdate")
-	public String showFormForUpdate(@ModelAttribute("productId")int id,
+	public String showFormForUpdate(@ModelAttribute("productId")Long id,
 									Model model) {
 		Product product = productService.getProduct(id);
 		model.addAttribute("product", product);
@@ -49,7 +49,7 @@ public class ProductController {
 	}
 	
 	@GetMapping("/delete")
-	public String delete(@ModelAttribute("productId")int id) {
+	public String delete(@ModelAttribute("productId")Long id) {
 		productService.deleteProduct(id);
 		return "redirect:list";
 	}

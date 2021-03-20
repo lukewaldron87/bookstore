@@ -19,7 +19,7 @@ public class UnitTestRoleEntityCollectionFactory extends RoleEntityCollectionFac
     }
 
     @Override
-    public Collection<Role> createRole(RoleType roleType) {
+    public Collection<Role> createRoleCollection(RoleType roleType) {
         return FACTORY_MAP.get(roleType);
     }
 

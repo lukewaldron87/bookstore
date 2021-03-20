@@ -22,7 +22,7 @@ public class UnitTestRoleEntityCollectionFactoryTest {
 
     @Test
     public void testCreateRole_returnsCollectionOfRoles(){
-        Collection<Role> roleCollection = roleEntityFactory.createRole(RoleType.ROLE_CUSTOMER);
+        Collection<Role> roleCollection = roleEntityFactory.createRoleCollection(RoleType.ROLE_CUSTOMER);
         for(Role role: roleCollection){
             assertTrue(role instanceof Role);
         }
@@ -30,7 +30,7 @@ public class UnitTestRoleEntityCollectionFactoryTest {
 
     @Test
     public void testCreateRole_createsCustomerRoleCorrectly() {
-        Collection<Role> roleCollection = roleEntityFactory.createRole(RoleType.ROLE_CUSTOMER);
+        Collection<Role> roleCollection = roleEntityFactory.createRoleCollection(RoleType.ROLE_CUSTOMER);
         Iterator<Role> iterator = roleCollection.iterator();
         while (iterator.hasNext()) {
             Role role = iterator.next();
@@ -40,7 +40,7 @@ public class UnitTestRoleEntityCollectionFactoryTest {
 
     @Test
     public void testCreateRole_createsEmployeeRoleCorrectly() {
-        Collection<Role> roleCollection = roleEntityFactory.createRole(RoleType.ROLE_EMPLOYEE);
+        Collection<Role> roleCollection = roleEntityFactory.createRoleCollection(RoleType.ROLE_EMPLOYEE);
         Iterator<Role> iterator = roleCollection.iterator();
         while (iterator.hasNext()) {
             Role role = iterator.next();
@@ -50,7 +50,7 @@ public class UnitTestRoleEntityCollectionFactoryTest {
 
     @Test
     public void testCreateRole_createsAdminRoleCorrectly() {
-        Collection<Role> roleCollection = roleEntityFactory.createRole(RoleType.ROLE_ADMIN);
+        Collection<Role> roleCollection = roleEntityFactory.createRoleCollection(RoleType.ROLE_ADMIN);
         Role[] roleArray = roleCollection.stream()
                 .map(x -> new Role(x.getName()))
                 .toArray(size -> new Role[size]);
@@ -60,6 +60,6 @@ public class UnitTestRoleEntityCollectionFactoryTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testCreateRole_throwsExceptionForIncorrectArgument(){
-        Collection<Role> roleCollection = roleEntityFactory.createRole(RoleType.valueOf("BAD_ROLE_TYPE"));
+        Collection<Role> roleCollection = roleEntityFactory.createRoleCollection(RoleType.valueOf("BAD_ROLE_TYPE"));
     }
 }

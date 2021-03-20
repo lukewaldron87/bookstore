@@ -12,6 +12,6 @@ public class RoleTestUtilsTest {
     public void testTestAssignedRoles(){
         UserEntityFactory userFactory = new UnitTestUserEntityFactory();
         User user = userFactory.createUser(RoleType.ROLE_ADMIN);
-        Assert.assertTrue(RoleTestUtils.testAssignedRoles(user, RoleType.ROLE_ADMIN));
+        Assert.assertTrue(RoleTestUtils.checkUserHasRoleType(user, RoleType.ROLE_ADMIN));
     }
 }

@@ -2,6 +2,9 @@ package com.waldronprojects.bookstore.dao;
 
 import com.waldronprojects.bookstore.config.MvcConfig;
 import com.waldronprojects.bookstore.entity.Product;
+import com.waldronprojects.bookstore.entity.factory.ProductEntityFactory;
+import com.waldronprojects.bookstore.entity.factory.ProductTypeEnum;
+import com.waldronprojects.bookstore.util.UnitTestProductEntityFactory;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,9 +14,11 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -25,9 +30,9 @@ public class ProductDaoImplTest {
 
     @Test
     @Transactional
-    @Rollback(true)
+    @Rollback
     public void getProduct() {
-        int id = 3;
+        Long id = 3L;
         String productName = "book1";
         Product product = productDao.getProduct(id);
         assertEquals(id, product.getId());
@@ -36,7 +41,7 @@ public class ProductDaoImplTest {
 
     @Test
     @Transactional
-    @Rollback(true)
+    @Rollback
     public void getProducts() {
         int numberOfProducts = 4;
         List<Product> productList = productDao.getProducts();
@@ -45,26 +50,20 @@ public class ProductDaoImplTest {
 
     @Test
     @Transactional
-    @Rollback(true)
+    @Rollback
     public void saveProduct() {
-        int id = 99;
-        String productName = "Unit Test Product";
-        double unitPrice = 9.9;
-        String description = "Unit Test Product Description";
-        Product product = new Product(id,
-                                      productName,
-                                      unitPrice,
-                                      description);
+        ProductEntityFactory productEntityFactory = new UnitTestProductEntityFactory();
+        Product product = productEntityFactory.createProduct(ProductTypeEnum.GENERIC);
         productDao.saveProduct(product);
-        Product returnedProduct = productDao.getProduct(id);
-        assertEquals(id, returnedProduct.getId());
+        Product returnedProduct = productDao.getProduct(product.getId());
+        assertEquals(product.getId(), returnedProduct.getId());
     }
 
     @Test
     @Transactional
-    @Rollback(true)
+    @Rollback
     public void deleteProduct() {
-        int id = 3;
+        Long id = 3L;
         productDao.deleteProduct(id);
         Product product = productDao.getProduct(id);
         assertNull(product);

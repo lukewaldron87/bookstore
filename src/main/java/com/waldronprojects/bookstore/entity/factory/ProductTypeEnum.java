@@ -1,5 +1,5 @@
 package com.waldronprojects.bookstore.entity.factory;
 
-public enum ProductType {
+public enum ProductTypeEnum {
     GENERIC
 }

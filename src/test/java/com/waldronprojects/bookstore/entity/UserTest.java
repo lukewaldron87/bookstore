@@ -52,7 +52,7 @@ public class UserTest {
         RoleEntityCollectionFactory roleEntityCollectionFactory =
                 new UnitTestRoleEntityCollectionFactory();
         Collection<Role> roleCollection = roleEntityCollectionFactory
-                .createRole(RoleType.ROLE_ADMIN);
+                .createRoleCollection(RoleType.ROLE_ADMIN);
         user = new User(username,
                 password,
                 firstName,
@@ -182,7 +182,7 @@ public class UserTest {
         RoleEntityCollectionFactory roleEntityCollectionFactory =
                 new UnitTestRoleEntityCollectionFactory();
         Collection<Role> roleCollection = roleEntityCollectionFactory
-                .createRole(RoleType.ROLE_ADMIN);
+                .createRoleCollection(RoleType.ROLE_ADMIN);
         fieldModifier.setField(fieldName, (Object) roleCollection);
         Collection<Role> returnedRoleCollection = user.getRoles();
         assertEquals(roleCollection, returnedRoleCollection);
@@ -194,7 +194,7 @@ public class UserTest {
         RoleEntityCollectionFactory roleEntityCollectionFactory =
                 new UnitTestRoleEntityCollectionFactory();
         Collection<Role> roleCollection = roleEntityCollectionFactory
-                .createRole(RoleType.ROLE_ADMIN);
+                .createRoleCollection(RoleType.ROLE_ADMIN);
         user.setRoles(roleCollection);
         Object returnedRoleCollection = fieldModifier.getFieldValue(fieldName);
         assertEquals(roleCollection, returnedRoleCollection);
@@ -210,7 +210,7 @@ public class UserTest {
         RoleEntityCollectionFactory roleEntityCollectionFactory =
                 new UnitTestRoleEntityCollectionFactory();
         Collection<Role> roleCollection = roleEntityCollectionFactory
-                .createRole(RoleType.ROLE_ADMIN);
+                .createRoleCollection(RoleType.ROLE_ADMIN);
         Long idIndex = 1L;
         for(Role role: roleCollection){
             role.setId(idIndex);

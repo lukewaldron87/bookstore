@@ -5,7 +5,6 @@ import com.waldronprojects.bookstore.dto.EmployeeDto;
 import com.waldronprojects.bookstore.dto.UserDto;
 import com.waldronprojects.bookstore.dto.factory.UserDtoFactory;
 import com.waldronprojects.bookstore.entity.Role;
-import com.waldronprojects.bookstore.entity.User;
 import com.waldronprojects.bookstore.entity.factory.RoleEntityCollectionFactory;
 import com.waldronprojects.bookstore.entity.factory.RoleType;
 
@@ -98,7 +97,7 @@ public class UnitTestUserDtoFactory extends UserDtoFactory {
 		customerDto.setPostCode("postCode0");
 		customerDto.setPhoneNumber("12340");
 		Collection<Role> roleCollection = roleEntityCollectionFactory
-				.createRole(RoleType.ROLE_CUSTOMER);
+				.createRoleCollection(RoleType.ROLE_CUSTOMER);
 		customerDto.setRoles(roleCollection);
 		return customerDto;
 	}
@@ -106,7 +105,7 @@ public class UnitTestUserDtoFactory extends UserDtoFactory {
 	private UserDto createRegularEmployeeUser() {
 		EmployeeDto employeeDto = createEmployeeObject();
 		Collection<Role> roleCollection = roleEntityCollectionFactory
-				.createRole(RoleType.ROLE_EMPLOYEE);
+				.createRoleCollection(RoleType.ROLE_EMPLOYEE);
 		employeeDto.setRoles(roleCollection);
 		employeeDto.setIsAdmin(false);
 		return employeeDto;
@@ -115,7 +114,7 @@ public class UnitTestUserDtoFactory extends UserDtoFactory {
 	private UserDto createAdminEmployeeUser() {
 		EmployeeDto employeeDto = createEmployeeObject();
 		Collection<Role> roleCollection = roleEntityCollectionFactory
-				.createRole(RoleType.ROLE_ADMIN);
+				.createRoleCollection(RoleType.ROLE_ADMIN);
 		employeeDto.setRoles(roleCollection);
 		employeeDto.setIsAdmin(true);
 		return employeeDto;
