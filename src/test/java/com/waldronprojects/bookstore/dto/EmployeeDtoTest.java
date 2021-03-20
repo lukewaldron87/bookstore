@@ -55,7 +55,7 @@ public class EmployeeDtoTest {
         RoleEntityCollectionFactory roleEntityCollectionFactory =
                 new UnitTestRoleEntityCollectionFactory();
         Collection<Role> roleCollection = roleEntityCollectionFactory
-                .createRole(RoleType.ROLE_ADMIN);
+                .createRoleCollection(RoleType.ROLE_ADMIN);
         employeeDto = new EmployeeDto(username, password, firstName,
                                       lastName, email, roleCollection,
                                       department, title, isAdmin);
@@ -131,7 +131,7 @@ public class EmployeeDtoTest {
         RoleEntityCollectionFactory roleEntityCollectionFactory =
                 new UnitTestRoleEntityCollectionFactory();
         Collection<Role> roleCollection = roleEntityCollectionFactory
-                .createRole(RoleType.ROLE_ADMIN);
+                .createRoleCollection(RoleType.ROLE_ADMIN);
         employeeDto = new EmployeeDto(username, password, firstName,
                                       lastName, email, roleCollection,
                                       department, title, isAdmin);

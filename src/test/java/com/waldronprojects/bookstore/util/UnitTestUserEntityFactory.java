@@ -48,7 +48,7 @@ public class UnitTestUserEntityFactory extends UserEntityFactory {
 		customer.setPostCode("postCode0");
 		customer.setPhoneNumber("12340");
 		Collection<Role> roleCollection = roleEntityCollectionFactory
-				.createRole(RoleType.ROLE_CUSTOMER);
+				.createRoleCollection(RoleType.ROLE_CUSTOMER);
 		customer.setRoles(roleCollection);
 		return customer;
 	}
@@ -56,7 +56,7 @@ public class UnitTestUserEntityFactory extends UserEntityFactory {
 	private Employee createRegularEmployeeUser() {
 		Employee employee = createEmployeeObject();
 		Collection<Role> roleCollection = roleEntityCollectionFactory
-				.createRole(RoleType.ROLE_EMPLOYEE);
+				.createRoleCollection(RoleType.ROLE_EMPLOYEE);
 		employee.setRoles(roleCollection);
 		return employee;
 	}
@@ -64,7 +64,7 @@ public class UnitTestUserEntityFactory extends UserEntityFactory {
 	private Employee createAdminEmployeeUser() {
 		Employee employee = createEmployeeObject();
 		Collection<Role> roleCollection = roleEntityCollectionFactory
-				.createRole(RoleType.ROLE_ADMIN);
+				.createRoleCollection(RoleType.ROLE_ADMIN);
 		employee.setRoles(roleCollection);
 		return employee;
 	}

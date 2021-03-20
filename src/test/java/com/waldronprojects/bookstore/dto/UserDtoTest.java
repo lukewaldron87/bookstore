@@ -52,7 +52,7 @@ public class UserDtoTest {
         String firstName = "firstName";
         String lastName = "lastName";
         String email = "email";
-        Collection<Role> roleCollection = roleEntityCollectionFactory.createRole(RoleType.ROLE_ADMIN);
+        Collection<Role> roleCollection = roleEntityCollectionFactory.createRoleCollection(RoleType.ROLE_ADMIN);
         userDto = new UserDto(username,
                               password,
                               firstName,
@@ -197,7 +197,7 @@ public class UserDtoTest {
     @Test
     public void testGetRoles_getsValue() throws NoSuchFieldException, IllegalAccessException {
         String fieldName = "roles";
-        Collection<Role> roleCollection = roleEntityCollectionFactory.createRole(RoleType.ROLE_ADMIN);
+        Collection<Role> roleCollection = roleEntityCollectionFactory.createRoleCollection(RoleType.ROLE_ADMIN);
         fieldModifier.setField(fieldName, (Object) roleCollection);
         Collection<Role> returnedRoleCollection = userDto.getRoles();
         assertEquals(roleCollection, returnedRoleCollection);
@@ -206,7 +206,7 @@ public class UserDtoTest {
     @Test
     public void testSetRoles_setsProperly() throws NoSuchFieldException, IllegalAccessException {
         String fieldName = "roles";
-        Collection<Role> roleCollection = roleEntityCollectionFactory.createRole(RoleType.ROLE_ADMIN);
+        Collection<Role> roleCollection = roleEntityCollectionFactory.createRoleCollection(RoleType.ROLE_ADMIN);
         userDto.setRoles(roleCollection);
         Object returnedRoleCollection = fieldModifier.getFieldValue(fieldName);
         assertEquals(roleCollection, returnedRoleCollection);
@@ -219,7 +219,7 @@ public class UserDtoTest {
         String firstName = "firstName";
         String lastName = "lastName";
         String email = "email";
-        Collection<Role> roleCollection = roleEntityCollectionFactory.createRole(RoleType.ROLE_ADMIN);
+        Collection<Role> roleCollection = roleEntityCollectionFactory.createRoleCollection(RoleType.ROLE_ADMIN);
         Long idIndex = 1L;
         for(Role role: roleCollection){
             role.setId(idIndex);

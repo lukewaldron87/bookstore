@@ -75,7 +75,7 @@ public class CustomerTest {
         RoleEntityCollectionFactory roleEntityCollectionFactory =
                 new UnitTestRoleEntityCollectionFactory();
         Collection<Role> roleCollection = roleEntityCollectionFactory
-                .createRole(RoleType.ROLE_ADMIN);
+                .createRoleCollection(RoleType.ROLE_ADMIN);
 
         customer = new Customer(username,
                 password,
@@ -222,7 +222,7 @@ public class CustomerTest {
         RoleEntityCollectionFactory roleEntityCollectionFactory =
                 new UnitTestRoleEntityCollectionFactory();
         Collection<Role> roleCollection = roleEntityCollectionFactory
-                .createRole(RoleType.ROLE_ADMIN);
+                .createRoleCollection(RoleType.ROLE_ADMIN);
         customer = new Customer(username,
                 password,
                 firstName,
