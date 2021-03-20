@@ -1,6 +1,8 @@
 package com.waldronprojects.bookstore.entity;
 
+import com.waldronprojects.bookstore.entity.factory.AssociateTypeCollectionFactory;
 import com.waldronprojects.bookstore.util.FieldModifier;
+import com.waldronprojects.bookstore.util.UnitTestAssociateTypeCollectionFactory;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -291,7 +293,10 @@ public class ProductTest {
     }
 
     private Collection<Associate> createAssociateCollection() {
-        Collection<AssociateType> associateTypeCollection = null;// = createAssociateTypeCollection();
+        AssociateTypeCollectionFactory associateTypeCollectionFactory =
+                new UnitTestAssociateTypeCollectionFactory();
+        Collection<AssociateType> associateTypeCollection =
+                associateTypeCollectionFactory.createAssociateTypeCollection();
         Associate associate1 = new Associate(1L, "Oscar Wild",
                                         "An Irish poet and playwright.",
                                             associateTypeCollection);
