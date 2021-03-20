@@ -78,7 +78,7 @@ public class AssociateTypeTest {
     @Test
     public void testSetDescription() throws NoSuchFieldException, IllegalAccessException {
         String fieldValue = "description";
-        String fieldName = "associateTypeCollection";
+        String fieldName = "description";
         associateType.setDescription(fieldValue);
         Object returnedFieldValue = fieldModifier.getFieldValue(fieldName);
         assertEquals(fieldValue, returnedFieldValue);

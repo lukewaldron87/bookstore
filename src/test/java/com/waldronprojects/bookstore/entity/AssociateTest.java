@@ -1,10 +1,11 @@
 package com.waldronprojects.bookstore.entity;
 
+import com.waldronprojects.bookstore.entity.factory.AssociateTypeCollectionFactory;
 import com.waldronprojects.bookstore.util.FieldModifier;
+import com.waldronprojects.bookstore.util.UnitTestAssociateTypeCollectionFactory;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 import static org.junit.Assert.assertEquals;
@@ -13,11 +14,13 @@ public class AssociateTest {
 
     private Associate associate;
     private FieldModifier fieldModifier;
+    private AssociateTypeCollectionFactory associateTypeCollectionFactory;
 
     @Before
     public void setUp() {
         associate = new Associate();
         fieldModifier = new FieldModifier(associate);
+        associateTypeCollectionFactory = new UnitTestAssociateTypeCollectionFactory();
     }
 
     @Test
@@ -26,7 +29,8 @@ public class AssociateTest {
         long id = 1;
         String name = "name";
         String bio = "bio";
-        Collection<AssociateType> associateTypeCollection = createAssociateTypeCollection();
+        Collection<AssociateType> associateTypeCollection =
+                associateTypeCollectionFactory.createAssociateTypeCollection();
         Associate associate = new Associate(id, name, bio, associateTypeCollection);
         fieldModifier = new FieldModifier(associate);
         assertEquals(id, fieldModifier.getFieldValue("id"));
@@ -92,7 +96,8 @@ public class AssociateTest {
 
     @Test
     public void testGetAssociateTypeCollection() throws NoSuchFieldException, IllegalAccessException{
-        Collection<AssociateType> fieldValue = createAssociateTypeCollection();
+        Collection<AssociateType> fieldValue =
+                associateTypeCollectionFactory.createAssociateTypeCollection();
         String fieldName = "associateTypeCollection";
         fieldModifier.setField(fieldName, fieldValue);
         Object returnedFieldValue = associate.getAssociateTypeCollection();
@@ -101,7 +106,8 @@ public class AssociateTest {
 
     @Test
     public void testSetAssociateTypeCollection() throws NoSuchFieldException, IllegalAccessException {
-        Collection<AssociateType> fieldValue = createAssociateTypeCollection();
+        Collection<AssociateType> fieldValue =
+                associateTypeCollectionFactory.createAssociateTypeCollection();
         String fieldName = "associateTypeCollection";
         associate.setAssociateTypeCollection(fieldValue);
         Object returnedFieldValue = fieldModifier.getFieldValue(fieldName);
@@ -113,7 +119,8 @@ public class AssociateTest {
         long id = 1;
         String name = "name";
         String bio = "bio";
-        Collection<AssociateType> associateTypeCollection = createAssociateTypeCollection();
+        Collection<AssociateType> associateTypeCollection =
+                associateTypeCollectionFactory.createAssociateTypeCollection();
         Associate associate = new Associate(id, name, bio, associateTypeCollection);
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Associate {")
@@ -125,16 +132,5 @@ public class AssociateTest {
                 .append("}");
         String associateString = associate.toString();
         assertEquals(stringBuilder.toString(), associateString);
-    }
-
-    private Collection<AssociateType> createAssociateTypeCollection() {
-        AssociateType associateType1 = new AssociateType(1L, "Author",
-                "A person who writes a book");
-        AssociateType associateType2 = new AssociateType(2L, "Illustrator",
-                "A person who draws pictures for books");
-        Collection<AssociateType> associateTypeCollection = new ArrayList<>();
-        associateTypeCollection.add(associateType1);
-        associateTypeCollection.add(associateType2);
-        return associateTypeCollection;
     }
 }
