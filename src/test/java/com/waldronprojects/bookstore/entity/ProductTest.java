@@ -291,11 +291,14 @@ public class ProductTest {
     }
 
     private Collection<Associate> createAssociateCollection() {
+        Collection<AssociateType> associateTypeCollection = null;// = createAssociateTypeCollection();
         Associate associate1 = new Associate(1L, "Oscar Wild",
-                                        "An Irish poet and playwright.");
+                                        "An Irish poet and playwright.",
+                                            associateTypeCollection);
         Associate associate2 = new Associate(2L, "James Joyce",
                                         "was an Irish novelist, short story writer,"
-                                                + " poet, teacher, and literary critic.");
+                                                + " poet, teacher, and literary critic.",
+                                            associateTypeCollection);
         Collection associateCollection = new ArrayList();
         associateCollection.add(associate1);
         associateCollection.add(associate2);

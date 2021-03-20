@@ -5,7 +5,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import java.util.Collection;
 
 /**
  * A person related to a product
@@ -26,15 +30,23 @@ public class Associate {
     @Column(name = "bio")
     private String bio;
 
+    @ManyToMany
+    @JoinTable(name = "associate_associate_types",
+            joinColumns = @JoinColumn(name = "associate_id"),
+            inverseJoinColumns = @JoinColumn(name = "associate_type_id"))
+    private Collection<AssociateType> associateTypeCollection;
+
 
     public Associate () {
     }
 
 
-    public Associate (long id, String name, String bio) {
+    public Associate (long id, String name, String bio,
+                      Collection<AssociateType> associateTypeCollection) {
         this.id = id;
         this.name = name;
         this.bio = bio;
+        this.associateTypeCollection = associateTypeCollection;
     }
 
     public long getId() {
@@ -61,6 +73,14 @@ public class Associate {
         this.bio = description;
     }
 
+    public Collection<AssociateType> getAssociateTypeCollection() {
+        return associateTypeCollection;
+    }
+
+    public void setAssociateTypeCollection(Collection<AssociateType> associateTypeCollection) {
+        this.associateTypeCollection = associateTypeCollection;
+    }
+
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
@@ -68,6 +88,8 @@ public class Associate {
                 .append(" id='").append(id).append("'")
                 .append(", name='").append(name).append("'")
                 .append(", bio='").append(bio).append("'")
+                .append(", associateTypeCollection='")
+                    .append(associateTypeCollection.toString()).append("'")
                 .append("}");
         return stringBuilder.toString();
     }

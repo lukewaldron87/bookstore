@@ -26,23 +26,14 @@ public class AssociateTest {
         long id = 1;
         String name = "name";
         String bio = "bio";
-        //Collection<AssociateType> associateTypeCollection = createAssociateCollection();
-        Associate associate = new Associate(id, name, bio);
+        Collection<AssociateType> associateTypeCollection = createAssociateTypeCollection();
+        Associate associate = new Associate(id, name, bio, associateTypeCollection);
         fieldModifier = new FieldModifier(associate);
         assertEquals(id, fieldModifier.getFieldValue("id"));
         assertEquals(name, fieldModifier.getFieldValue("name"));
         assertEquals(bio, fieldModifier.getFieldValue("bio"));
-    }
-
-    private Collection<AssociateType> createAssociateCollection() {
-        AssociateType associateType1 = new AssociateType(1L, "Author",
-                                                "A person who writes a book");
-        AssociateType associateType2 = new AssociateType(2L, "Illustrator",
-                                                "A person who draws pictures for books");
-        Collection<AssociateType> associateTypeCollection = new ArrayList<>();
-        associateTypeCollection.add(associateType1);
-        associateTypeCollection.add(associateType2);
-        return associateTypeCollection;
+        assertEquals(associateTypeCollection,
+                fieldModifier.getFieldValue("associateTypeCollection"));
     }
 
     @Test
@@ -53,6 +44,7 @@ public class AssociateTest {
         Object returnedFieldValue = associate.getId();
         assertEquals(fieldValue, returnedFieldValue);
     }
+
     @Test
     public void testSetId() throws NoSuchFieldException, IllegalAccessException {
         long fieldValue = 1;
@@ -61,6 +53,7 @@ public class AssociateTest {
         Object returnedFieldValue = fieldModifier.getFieldValue(fieldName);
         assertEquals(fieldValue, returnedFieldValue);
     }
+
     @Test
     public void testGetName() throws NoSuchFieldException, IllegalAccessException{
         String fieldValue = "name";
@@ -69,6 +62,7 @@ public class AssociateTest {
         Object returnedFieldValue = associate.getName();
         assertEquals(fieldValue, returnedFieldValue);
     }
+
     @Test
     public void testSetName() throws NoSuchFieldException, IllegalAccessException {
         String fieldValue = "name";
@@ -77,6 +71,7 @@ public class AssociateTest {
         Object returnedFieldValue = fieldModifier.getFieldValue(fieldName);
         assertEquals(fieldValue, returnedFieldValue);
     }
+
     @Test
     public void testGetBio() throws NoSuchFieldException, IllegalAccessException{
         String fieldValue = "bio";
@@ -85,6 +80,7 @@ public class AssociateTest {
         Object returnedFieldValue = associate.getBio();
         assertEquals(fieldValue, returnedFieldValue);
     }
+
     @Test
     public void testSetBio() throws NoSuchFieldException, IllegalAccessException {
         String fieldValue = "bio";
@@ -93,19 +89,52 @@ public class AssociateTest {
         Object returnedFieldValue = fieldModifier.getFieldValue(fieldName);
         assertEquals(fieldValue, returnedFieldValue);
     }
+
+    @Test
+    public void testGetAssociateTypeCollection() throws NoSuchFieldException, IllegalAccessException{
+        Collection<AssociateType> fieldValue = createAssociateTypeCollection();
+        String fieldName = "associateTypeCollection";
+        fieldModifier.setField(fieldName, fieldValue);
+        Object returnedFieldValue = associate.getAssociateTypeCollection();
+        assertEquals(fieldValue, returnedFieldValue);
+    }
+
+    @Test
+    public void testSetAssociateTypeCollection() throws NoSuchFieldException, IllegalAccessException {
+        Collection<AssociateType> fieldValue = createAssociateTypeCollection();
+        String fieldName = "associateTypeCollection";
+        associate.setAssociateTypeCollection(fieldValue);
+        Object returnedFieldValue = fieldModifier.getFieldValue(fieldName);
+        assertEquals(fieldValue, returnedFieldValue);
+    }
+
     @Test
     public void testToString(){
         long id = 1;
         String name = "name";
         String bio = "bio";
-        Associate associate = new Associate(id, name, bio);
+        Collection<AssociateType> associateTypeCollection = createAssociateTypeCollection();
+        Associate associate = new Associate(id, name, bio, associateTypeCollection);
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Associate {")
                 .append(" id='").append(id).append("'")
                 .append(", name='").append(name).append("'")
                 .append(", bio='").append(bio).append("'")
+                .append(", associateTypeCollection='")
+                    .append(associateTypeCollection.toString()).append("'")
                 .append("}");
         String associateString = associate.toString();
         assertEquals(stringBuilder.toString(), associateString);
+    }
+
+    private Collection<AssociateType> createAssociateTypeCollection() {
+        AssociateType associateType1 = new AssociateType(1L, "Author",
+                "A person who writes a book");
+        AssociateType associateType2 = new AssociateType(2L, "Illustrator",
+                "A person who draws pictures for books");
+        Collection<AssociateType> associateTypeCollection = new ArrayList<>();
+        associateTypeCollection.add(associateType1);
+        associateTypeCollection.add(associateType2);
+        return associateTypeCollection;
     }
 }

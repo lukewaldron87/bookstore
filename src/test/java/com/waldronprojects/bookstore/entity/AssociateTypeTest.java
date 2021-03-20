@@ -69,8 +69,8 @@ public class AssociateTypeTest {
     @Test
     public void testGetDescription() throws NoSuchFieldException, IllegalAccessException{
         String fieldValue = "description";
-        String fieldDescription = "description";
-        fieldModifier.setField(fieldDescription, fieldValue);
+        String fieldName = "description";
+        fieldModifier.setField(fieldName, fieldValue);
         Object returnedFieldValue = associateType.getDescription();
         assertEquals(fieldValue, returnedFieldValue);
     }
@@ -78,9 +78,9 @@ public class AssociateTypeTest {
     @Test
     public void testSetDescription() throws NoSuchFieldException, IllegalAccessException {
         String fieldValue = "description";
-        String fieldDescription = "description";
+        String fieldName = "associateTypeCollection";
         associateType.setDescription(fieldValue);
-        Object returnedFieldValue = fieldModifier.getFieldValue(fieldDescription);
+        Object returnedFieldValue = fieldModifier.getFieldValue(fieldName);
         assertEquals(fieldValue, returnedFieldValue);
     }
 
