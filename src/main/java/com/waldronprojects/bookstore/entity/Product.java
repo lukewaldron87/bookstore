@@ -84,6 +84,40 @@ public class Product {
 		this.associateCollection = associateCollection;
 	}
 
+    private Product(Builder builder) {
+        this.id = builder.id;
+        this.productName = builder.productName;
+        this.unitPrice = builder.unitPrice;
+        this.description = builder.description;
+        this.unitsInStock = builder.unitsInStock;
+        this.productTypeCollection = builder.productTypeCollection;
+        this.genreCollection = builder.genreCollection;
+        this.imageCollection = builder.imageCollection;
+        this.associateCollection = builder.associateCollection;
+    }
+
+    public static class Builder {
+
+        private Long id;
+        private String productName;
+        private BigDecimal unitPrice;
+        private String description;
+        private int unitsInStock = 0;
+        private Collection<ProductType> productTypeCollection;
+        private Collection<Genre> genreCollection;
+        private Collection<Image> imageCollection;
+        private Collection<Associate> associateCollection;
+
+        public Builder(String productName, BigDecimal unitPrice) {
+            this.productName = productName;
+            this.unitPrice = unitPrice;
+        }
+
+        public Product build() {
+            return new Product(this);
+        }
+    }
+
 	public Long getId() {
 		return id;
 	}

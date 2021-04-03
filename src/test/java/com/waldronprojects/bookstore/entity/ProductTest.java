@@ -75,6 +75,18 @@ public class ProductTest {
     }
 
     @Test
+    public void testBuilder() throws NoSuchFieldException, IllegalAccessException {
+        String productName = "productName";
+        BigDecimal unitPrice = new BigDecimal("1.10");
+        String description = "description";
+        int unitsInStock = 1;
+        Product product = new Product.Builder(productName, unitPrice).build();
+        fieldModifier = new FieldModifier(product);
+        assertEquals(productName, fieldModifier.getFieldValue("productName"));
+        assertEquals(unitPrice, fieldModifier.getFieldValue("unitPrice"));
+    }
+
+    @Test
     public void testGetId() throws NoSuchFieldException, IllegalAccessException {
         Long fieldValue = 1L;
         String fieldName = "id";
@@ -286,7 +298,7 @@ public class ProductTest {
     private Collection<Image> createImageCollection() {
         Image image1 = new Image(1L, "/here/here");
         Image image2 = new Image(2L, "/there/there");
-        Collection imageCollection = new ArrayList();
+        Collection<Image> imageCollection = new ArrayList<>();
         imageCollection.add(image1);
         imageCollection.add(image2);
         return imageCollection;
@@ -304,7 +316,7 @@ public class ProductTest {
                                         "was an Irish novelist, short story writer,"
                                                 + " poet, teacher, and literary critic.",
                                             associateTypeCollection);
-        Collection associateCollection = new ArrayList();
+        Collection<Associate> associateCollection = new ArrayList<>();
         associateCollection.add(associate1);
         associateCollection.add(associate2);
         return associateCollection;
